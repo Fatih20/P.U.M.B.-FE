@@ -28,14 +28,7 @@ export default function registerPage({ }) {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         data.role = selectedRole
         console.log(data);
-
-        if (data.password != data.confirmPassword){
-            
-        }
     }
-
-    console.log(errors);
-    
 
     return (
 
