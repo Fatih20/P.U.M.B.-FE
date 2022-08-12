@@ -1,33 +1,41 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from 'react';
+import { ErrorMessage } from '@hookform/error-message';
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton"
 
 
 type Inputs = {
-    role : string,
+    role: string,
     username: string,
     email: string,
     first_name: string,
     last_name: string,
     password: string
-    confirmPassword : string
-  };
-  
+    confirmPassword: string,
+};
+
 
 export default function registerPage({ }) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
     // Role State
     const [selectedRole, setRole] = useState("STUDENT");
-    const manageRole = (role:string) => {
+    const manageRole = (role: string) => {
         setRole(role)
     }
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         data.role = selectedRole
         console.log(data);
+
+        if (data.password != data.confirmPassword){
+            
+        }
     }
+
+    console.log(errors);
+    
 
     return (
 
@@ -37,18 +45,21 @@ export default function registerPage({ }) {
                     <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">App Name</h2>
                 </div>
-               <InstructorOrStudentButton parentCallback={manageRole} />
+                <InstructorOrStudentButton role={selectedRole} setRole={setRole} />
+
                 {/* Form Start */}
-                <form onSubmit={handleSubmit(onSubmit)} 
+                <form onSubmit={handleSubmit(onSubmit)}
                     className="mt-8 space-y-6" action="#" method="POST">
                     <input type="hidden" name="remember" defaultValue="true" />
+
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
                             {/* <input name="username" type="text" autoComplete="username" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" /> */}
-                            <input {...register("username", { required: true })}
+                            <input {...register("username", { required: true, minLength: 3 })}
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Username"
                             />
+                            {errors.username && errors.username.type === "minLength" && <span>Username must be at least 3 character.</span>}
                         </div>
                         <div>
                             {/* <input name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email" /> */}
@@ -63,14 +74,14 @@ export default function registerPage({ }) {
                                 {/* <input name="firstname" type="text" autoComplete="firstname" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="First Name" />
                                 <input name="lastname" type="text" autoComplete="lastname" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Last Name" /> */}
                                 <input {...register("first_name", { required: true })}
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="First Name"
-                                type="text"
+                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    placeholder="First Name"
+                                    type="text"
                                 />
                                 <input {...register("last_name", { required: true })}
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                                placeholder="Last Name"
-                                type="text"
+                                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                    placeholder="Last Name"
+                                    type="text"
                                 />
                             </div>
                         </div>
@@ -80,7 +91,7 @@ export default function registerPage({ }) {
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                                 type="password"
-                                />
+                            />
                         </div>
                         <div>
                             {/* <input name="confirm-password" type="password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Confirm Password" /> */}
@@ -88,7 +99,7 @@ export default function registerPage({ }) {
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Confirm Password"
                                 type="password"
-                                />
+                            />
                         </div>
                     </div>
                     <div className="space-y-2">
