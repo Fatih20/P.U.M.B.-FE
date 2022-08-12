@@ -1,22 +1,20 @@
-import { useState } from 'react';
 
 interface InstructorOrStudentButtonProps {
-    parentCallback: (a: string) => void;
+    role: string;
+    setRole: (a: string) => void;
 }
 
 
-export default function InstructorOrStudentButton({ parentCallback }:InstructorOrStudentButtonProps) {
+export default function InstructorOrStudentButton({ role,setRole }:InstructorOrStudentButtonProps) {
    
-    const [role, setRole] = useState("STUDENT");
-
     const setRoleValue = (value:string) => {
-        parentCallback(value)
         setRole(value)
     }
 
+    // Manage Green Check Visibility
     let instructorCheckClass = "absolute";
     let studentrCheckClass = "absolute";
-
+    
     if (role != "INSTRUCTOR"){
         instructorCheckClass = "absolute hidden"
     }else{
