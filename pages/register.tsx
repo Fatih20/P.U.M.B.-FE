@@ -1,9 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from 'react';
-import { ErrorMessage } from '@hookform/error-message';
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton"
-
+import ErrorMessage from "../components/errorMessage"
 
 type Inputs = {
     role: string,
@@ -25,6 +24,14 @@ export default function registerPage({ }) {
         setRole(role)
     }
 
+    // Error Visibility State
+    const [showError, setShowError] = useState(false);
+    const manageShowError = () => {
+        setShowError(!showError)
+        console.log(showError);
+        
+    }
+
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         data.role = selectedRole
         console.log(data);
@@ -33,12 +40,17 @@ export default function registerPage({ }) {
     return (
 
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-0">
+            <div className="max-w-md w-full space-y-5">
                 <div className="mb-8">
                     <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">App Name</h2>
                 </div>
+                
+                {/* Instructor or Student Button */}
                 <InstructorOrStudentButton role={selectedRole} setRole={setRole} />
+
+                {/* Error Message */}
+                {showError ? <ErrorMessage message="This is error message" setVisibility={manageShowError} /> : null}
 
                 {/* Form Start */}
                 <form onSubmit={handleSubmit(onSubmit)}
