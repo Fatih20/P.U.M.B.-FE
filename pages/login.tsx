@@ -1,10 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 
-// type Inputs = {
-//     example: string,
-//     exampleRequired: string,
-// };
-
 type Inputs = {
     username: string,
     password: string,
