@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type Inputs = {
@@ -10,10 +11,17 @@ export default function loginPage() {
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data);
-        alert(`${data.username},${data.password}`)
-    }
 
-    console.log(watch("username"));
+        // belum beres => aplikasiin library next-auth
+        axios.post("/auth/login",{
+            email:data.username,
+            password : data.password
+        }).then(res => {
+            console.log(res);
+            console.log("dari login");
+            
+        })
+    }
 
     return (
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

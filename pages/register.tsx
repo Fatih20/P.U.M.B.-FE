@@ -19,8 +19,6 @@ type Inputs = {
 export default function registerPage({ }) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
-    axios.defaults.baseURL = 'https://compfest-be-staging.herokuapp.com'
-
     // Role State
     const [selectedRole, setRole] = useState("STUDENT");
     const manageRole = (role: string) => {
@@ -37,7 +35,7 @@ export default function registerPage({ }) {
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         data.role = selectedRole
-        console.log(data);
+        // console.log(data);
 
         axios.post('/auth/signup', {
             role: data.role,
@@ -50,8 +48,6 @@ export default function registerPage({ }) {
             console.log(res);
             console.log(res.data);
         })
-
-        // console.log(resp);
         
     }
 
