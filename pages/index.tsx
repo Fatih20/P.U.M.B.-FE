@@ -14,27 +14,30 @@ const Home: NextPage = () => {
     <BaseLayout showBackButton={false}>
       <div className="flex justify-start items-center flex-col w-full">
         <TagName
-          tagName="Bruhflkvmvmck"
+          name="Bruhflkvmvmck"
           runOnClick={() => {
             return;
           }}
         />
         <CourseForStudent
-          title="Test"
+          id={5}
+          name="Test"
           thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
-          tag="lkvmfv"
+          tags={[{ name: "lkvmfv", id: 5 }]}
           instructorName="lkvfkdlv"
           description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
         />
         <CourseForInstructor
-          title="Test"
+          id={5}
+          name="Test"
           thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
           description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
           status="verified"
           peopleEnrolled={56}
         />
         <CourseForAdmin
-          title="Test"
+          id={5}
+          name="Test"
           thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
           description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
           instructor="lkmvkd"
@@ -53,6 +56,7 @@ const Home: NextPage = () => {
           }}
         />
         <InstructorApplication
+          id={5}
           username="Test"
           email="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
           selected={true}
