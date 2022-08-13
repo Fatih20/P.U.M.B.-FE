@@ -1,4 +1,5 @@
 import axios from "axios";
+import Router from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import technicalConfig from "../config/technicalConfig";
 import { LoginInputs } from "../types/TypesForUs";
@@ -19,12 +20,13 @@ export default function LoginPage() {
       return;
     }
 
-    const accessToken = result.data.data.access_token;
-
+    const accessToken = result.data.access_token;
     localStorage.setItem(
       technicalConfig.accessTokenKey,
       JSON.stringify(accessToken)
     );
+
+    Router.push("/courses");
   };
 
   return (

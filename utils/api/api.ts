@@ -9,7 +9,7 @@ export async function errorWrapper (checkedFunction :  () => any) {
     }
 }
 
-export async function bearerHeader () {
+export function bearerHeader () {
     return ({
         headers : {
             "Authorization" : "Bearer" + getAccessToken()

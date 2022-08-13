@@ -9,73 +9,26 @@ import TagName from "../components/TagName";
 import InstructorApplication from "../components/InstructorApplication";
 import BaseLayout from "../layout/BaseLayout";
 
+import Router from "next/router";
+
+import { useQuery } from "react-query";
+import { getMe } from "../utils/api/auth";
+
 const Home: NextPage = () => {
-  return (
-    <BaseLayout showBackButton={false}>
-      <div className="flex justify-start items-center flex-col w-full">
-        <TagName
-          name="Bruhflkvmvmck"
-          runOnClick={() => {
-            return;
-          }}
-        />
-        <CourseForStudent
-          id={5}
-          name="Test"
-          thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
-          tags={[{ name: "lkvmfv", id: 5 }]}
-          instructorName="lkvfkdlv"
-          description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
-        />
-        <CourseForInstructor
-          id={5}
-          name="Test"
-          thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
-          description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
-          status="verified"
-          peopleEnrolled={56}
-        />
-        <CourseForAdmin
-          id={5}
-          name="Test"
-          thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
-          description="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
-          instructor="lkmvkd"
-          selected={true}
-          runOnApprove={() => {
-            return;
-          }}
-          runOnReject={() => {
-            return;
-          }}
-          runOnDeselect={() => {
-            return;
-          }}
-          runOnSelect={() => {
-            return;
-          }}
-        />
-        <InstructorApplication
-          id={5}
-          username="Test"
-          email="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
-          selected={true}
-          runOnApprove={() => {
-            return;
-          }}
-          runOnReject={() => {
-            return;
-          }}
-          runOnDeselect={() => {
-            return;
-          }}
-          runOnSelect={() => {
-            return;
-          }}
-        />
-      </div>
-    </BaseLayout>
-  );
+  const { data, isLoading, isFetching } = useQuery("me", getMe, {
+    onSuccess: () => {
+      Router.push("/courses");
+    },
+    onError: () => {
+      Router.push("/login");
+    },
+  });
+
+  if (isLoading || isFetching) {
+    return <h2>Loading...</h2>;
+  }
+
+  return <h2>Redirecting...</h2>;
 };
 
 export default Home;
