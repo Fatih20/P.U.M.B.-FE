@@ -19,7 +19,7 @@ const CourseHeader = ({
 }: CourseHeaderProps) => {
   return (
     <div className="flex flex-col items-start justify-center">
-      <Image src={thumbnail} alt={title} />
+      <img src={thumbnail} alt={title} />
       <h2>{title}</h2>
       <p>{description}</p>
       <button className={`${enrolled ? "" : "hidden"}`} onClick={runOnEnroll}>
