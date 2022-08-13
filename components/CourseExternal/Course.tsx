@@ -14,7 +14,7 @@ const Course = ({
   thumbnail,
 }: CourseProps) => {
   return (
-    <div className="relative  bg-gray-600 overflow-hidden rounded-xl w-64 flex flex-col items-start justify-center">
+    <div className="relative  bg-gray-600 overflow-hidden rounded-xl w-64 flex flex-col items-start justify-center break-all">
       {absoluteContent ?? null}
       <div className="">
         <img src={thumbnail} alt="" />
