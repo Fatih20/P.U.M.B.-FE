@@ -3,21 +3,28 @@ import {
   CourseContentElementProps,
   CourseContentElementType,
 } from "../../types/types";
+import CourseContentElement from "./CourseContentElement";
 
 type CourseContentProps = {
-  courseContent: CourseContentElementProps[];
+  courseContentComponents: CourseContentElementProps[];
+  runOnAddQuiz: () => void;
+  runOnAddLecture: () => void;
 };
 
-const CourseContent = (props: CourseContentProps) => {
+const CourseContent = ({
+  courseContentComponents,
+  runOnAddLecture,
+  runOnAddQuiz,
+}: CourseContentProps) => {
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );
 
   function handleAddingContentType() {
     if (seenContentType === "lecture") {
-      // Add lectures
+      runOnAddLecture();
     } else {
-      // Add quiz
+      runOnAddQuiz();
     }
   }
 
@@ -40,7 +47,21 @@ const CourseContent = (props: CourseContentProps) => {
         </button>
       </div>
       <button onClick={handleAddingContentType}>Add {seenContentType}</button>
-      <div className="flex flex-col w-full "></div>
+      <div className="flex flex-col w-full ">
+        {courseContentComponents.map(
+          ({ title, type, runOnDelete, runOnEdit }) => {
+            return (
+              <CourseContentElement
+                key={title}
+                title={title}
+                runOnDelete={runOnDelete}
+                runOnEdit={runOnEdit}
+                type={type}
+              />
+            );
+          }
+        )}
+      </div>
     </div>
   );
 };
