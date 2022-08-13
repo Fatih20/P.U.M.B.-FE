@@ -27,7 +27,6 @@ const CourseForInstructor = ({
   peopleEnrolled,
   thumbnail,
 }: CourseForInstructorProps) => {
-  const [showDescription, setShowDescription] = useState(false);
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
