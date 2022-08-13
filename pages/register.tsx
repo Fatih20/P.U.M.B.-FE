@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from 'react';
+import Router from "next/router";
 import axios from "axios";
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton"
@@ -45,8 +46,10 @@ export default function registerPage({ }) {
             last_name: data.last_name,
             password: data.password
         }).then(res => {
-            console.log(res);
-            console.log(res.data);
+            console.log(res)
+            console.log(res.data)
+            alert("Register Success!")
+            Router.push("/login")
         })
         
     }
