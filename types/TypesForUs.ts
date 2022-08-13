@@ -102,3 +102,18 @@ export type SearchBarProps = {
     // It is assumed that the function triggered here has the tagName built-in
     runOnClick: () => void;
   };
+
+  export type LoginInputs = {
+    username: string;
+    password: string;
+  };
+
+  export type RegisterInputs = {
+    role: string;
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    password: string;
+    confirmPassword: string;
+  };
