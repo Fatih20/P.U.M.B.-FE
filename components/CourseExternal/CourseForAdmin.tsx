@@ -7,7 +7,7 @@ import { Icon } from "@fortawesome/fontawesome-svg-core";
 const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
 
-type CourseAdminProps = {
+type CourseForAdminProps = {
   title: string;
   instructor: string;
   shortenedDescription: string;
@@ -50,7 +50,7 @@ const ActionButton = ({
   );
 };
 
-const CourseAdmin = ({
+const CourseForAdmin = ({
   title,
   instructor,
   shortenedDescription,
@@ -60,7 +60,7 @@ const CourseAdmin = ({
   runOnReject,
   runOnApprove,
   runOnDeselect,
-}: CourseAdminProps) => {
+}: CourseForAdminProps) => {
   const buttonProperty = {
     approve: {
       color: "bg-green-500",
@@ -92,7 +92,12 @@ const CourseAdmin = ({
         {possibleCourseAction.map((courseAction: CourseAction) => {
           const { color, content, onClick } = buttonProperty[courseAction];
           return (
-            <ActionButton onClick={onClick} type={courseAction} color={color}>
+            <ActionButton
+              key={courseAction}
+              onClick={onClick}
+              type={courseAction}
+              color={color}
+            >
               {content}
             </ActionButton>
           );
@@ -118,4 +123,4 @@ const CourseAdmin = ({
   );
 };
 
-export default CourseAdmin;
+export default CourseForAdmin;

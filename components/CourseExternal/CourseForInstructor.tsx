@@ -1,7 +1,7 @@
 import React from "react";
-import { CourseColorAndText, CourseStatus } from "../types/types";
+import { CourseColorAndText, CourseStatus } from "../../types/types";
 import Course from "./Course";
-import TagName from "./TagName";
+import TagName from "../TagName";
 
 const statusColorAndText = {
   rejected: { color: "bg-red-500", text: "Rejected" },
@@ -9,7 +9,7 @@ const statusColorAndText = {
   waiting: { color: "bg-yellow-500", text: "Waiting list" },
 } as Record<CourseStatus, CourseColorAndText>;
 
-type CourseInstructorProps = {
+type CourseForInstructorProps = {
   title: string;
   shortenedDescription: string;
   status: CourseStatus;
@@ -18,13 +18,13 @@ type CourseInstructorProps = {
   thumbnail: string;
 };
 
-const CourseInstructor = ({
+const CourseForInstructor = ({
   title,
   shortenedDescription,
   status,
   peopleEnrolled,
   thumbnail,
-}: CourseInstructorProps) => {
+}: CourseForInstructorProps) => {
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
@@ -47,4 +47,4 @@ const CourseInstructor = ({
   );
 };
 
-export default CourseInstructor;
+export default CourseForInstructor;

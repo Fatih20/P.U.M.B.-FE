@@ -1,8 +1,8 @@
 import React from "react";
 import Course from "./Course";
-import TagName from "./TagName";
+import TagName from "../TagName";
 
-type CourseStudentProps = {
+type CourseForStudentProps = {
   title: string;
   shortenedDescription: string;
   instructorName: string;
@@ -11,13 +11,13 @@ type CourseStudentProps = {
   thumbnail: string;
 };
 
-const CourseStudent = ({
+const CourseForStudent = ({
   title,
   shortenedDescription,
   instructorName,
   tag,
   thumbnail,
-}: CourseStudentProps) => {
+}: CourseForStudentProps) => {
   const tagAndContainer = (
     <div className="absolute p-3 flex w-full top-0 bottom-0 left-0 right-0 items-start justify-end">
       <TagName
@@ -47,4 +47,4 @@ const CourseStudent = ({
   );
 };
 
-export default CourseStudent;
+export default CourseForStudent;
