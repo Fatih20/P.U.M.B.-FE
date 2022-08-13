@@ -11,7 +11,7 @@ const Header = ({ showBackButton }: HeaderProps) => {
     <div
       className={`w-full p-4 flex items-center ${
         showBackButton ? `justify-between` : `justify-center`
-      } flex-row bg-gray-600`}
+      } flex-row bg-gray-600 fixed z-10 h-8`}
     >
       <button
         className={`${showBackButton ? "" : "hidden"}`}
