@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { CourseColorAndText, CourseStatus } from "../../types/types";
 import Course from "./Course";
 import TagName from "../TagName";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const statusColorAndText = {
   rejected: { color: "bg-red-500", text: "Rejected" },
@@ -11,7 +13,7 @@ const statusColorAndText = {
 
 type CourseForInstructorProps = {
   title: string;
-  shortenedDescription: string;
+  description: string;
   status: CourseStatus;
   peopleEnrolled?: number;
   // Link to the image, not an actual image
@@ -20,11 +22,12 @@ type CourseForInstructorProps = {
 
 const CourseForInstructor = ({
   title,
-  shortenedDescription,
+  description,
   status,
   peopleEnrolled,
   thumbnail,
 }: CourseForInstructorProps) => {
+  const [showDescription, setShowDescription] = useState(false);
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
@@ -35,7 +38,6 @@ const CourseForInstructor = ({
   const centerContent = (
     <>
       <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
-      <p className="whitespace-normal">{shortenedDescription}</p>
     </>
   );
   return (
@@ -43,6 +45,8 @@ const CourseForInstructor = ({
       centerContent={centerContent}
       thumbnail={thumbnail}
       bottomContent={bottomContent}
+      title={title}
+      description={description}
     />
   );
 };
