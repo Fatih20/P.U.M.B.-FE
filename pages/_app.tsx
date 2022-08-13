@@ -5,7 +5,7 @@ import axios from 'axios';
 axios.defaults.baseURL = process.env.beBaseUrl;
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <Component {...pageProps} />;
 }
 
-export default MyApp
+export default MyApp;
