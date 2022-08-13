@@ -11,27 +11,14 @@ import { Icon } from "@fortawesome/fontawesome-svg-core";
 import {
   ApprovalButtonProperty,
   CourseAction,
+  CourseForAdminProps,
   possibleCourseAction,
-} from "../../types/types";
+} from "../../types/TypesForUs";
 import ApprovalButton from "../ApprovalButtons";
 import ApprovalButtons from "../ApprovalButtons";
 
-type CourseForAdminProps = {
-  title: string;
-  instructor: string;
-  description: string;
-  // Link to the image, not an actual image
-  thumbnail: string;
-  runOnReject: () => void;
-  runOnApprove: () => void;
-  runOnSelect: () => void;
-  runOnDeselect: () => void;
-  // The logic for saving what course is selected is left to its parent. It is assumed that the parent will have a state containing an array and the selected props will be given by using array .includes
-  selected: Boolean;
-};
-
 const CourseForAdmin = ({
-  title,
+  name,
   instructor,
   description,
   selected,
@@ -56,7 +43,7 @@ const CourseForAdmin = ({
 
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
+      <h2 className="text-2xl font-bold whitespace-normal">{name}</h2>
       <h3 className="whitespace-normal text-lg font-medium">{instructor}</h3>
     </>
   );
@@ -66,7 +53,7 @@ const CourseForAdmin = ({
       thumbnail={thumbnail}
       absoluteContent={absoluteContent}
       centerContent={centerContent}
-      title={title}
+      name={name}
       description={description}
     ></Course>
   );

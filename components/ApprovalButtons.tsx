@@ -3,18 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import {
   ApprovalButtonProperty,
+  ApprovalButtonsProps,
   CourseAction,
   possibleCourseAction,
-} from "../types/types";
-
-type ApprovalButtonsProps = {
-  runOnReject: () => void;
-  runOnApprove: () => void;
-  runOnSelect: () => void;
-  runOnDeselect: () => void;
-  selected: Boolean;
-  vertical: Boolean;
-};
+} from "../types/TypesForUs";
 
 const ApprovalButtons = ({
   runOnSelect,

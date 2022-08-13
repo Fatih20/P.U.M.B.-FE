@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { CourseContentElementProps } from "../../types/types";
+import { CourseContentElementProps } from "../../types/TypesForUs";
 
 const CourseContentElement = ({
   title,

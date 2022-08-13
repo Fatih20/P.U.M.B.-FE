@@ -7,16 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-
-type CourseProps = {
-  absoluteContent?: JSX.Element;
-  centerContent: JSX.Element;
-  bottomContent?: JSX.Element;
-  thumbnail: string;
-  description: string;
-  title: string;
-  useDropdownDescription?: Boolean;
-};
+import { CourseProps } from "../../types/TypesForUs";
 
 const Course = ({
   absoluteContent,
@@ -24,7 +15,7 @@ const Course = ({
   description,
   bottomContent,
   thumbnail,
-  title,
+  name,
   useDropdownDescription = true,
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
@@ -36,7 +27,7 @@ const Course = ({
     <div className="relative  bg-gray-600 overflow-hidden rounded-xl w-64 flex flex-col items-start justify-center break-all">
       {absoluteContent ?? null}
       <div className="">
-        <img src={thumbnail} alt={title} />
+        <img src={thumbnail} alt={name} />
       </div>
       <div className="bg-gray-400 p-4 w-full flex flex-col items-start justify-start">
         {centerContent}

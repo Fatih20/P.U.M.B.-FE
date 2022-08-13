@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { CourseColorAndText, CourseStatus } from "../../types/types";
+import {
+  CourseColorAndText,
+  CourseForInstructorProps,
+  CourseStatus,
+} from "../../types/TypesForUs";
 import Course from "./Course";
 import TagName from "../TagName";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,17 +15,8 @@ const statusColorAndText = {
   waiting: { color: "bg-yellow-500", text: "Waiting list" },
 } as Record<CourseStatus, CourseColorAndText>;
 
-type CourseForInstructorProps = {
-  title: string;
-  description: string;
-  status: CourseStatus;
-  peopleEnrolled?: number;
-  // Link to the image, not an actual image
-  thumbnail: string;
-};
-
 const CourseForInstructor = ({
-  title,
+  name,
   description,
   status,
   peopleEnrolled,
@@ -36,7 +31,7 @@ const CourseForInstructor = ({
   );
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
+      <h2 className="text-2xl font-bold whitespace-normal">{name}</h2>
     </>
   );
   return (
@@ -44,7 +39,7 @@ const CourseForInstructor = ({
       centerContent={centerContent}
       thumbnail={thumbnail}
       bottomContent={bottomContent}
-      title={title}
+      name={name}
       description={description}
     />
   );

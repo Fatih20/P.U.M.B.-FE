@@ -1,15 +1,6 @@
 import React from "react";
+import { InstructorApplicationProps } from "../types/TypesForUs";
 import ApprovalButtons from "./ApprovalButtons";
-
-type InstructorApplicationProps = {
-  username: string;
-  email: string;
-  runOnReject: () => void;
-  runOnApprove: () => void;
-  runOnSelect: () => void;
-  runOnDeselect: () => void;
-  selected: Boolean;
-};
 
 const InstructorApplication = ({
   email,
