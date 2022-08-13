@@ -6,6 +6,7 @@ import CourseForInstructor from "../components/CourseExternal/CourseForInstructo
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import TagName from "../components/TagName";
+import InstructorApplication from "../components/InstructorApplication";
 
 const Home: NextPage = () => {
   return (
@@ -37,6 +38,23 @@ const Home: NextPage = () => {
         thumbnail="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
         shortenedDescription="l;fmdklvmfdklkcmsdfdsmlkvdmskkmlmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmlvmsdklvdsmklvmkll"
         instructor="lkmvkd"
+        selected={true}
+        runOnApprove={() => {
+          return;
+        }}
+        runOnReject={() => {
+          return;
+        }}
+        runOnDeselect={() => {
+          return;
+        }}
+        runOnSelect={() => {
+          return;
+        }}
+      />
+      <InstructorApplication
+        username="Test"
+        email="https://www.manorhousestables.co.uk/wp-content/uploads/2015/03/placeholder_image_1000.jpg"
         selected={true}
         runOnApprove={() => {
           return;
