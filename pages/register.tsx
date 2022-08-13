@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from 'react';
+import axios from "axios";
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton"
 import ErrorMessage from "../components/errorMessage"
@@ -18,6 +19,8 @@ type Inputs = {
 export default function registerPage({ }) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>();
 
+    axios.defaults.baseURL = 'https://compfest-be-staging.herokuapp.com'
+
     // Role State
     const [selectedRole, setRole] = useState("STUDENT");
     const manageRole = (role: string) => {
@@ -29,12 +32,27 @@ export default function registerPage({ }) {
     const manageShowError = () => {
         setShowError(!showError)
         console.log(showError);
-        
+
     }
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         data.role = selectedRole
         console.log(data);
+
+        axios.post('/auth/signup', {
+            role: data.role,
+            username: data.username,
+            email: data.email,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            password: data.password
+        }).then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+
+        // console.log(resp);
+        
     }
 
     return (
@@ -45,7 +63,7 @@ export default function registerPage({ }) {
                     <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">App Name</h2>
                 </div>
-                
+
                 {/* Instructor or Student Button */}
                 <InstructorOrStudentButton role={selectedRole} setRole={setRole} />
 
