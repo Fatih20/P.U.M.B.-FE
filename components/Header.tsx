@@ -2,12 +2,19 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-type Props = {};
+type HeaderProps = {
+  showBackButton: Boolean;
+};
 
-const Header = (props: Props) => {
+const Header = ({ showBackButton }: HeaderProps) => {
   return (
-    <div className="w-full p-4 flex items-center justify-between flex-row bg-gray-600">
+    <div
+      className={`w-full p-4 flex items-center ${
+        showBackButton ? `justify-between` : `justify-center`
+      } flex-row bg-gray-600`}
+    >
       <button
+        className={`${showBackButton ? "" : "hidden"}`}
         onClick={() => {
           location.assign("/");
         }}
@@ -15,7 +22,7 @@ const Header = (props: Props) => {
         <FontAwesomeIcon icon={faChevronLeft} />
       </button>
       <h1>App Name</h1>
-      <button className="invisible">
+      <button className={`${showBackButton ? "invisible" : "hidden"}`}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </button>
     </div>
