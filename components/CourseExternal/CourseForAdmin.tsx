@@ -27,6 +27,7 @@ const CourseForAdmin = ({
   runOnDeselect,
   runOnReject,
   runOnSelect,
+  id,
 }: CourseForAdminProps) => {
   const absoluteContent = (
     <div className="absolute p-3 flex w-full top-0 bottom-0 left-0 right-0 items-start justify-end pointer-events-none">
@@ -50,6 +51,7 @@ const CourseForAdmin = ({
 
   return (
     <Course
+      id={id}
       thumbnail={thumbnail}
       absoluteContent={absoluteContent}
       centerContent={centerContent}

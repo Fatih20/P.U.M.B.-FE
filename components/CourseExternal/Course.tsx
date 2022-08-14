@@ -24,7 +24,7 @@ const Course = ({
 
   return (
     <div
-      onClick={() => Router.push(`/${id}`)}
+      onClick={() => Router.push(`${Router.asPath}/${id}`)}
       className="relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all"
     >
       {absoluteContent ?? null}
