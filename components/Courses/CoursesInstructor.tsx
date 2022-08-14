@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   CoursesProps,
   possibleSeenCourse,
@@ -10,13 +10,16 @@ import CoursesContainer from "./Courses";
 
 const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
-  console.log(listOfCourse);
+  //   console.log(listOfCourse);
 
-  function filterCourse({
-    course_status: { status },
-  }: {
-    course_status: CourseStatusInCourse;
-  }) {
+  function filterCourse(
+    {
+      course_status: { status },
+    }: {
+      course_status: CourseStatusInCourse;
+    },
+    seenType: SeenCourse
+  ) {
     if (seenType === "ALL") {
       return true;
     }
@@ -43,6 +46,11 @@ const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
     );
   }
 
+  const seenCourses = useMemo(
+    () => listOfCourse.filter((course) => filterCourse(course, seenType)),
+    [seenType, listOfCourse]
+  );
+
   function ChangeSeenButton({ selectedSeen }: { selectedSeen: SeenCourse }) {
     const buttonText = `${selectedSeen[0].toUpperCase()}${selectedSeen
       .toLowerCase()
@@ -66,14 +74,12 @@ const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
           <ChangeSeenButton key={seenCourse} selectedSeen={seenCourse} />
         ))}
       </div>
-      {listOfCourse.filter(filterCourse).length === 0 ? (
+      {seenCourses.length === 0 ? (
         <div className="w-full h-full flex flex-col items-center justify-center">
           <h2>No course found</h2>
         </div>
       ) : (
-        <CoursesContainer>
-          {listOfCourse.filter(filterCourse).map(mapCourse)}
-        </CoursesContainer>
+        <CoursesContainer>{seenCourses.map(mapCourse)}</CoursesContainer>
       )}
     </div>
   );
