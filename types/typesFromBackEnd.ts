@@ -31,16 +31,20 @@ export type Course = UniqueObject & {
 
 }
 
-export type User = {
-  id : number,
+export type User = UniqueObject & {
   username : string,
   email : string,
   role : UserRole,
 }
 
-export type CourseStatusInCourse = {
+export type CourseStatusInCourse = UniqueObject & {
   id : number,
   course_id : number,
   status : CourseStatus,
   description : string
+}
+
+export type Lecture = UniqueObject & {
+  title : string,
+  course_id : string
 }

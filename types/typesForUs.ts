@@ -126,3 +126,6 @@ export type CoursesProps = {
 
 export const possibleSeenCourse = [...possibleCourseStatus, "ALL"] as const;
 export type SeenCourse = typeof possibleSeenCourse[number];
+
+export const possibleQuizOrLecture = ["quiz", "lecture"] as const;
+export type QuizOrLecture = typeof possibleQuizOrLecture[number];
