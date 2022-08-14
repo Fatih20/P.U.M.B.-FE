@@ -1,6 +1,4 @@
-import { Category, Course, UniqueObject } from "./TypesFromBackEnd";
-
-export type CourseStatus = "verified" | "rejected" | "waiting"
+import { Category, Course, CourseStatus, UniqueObject } from "./typesFromBackEnd";
 
 export const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
@@ -30,7 +28,7 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
-    name : string;
+    title : string;
     thumbnail: string;
     description: string;
     useDropdownDescription?: Boolean;
@@ -48,7 +46,7 @@ export type CourseProps = {
   }
 
 export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
-    name: string;
+    title: string;
     instructor: string;
     description: string;
     // Link to the image, not an actual image
@@ -58,7 +56,7 @@ export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
   };
 
 export type CourseForInstructorProps = UniqueObject & {
-    name: string;
+    title: string;
     description: string;
     status: CourseStatus;
     peopleEnrolled?: number;
@@ -68,7 +66,7 @@ export type CourseForInstructorProps = UniqueObject & {
 
 
 export type CourseForStudentProps = UniqueObject & {
-    name: string;
+    title: string;
     instructorName: string;
     tags: Category[];
     description: string;
@@ -117,3 +115,11 @@ export type SearchBarProps = {
     password: string;
     confirmPassword: string;
   };
+
+export type UseMeDataStatus = "authorized" | "unauthorized" | "serverError" | "fetching"
+
+export type CoursesProps = {
+    listOfCourse : Course[]  
+};
+
+export type SeenCourse = CourseStatus | "ALL";

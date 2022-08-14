@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   CourseContentElementProps,
   CourseContentElementType,
-} from "../../types/TypesForUs";
+} from "../../types/typesForUs";
 import CourseContentElement from "./CourseContentElement";
 
 type CourseContentProps = {

@@ -2,26 +2,29 @@ import React, { useState } from "react";
 import {
   CourseColorAndText,
   CourseForInstructorProps,
-  CourseStatus,
-} from "../../types/TypesForUs";
+} from "../../types/typesForUs";
+
 import Course from "./Course";
 import TagName from "../TagName";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { CourseStatus } from "../../types/typesFromBackEnd";
 
 const statusColorAndText = {
-  rejected: { color: "bg-red-500", text: "Rejected" },
-  verified: { color: "bg-green-600", text: " student enrolled" },
-  waiting: { color: "bg-yellow-500", text: "Waiting list" },
+  REJECTED: { color: "bg-red-500", text: "Rejected" },
+  VERIFIED: { color: "bg-green-600", text: " student enrolled" },
+  VERIFYING: { color: "bg-yellow-500", text: "Waiting list" },
 } as Record<CourseStatus, CourseColorAndText>;
 
 const CourseForInstructor = ({
-  name,
+  title,
   description,
   status,
   peopleEnrolled,
   thumbnail,
 }: CourseForInstructorProps) => {
+  console.log(status);
+  console.log(statusColorAndText[status]);
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
@@ -31,7 +34,7 @@ const CourseForInstructor = ({
   );
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{name}</h2>
+      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
     </>
   );
   return (
@@ -39,7 +42,7 @@ const CourseForInstructor = ({
       centerContent={centerContent}
       thumbnail={thumbnail}
       bottomContent={bottomContent}
-      name={name}
+      title={title}
       description={description}
     />
   );

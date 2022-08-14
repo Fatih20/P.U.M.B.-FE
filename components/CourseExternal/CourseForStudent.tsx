@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Course from "./Course";
 import TagName from "../TagName";
-import { CourseForStudentProps } from "../../types/TypesForUs";
+import { CourseForStudentProps } from "../../types/typesForUs";
 
 const CourseForStudent = ({
-  name,
+  title,
   description,
   instructorName,
   tags,
@@ -23,7 +23,7 @@ const CourseForStudent = ({
 
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{name}</h2>
+      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
       <h3 className="whitespace-normal text-lg font-medium">
         {instructorName}
       </h3>
@@ -34,7 +34,7 @@ const CourseForStudent = ({
       absoluteContent={tagAndContainer}
       centerContent={centerContent}
       thumbnail={thumbnail}
-      name={name}
+      title={title}
       description={description}
     />
   );

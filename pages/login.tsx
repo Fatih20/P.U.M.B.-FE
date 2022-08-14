@@ -2,7 +2,7 @@ import axios from "axios";
 import Router from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import technicalConfig from "../config/technicalConfig";
-import { LoginInputs } from "../types/TypesForUs";
+import { LoginInputs } from "../types/typesForUs";
 import { login } from "../utils/api/auth";
 
 export default function LoginPage() {
@@ -17,6 +17,7 @@ export default function LoginPage() {
     const { result, error } = await login(data);
 
     if (!result) {
+      console.log(error);
       return;
     }
 

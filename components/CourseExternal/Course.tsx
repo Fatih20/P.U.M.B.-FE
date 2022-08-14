@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { CourseProps } from "../../types/TypesForUs";
+import { CourseProps } from "../../types/typesForUs";
 
 const Course = ({
   absoluteContent,
@@ -15,21 +15,18 @@ const Course = ({
   description,
   bottomContent,
   thumbnail,
-  name,
+  title,
   useDropdownDescription = true,
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
-  useEffect(() => {
-    console.log(showDescription);
-  });
 
   return (
-    <div className="relative  bg-gray-600 overflow-hidden rounded-xl w-64 flex flex-col items-start justify-center break-all">
+    <div className="relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all">
       {absoluteContent ?? null}
-      <div className="">
-        <img src={thumbnail} alt={name} />
+      <div className="h-56">
+        <img src={thumbnail} alt={title} className="object-cover" />
       </div>
-      <div className="bg-gray-400 p-4 w-full flex flex-col items-start justify-start">
+      <div className="bg-indigo-400 p-4 w-full flex flex-col items-start justify-start">
         {centerContent}
         <p
           className={`block max-w-full ${

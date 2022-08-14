@@ -13,12 +13,12 @@ import {
   CourseAction,
   CourseForAdminProps,
   possibleCourseAction,
-} from "../../types/TypesForUs";
+} from "../../types/typesForUs";
 import ApprovalButton from "../ApprovalButtons";
 import ApprovalButtons from "../ApprovalButtons";
 
 const CourseForAdmin = ({
-  name,
+  title,
   instructor,
   description,
   selected,
@@ -43,7 +43,7 @@ const CourseForAdmin = ({
 
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{name}</h2>
+      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
       <h3 className="whitespace-normal text-lg font-medium">{instructor}</h3>
     </>
   );
@@ -53,7 +53,7 @@ const CourseForAdmin = ({
       thumbnail={thumbnail}
       absoluteContent={absoluteContent}
       centerContent={centerContent}
-      name={name}
+      title={title}
       description={description}
     ></Course>
   );

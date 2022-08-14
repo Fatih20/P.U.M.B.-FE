@@ -4,8 +4,9 @@ import Router from "next/router";
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton";
 import ErrorMessage from "../components/errorMessage";
-import { RegisterInputs } from "../types/TypesForUs";
+import { RegisterInputs } from "../types/typesForUs";
 import { signup } from "../utils/api/auth";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const {
@@ -157,7 +158,7 @@ export default function RegisterPage() {
               <p>
                 Already have an account?{" "}
                 <a
-                  href="/login"
+                  onClick={() => Router.push("/login")}
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {" "}
