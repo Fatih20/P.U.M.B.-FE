@@ -5,6 +5,7 @@ import {
   SeenCourse,
 } from "../../types/typesForUs";
 import { Course, CourseStatusInCourse } from "../../types/typesFromBackEnd";
+import ChangeSeenButton from "../ChangeSeenButton";
 import CourseForInstructor from "../CourseExternal/CourseForInstructor";
 import CoursesContainer from "./Courses";
 
@@ -51,28 +52,25 @@ const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
     [seenType, listOfCourse]
   );
 
-  function ChangeSeenButton({ selectedSeen }: { selectedSeen: SeenCourse }) {
+  function createChangeSeenButton(selectedSeen: SeenCourse) {
     const buttonText = `${selectedSeen[0].toUpperCase()}${selectedSeen
       .toLowerCase()
       .substring(1, selectedSeen.length)}`;
-    const selected = selectedSeen === seenType;
     return (
-      <button
-        className={`p-1 ${
-          selected ? "bg-gray-400 text-white" : "bg-transparent"
-        } rounded-md `}
-        onClick={() => setSeenType(selectedSeen)}
-      >
-        {buttonText}
-      </button>
+      <ChangeSeenButton
+        key={selectedSeen}
+        buttonText={buttonText}
+        selected={selectedSeen === seenType}
+        runOnClick={() => setSeenType(selectedSeen)}
+      />
     );
   }
   return (
     <div className="flex flex-col items-center py-4 min-h-full">
       <div className="max-w-md flex items-center justify-center gap-2 min-h-full">
-        {possibleSeenCourse.map((seenCourse) => (
-          <ChangeSeenButton key={seenCourse} selectedSeen={seenCourse} />
-        ))}
+        {possibleSeenCourse.map((selectedSeen) =>
+          createChangeSeenButton(selectedSeen)
+        )}
       </div>
       {seenCourses.length === 0 ? (
         <div className="w-full h-full flex flex-col items-center justify-center">

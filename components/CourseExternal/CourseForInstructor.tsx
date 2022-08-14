@@ -24,8 +24,8 @@ const CourseForInstructor = ({
   thumbnail,
   id,
 }: CourseForInstructorProps) => {
-  console.log(status);
-  console.log(statusColorAndText[status]);
+  // console.log(status);
+  // console.log(statusColorAndText[status]);
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
