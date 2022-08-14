@@ -6,7 +6,13 @@ import { QueryClientProvider, QueryClient, Hydrate } from "react-query";
 axios.defaults.baseURL = process.env.beBaseUrl;
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 2,
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
