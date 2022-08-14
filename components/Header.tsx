@@ -11,11 +11,11 @@ import { logout } from "../utils/api/auth";
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync: handleLogout } = useMutation(logout, {
-    onSuccess: () => {
-      queryClient.invalidateQueries("me");
-    },
-  });
+  // const { mutateAsync: handleLogout } = useMutation(logout, {
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries("me");
+  //   },
+  // });
 
   return (
     <div
@@ -29,9 +29,11 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
       >
         <FontAwesomeIcon icon={faChevronLeft} />
       </button>
-      <h1 className="font-semibold">App Name</h1>
+      <h1 className='font-semibold'>App Name</h1>
       <button
-        onClick={async () => await handleLogout()}
+        onClick={async () =>
+          await logout(() => queryClient.invalidateQueries("me"))
+        }
         className={`${showLogoutButton ? "" : "invisible"}`}
       >
         <FontAwesomeIcon icon={faRightFromBracket} />
