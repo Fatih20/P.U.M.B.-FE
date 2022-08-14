@@ -82,6 +82,7 @@ export type CourseForStudentProps = UniqueObject & {
 
   export type HeaderProps = {
     showBackButton: Boolean;
+    showLogoutButton : Boolean
   };
 
   export type InstructorApplicationProps = UniqueObject & ApprovalButtonFunction & {

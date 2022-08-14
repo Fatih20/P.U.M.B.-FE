@@ -7,9 +7,15 @@ export async function login(data:LoginInputs) {
     return errorWrappedResult;
 }
 
+
 export async function signup(data:RegisterInputs) {
     const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/signup", { ...data, confirmPassword : undefined })))
     
+    return errorWrappedResult;
+}
+
+export async function logout() {
+    const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/login",)))
     return errorWrappedResult;
 }
 
