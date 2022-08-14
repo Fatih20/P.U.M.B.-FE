@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton";
 import ErrorMessage from "../components/errorMessage";
@@ -21,6 +21,7 @@ export default function RegisterPage() {
   const manageRole = (role: string) => {
     setRole(role);
   };
+  const router = useRouter();
 
   // Error Visibility State
   const [showError, setShowError] = useState(false);
@@ -40,7 +41,7 @@ export default function RegisterPage() {
       console.log(error);
       return;
     }
-    Router.push("/login");
+    router.push("/login");
   };
   return (
     <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -158,7 +159,7 @@ export default function RegisterPage() {
               <p>
                 Already have an account?{" "}
                 <a
-                  onClick={() => Router.push("/login")}
+                  onClick={() => router.push("/login")}
                   className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {" "}

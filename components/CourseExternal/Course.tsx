@@ -1,7 +1,7 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import React, {
   ReactComponentElement,
   ReactElement,
@@ -21,10 +21,11 @@ const Course = ({
   useDropdownDescription = true,
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
+  const router = useRouter();
 
   return (
     <div
-      onClick={() => Router.push(`${Router.asPath}/${id}`)}
+      onClick={() => router.push(`${router.asPath}/${id}`)}
       className="relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all"
     >
       {absoluteContent ?? null}

@@ -1,4 +1,3 @@
-import  Router  from "next/router";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { UseMeDataStatus } from "../types/typesForUs";

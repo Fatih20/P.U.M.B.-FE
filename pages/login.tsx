@@ -1,11 +1,12 @@
 import axios from "axios";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import technicalConfig from "../config/technicalConfig";
 import { LoginInputs } from "../types/typesForUs";
 import { login } from "../utils/api/auth";
 
 export default function LoginPage() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,7 +28,7 @@ export default function LoginPage() {
       JSON.stringify(accessToken)
     );
 
-    Router.push("/courses");
+    router.push("/courses");
   };
 
   return (

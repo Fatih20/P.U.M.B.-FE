@@ -1,4 +1,4 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
 import CourseForInstructor from "../../components/CourseExternal/CourseForInstructor";
@@ -15,6 +15,7 @@ type CoursesPage = {};
 
 const CoursesPage = (props: CoursesPage) => {
   const { user, isLoading: userIsLoading, error: errorGettingMe } = useMe();
+  const router = useRouter();
   const {
     data: courseData,
     error: courseError,
@@ -28,7 +29,7 @@ const CoursesPage = (props: CoursesPage) => {
       if (statusCode >= 500) {
         return <div>Error getting data, please try again.</div>;
       } else if (statusCode >= 400) {
-        Router.push("/login");
+        router.push("/login");
       }
     } catch (error) {}
   }

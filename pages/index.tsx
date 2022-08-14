@@ -9,18 +9,19 @@ import TagName from "../components/TagName";
 import InstructorApplication from "../components/InstructorApplication";
 import BaseLayout from "../layout/BaseLayout";
 
-import Router from "next/router";
+import { useRouter } from "next/router";
 
 import { useQuery } from "react-query";
 import { getMe } from "../utils/api/auth";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { data, isLoading, isFetching } = useQuery("me", getMe, {
     onSuccess: () => {
-      Router.push("/courses");
+      router.push("/courses");
     },
     onError: () => {
-      Router.push("/login");
+      router.push("/login");
     },
   });
 
