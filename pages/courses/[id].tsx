@@ -1,62 +1,78 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { getLecture } from "../../utils/api/courses";
+import { getCourse, getLectures, getQuizzes } from "../../utils/api/courses";
+import technicalConfig from "../../config/technicalConfig";
+import queryFetchingConfig from "../../config/queryFetchingConfig";
 
 type Props = {};
 
 function idValid(id: string | string[] | undefined) {
   if (!id) {
-    return false;
-  }
-  if (Array.isArray(id)) {
-    return false;
+    return "1";
   }
 
-  try {
-    const validId = parseInt(id);
-    return true;
-  } catch {
-    return false;
+  if (Array.isArray(id)) {
+    return id[0];
   }
+
+  return id;
 }
 
 const CourseIndividual = (props: Props) => {
   const router = useRouter();
   const { id } = router.query;
-  const processedID = Array.isArray(id ?? "1") ? (id ?? "1")[0] : id;
-  // const {
-  //   data: courseData,
-  //   isLoading : i,
-  //   isError,
-  // } = useQuery(`courses/${id}`, getCourse);
+  const {
+    data: courseData,
+    isLoading: isCourseLoading,
+    isError: isCourseError,
+  } = useQuery(
+    `courses/${id}`,
+    async () => await getCourse(idValid(id)),
+    queryFetchingConfig
+  );
 
-  // const { data: lectureData, isLoading } = useQuery(
-  //   `course/${id}/lecture`,
-  //   async () => getLecture(id)
-  // );
+  const {
+    data: lectureData,
+    isLoading: isLectureLoading,
+    isError: isLectureError,
+  } = useQuery(
+    `course/${id}/lecture`,
+    async () => getLectures(idValid(id)),
+    queryFetchingConfig
+  );
 
-//   if (!isLoading) {
-//     console.log(lectureData);
-//   }
-//   return <div>CourseIndividual</div>;
-// };
+  const {
+    data: quizData,
+    isLoading: isQuizLoading,
+    isError: isQuizError,
+  } = useQuery(
+    `course/${id}/quiz`,
+    async () => getQuizzes(idValid(id)),
+    queryFetchingConfig
+  );
 
-// export async function getServerSideProps(context) {
-//     const res = await ;
-//     switch (res.url) {
-//         case 'checkout': {
-//             return {
-//                 props: {
-//                     //my other props
-//                 },
-//             };
-//         }
-//         default:
-//             return {
-//                 notFound: true
-//             };
-//     }
-// }
+  //   if (!isLoading) {
+  //     console.log(lectureData);
+  //   }
+  //   return <div>CourseIndividual</div>;
+  // };
+
+  // export async function getServerSideProps(context) {
+  //     const res = await ;
+  //     switch (res.url) {
+  //         case 'checkout': {
+  //             return {
+  //                 props: {
+  //                     //my other props
+  //                 },
+  //             };
+  //         }
+  //         default:
+  //             return {
+  //                 notFound: true
+  //             };
+  //     }
+};
 
 export default CourseIndividual;

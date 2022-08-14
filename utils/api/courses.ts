@@ -7,7 +7,17 @@ export async function getCourses() {
     return result.data as Course[];
 }
 
-export async function getLecture(id:string) {
+export async function getCourse(id : string) {
+    const result =  await axios.get(`/courses/${id}` ,bearerHeader())
+    return result.data as Course;
+}
+
+export async function getLectures(id : string) {
     const result =  await axios.get(`/courses/${id}/lectures` ,bearerHeader())
     return result.data as Lecture[];
+}
+
+export async function getQuizzes(id : string) {
+    const result =  await axios.get(`/courses/${id}/quiz` ,bearerHeader())
+    return result.data as Quiz[];
 }

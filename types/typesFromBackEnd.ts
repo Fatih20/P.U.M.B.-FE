@@ -48,3 +48,5 @@ export type Lecture = UniqueObject & {
   title : string,
   course_id : string
 }
+
+export type Quiz = Lecture
