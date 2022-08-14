@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Course, Lecture } from "../../types/typesFromBackEnd";
+import { Course, Lecture, Quiz } from "../../types/typesFromBackEnd";
 import { bearerHeader, errorWrapper } from "./api"
 
 export async function getCourses() {
