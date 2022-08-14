@@ -20,7 +20,7 @@ const CoursesPage = (props: CoursesPage) => {
     data: courseData,
     error: courseError,
     isError: courseIsError,
-    isLoading: courseLoading,
+    isLoading: courseIsLoading,
   } = useQuery("courses", getCourses);
 
   if (courseIsError) {
@@ -34,7 +34,7 @@ const CoursesPage = (props: CoursesPage) => {
     } catch (error) {}
   }
 
-  if (courseLoading || !courseData) {
+  if (courseIsLoading || !courseData || userIsLoading) {
     return (
       <BaseLayout showBackButton={false}>
         <div>
