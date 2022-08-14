@@ -9,6 +9,7 @@ const CourseForStudent = ({
   instructorName,
   tags,
   thumbnail,
+  id,
 }: CourseForStudentProps) => {
   const tagAndContainer = (
     <div className="absolute p-3 flex w-full top-0 bottom-0 left-0 right-0 items-start justify-end pointer-events-none">
@@ -31,6 +32,7 @@ const CourseForStudent = ({
   );
   return (
     <Course
+      id={id}
       absoluteContent={tagAndContainer}
       centerContent={centerContent}
       thumbnail={thumbnail}

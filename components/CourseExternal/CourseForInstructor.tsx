@@ -22,6 +22,7 @@ const CourseForInstructor = ({
   status,
   peopleEnrolled,
   thumbnail,
+  id,
 }: CourseForInstructorProps) => {
   console.log(status);
   console.log(statusColorAndText[status]);
@@ -39,6 +40,7 @@ const CourseForInstructor = ({
   );
   return (
     <Course
+      id={id}
       centerContent={centerContent}
       thumbnail={thumbnail}
       bottomContent={bottomContent}

@@ -28,6 +28,7 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
+    id : number
     title : string;
     thumbnail: string;
     description: string;
