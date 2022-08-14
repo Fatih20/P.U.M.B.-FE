@@ -1,4 +1,4 @@
-import { Category, Course, CourseStatus, UniqueObject } from "./typesFromBackEnd";
+import { Category, Course, CourseStatus, possibleCourseStatus, UniqueObject } from "./typesFromBackEnd";
 
 export const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
@@ -122,5 +122,5 @@ export type CoursesProps = {
     listOfCourse : Course[]  
 };
 
-export const possibleSeenCourse = [...possibleCourseAction, "ALL"] as const;
+export const possibleSeenCourse = [...possibleCourseStatus, "ALL"] as const;
 export type SeenCourse = typeof possibleSeenCourse[number];
