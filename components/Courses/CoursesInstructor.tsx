@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useMemo, useState } from "react";
 import {
   CoursesProps,
@@ -66,14 +68,19 @@ const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
     );
   }
   return (
-    <div className="flex flex-col items-center py-4 min-h-full">
-      <div className="max-w-md flex items-center justify-center gap-2 min-h-full">
+    <div className='flex flex-col items-center py-4 flex-grow relative'>
+      <div className='box-border absolute top-0 bottom-0 left-0 right-0 p-4 min-h-full flex items-end justify-end z-10'>
+        <button className='text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600'>
+          <FontAwesomeIcon icon={faPlus} />
+        </button>
+      </div>
+      <div className='max-w-md flex items-center justify-center gap-2 min-h-full'>
         {possibleSeenCourse.map((selectedSeen) =>
           createChangeSeenButton(selectedSeen)
         )}
       </div>
       {seenCourses.length === 0 ? (
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className='w-full h-full flex flex-col items-center justify-center'>
           <h2>No course found</h2>
         </div>
       ) : (
