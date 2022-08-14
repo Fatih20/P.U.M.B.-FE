@@ -1,4 +1,5 @@
 import axios from "axios";
+import technicalConfig from "../../config/technicalConfig";
 import { LoginInputs, RegisterInputs } from "../../types/typesForUs";
 import { bearerHeader, errorWrapper } from "./api";
 
@@ -14,9 +15,11 @@ export async function signup(data:RegisterInputs) {
     return errorWrappedResult;
 }
 
-export async function logout() {
-    const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/login",)))
-    return errorWrappedResult;
+export async function logout(invalidateFunction : () => void) {
+    // const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/login",)))
+    // return errorWrappedResult;
+    localStorage.removeItem(technicalConfig.accessTokenKey);
+    invalidateFunction();
 }
 
 export async function getMe() {

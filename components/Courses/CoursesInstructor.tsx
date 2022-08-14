@@ -10,6 +10,7 @@ import { Course, CourseStatusInCourse } from "../../types/typesFromBackEnd";
 import ChangeSeenButton from "../ChangeSeenButton";
 import CourseForInstructor from "../CourseExternal/CourseForInstructor";
 import CoursesContainer from "./Courses";
+import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 
 const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
@@ -74,11 +75,11 @@ const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      <div className='max-w-md flex items-center justify-center gap-2 min-h-full'>
+      <ChangeSeenButtonContainer>
         {possibleSeenCourse.map((selectedSeen) =>
           createChangeSeenButton(selectedSeen)
         )}
-      </div>
+      </ChangeSeenButtonContainer>
       {seenCourses.length === 0 ? (
         <div className='w-full h-full flex flex-col items-center justify-center'>
           <h2>No course found</h2>

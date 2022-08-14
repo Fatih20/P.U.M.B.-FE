@@ -49,4 +49,6 @@ export type Lecture = UniqueObject & {
   course_id : string
 }
 
-export type Quiz = Lecture
+export type Quiz = Lecture;
+
+export type CourseStatusAdminModified = Exclude<CourseStatus, "VERIFYING">

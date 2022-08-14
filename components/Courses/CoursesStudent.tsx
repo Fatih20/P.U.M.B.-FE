@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CoursesProps } from "../../types/typesForUs";
 import ChangeSeenButton from "../ChangeSeenButton";
+import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 import CourseForStudent from "../CourseExternal/CourseForStudent";
 import CoursesContainer from "./Courses";
 
@@ -9,7 +10,7 @@ const CoursesStudent = ({ listOfCourse }: CoursesProps) => {
   console.log(listOfCourse);
   return (
     <div className='flex flex-col items-center py-4 min-h-full'>
-      <div className='max-w-md flex items-center justify-center gap-2 min-h-full'>
+      <ChangeSeenButtonContainer>
         <ChangeSeenButton
           buttonText='All Courses'
           runOnClick={() => {
@@ -24,7 +25,7 @@ const CoursesStudent = ({ listOfCourse }: CoursesProps) => {
           }}
           selected={!seeAll}
         />
-      </div>
+      </ChangeSeenButtonContainer>
       <CoursesContainer>
         {listOfCourse.map(
           ({ id, categories, description, title, teacher, thumbnail_url }) => (
