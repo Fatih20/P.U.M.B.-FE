@@ -19,9 +19,7 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
 
   return (
     <div
-      className={`w-full flex items-center ${
-        showBackButton ? `justify-between` : `justify-center`
-      } flex-row bg-indigo-600 fixed z-10 h-10 text-white`}
+      className={`w-full flex items-center justify-between flex-row bg-indigo-600 fixed z-10 h-10 text-white px-3`}
     >
       <button
         className={`${showBackButton ? "" : "invisible"}`}
