@@ -1,5 +1,5 @@
 import React from "react";
-import { InstructorApplicationProps } from "../types/TypesForUs";
+import { InstructorApplicationProps } from "../types/typesForUs";
 import ApprovalButtons from "./ApprovalButtons";
 
 const InstructorApplication = ({

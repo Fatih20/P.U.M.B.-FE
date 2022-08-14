@@ -1,5 +1,5 @@
 export type UserRole = "STUDENT" | "TEACHER" | "ADMIN";
-const possibleCourseStatus = ["REJECTED" , "VERIFYING" , "VERIFIED"] as const;
+export const possibleCourseStatus = ["REJECTED" , "VERIFYING" , "VERIFIED"] as const;
 export type CourseStatus = typeof possibleCourseStatus[number];
 
 export interface UniqueObject  {

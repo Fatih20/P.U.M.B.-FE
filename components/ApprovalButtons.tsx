@@ -6,7 +6,7 @@ import {
   ApprovalButtonsProps,
   CourseAction,
   possibleCourseAction,
-} from "../types/TypesForUs";
+} from "../types/typesForUs";
 
 const ApprovalButtons = ({
   runOnSelect,

@@ -122,4 +122,5 @@ export type CoursesProps = {
     listOfCourse : Course[]  
 };
 
-export type SeenCourse = CourseStatus | "ALL";
+export const possibleSeenCourse = [...possibleCourseAction, "ALL"] as const;
+export type SeenCourse = typeof possibleSeenCourse[number];
