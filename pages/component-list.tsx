@@ -1,4 +1,5 @@
 import YoutubeEmbed from "../components/Lecture/YoutubeEmbed"
+import { Document } from 'react-pdf'
 
 export default function componentListPage() {
     return (
@@ -9,4 +10,3 @@ export default function componentListPage() {
         </div>
     )
 }
-
