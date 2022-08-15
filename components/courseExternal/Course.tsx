@@ -26,13 +26,13 @@ const Course = ({
   return (
     <div
       onClick={() => router.push(`${router.asPath}/${id}`)}
-      className="relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all"
+      className='relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all'
     >
       {absoluteContent ?? null}
-      <div className="h-56">
-        <img src={thumbnail} alt={title} className="object-cover" />
+      <div className='h-56'>
+        <img src={thumbnail} alt={title} className='object-cover' />
       </div>
-      <div className="bg-indigo-400 p-4 w-full flex flex-col items-start justify-start">
+      <div className='bg-indigo-400 p-4 w-full flex flex-col items-start justify-start'>
         {centerContent}
         <p
           className={`block max-w-full ${
@@ -42,14 +42,16 @@ const Course = ({
           {description}
         </p>
         <div
+          onClick={(e) => e.stopPropagation()}
           className={`${
             useDropdownDescription ? "" : "hidden"
           }flex items-center justify-center w-full`}
         >
           <button
-            onClick={() =>
-              setShowDescription((prevShowDescription) => !prevShowDescription)
-            }
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDescription((prevShowDescription) => !prevShowDescription);
+            }}
           >
             <FontAwesomeIcon
               icon={faChevronDown}

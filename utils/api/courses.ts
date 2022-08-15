@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Course, CourseStatusAdminModified, CourseStatusModifier, Lecture, Quiz, Teacher } from "../../types/typesFromBackEnd";
+import { Course, CourseStatusAdminModified, CourseStatusModifier, Lecture, Quiz, TeacherForAdmin } from "../../types/typesFromBackEnd";
 import { bearerHeader, errorWrapper } from "./api"
 
 export async function getCourses() {
@@ -29,7 +29,7 @@ export async function getCoursesUnverified () {
 
 export async function getTeachersUnverified () {
     const result =  await axios.get(`/admin/teachers/` ,bearerHeader());
-    return result.data as Teacher[];
+    return result.data as TeacherForAdmin[];
 }
 
 export async function modifyCourseStatus (idArray : number[], status : CourseStatusAdminModified) {

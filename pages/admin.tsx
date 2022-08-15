@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
+import AdminPage from "../components/admin/AdminPage";
 import useMe from "../hooks/useMe";
 import BaseLayout from "../layout/BaseLayout";
-import AdminPage from "../components/admin/AdminCourses";
 
 type Props = {};
 

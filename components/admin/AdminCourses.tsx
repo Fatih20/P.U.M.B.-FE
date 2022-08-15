@@ -99,14 +99,16 @@ const AdminCourses = (props: Props) => {
       <CoursesContainer>
         {courseVerifyingData.map(courseMapper)}
       </CoursesContainer>
-      <CollectiveActionButtons
-        runOnApprove={async () =>
-          await modifyCourse({ idArray: selectedCourses, status: "VERIFIED" })
-        }
-        runOnReject={async () =>
-          await modifyCourse({ idArray: selectedCourses, status: "REJECTED" })
-        }
-      />
+      {selectedCourses.length === 0 ? null : (
+        <CollectiveActionButtons
+          runOnApprove={async () =>
+            await modifyCourse({ idArray: selectedCourses, status: "VERIFIED" })
+          }
+          runOnReject={async () =>
+            await modifyCourse({ idArray: selectedCourses, status: "REJECTED" })
+          }
+        />
+      )}
     </>
   );
 };

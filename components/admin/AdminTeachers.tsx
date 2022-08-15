@@ -4,7 +4,7 @@ import queryFetchingConfig from "../../config/queryFetchingConfig";
 import { RejectOrApproveInput } from "../../types/typesForUs";
 import {
   CourseStatusAdminModified,
-  Teacher,
+  TeacherForAdmin,
 } from "../../types/typesFromBackEnd";
 import {
   getTeachersUnverified,
@@ -47,7 +47,7 @@ const AdminTeachers = (props: Props) => {
     }
   );
 
-  function teacherMapper({ user: { email, username }, user_id: id }: Teacher) {
+  function teacherMapper({ username, id, email }: TeacherForAdmin) {
     return (
       <InstructorApplication
         email={email}
@@ -97,14 +97,22 @@ const AdminTeachers = (props: Props) => {
       <CoursesContainer>
         {teacherVerifyingData.map(teacherMapper)}
       </CoursesContainer>
-      <CollectiveActionButtons
-        runOnApprove={async () =>
-          await modifyTeacher({ idArray: selectedTeachers, status: "VERIFIED" })
-        }
-        runOnReject={async () =>
-          await modifyTeacher({ idArray: selectedTeachers, status: "REJECTED" })
-        }
-      />
+      {selectedTeachers.length === 0 ? null : (
+        <CollectiveActionButtons
+          runOnApprove={async () =>
+            await modifyTeacher({
+              idArray: selectedTeachers,
+              status: "VERIFIED",
+            })
+          }
+          runOnReject={async () =>
+            await modifyTeacher({
+              idArray: selectedTeachers,
+              status: "REJECTED",
+            })
+          }
+        />
+      )}
     </>
   );
 };

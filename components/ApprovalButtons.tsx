@@ -45,14 +45,17 @@ const ApprovalButtons = ({
     <div
       className={`flex ${
         vertical ? "flex-col" : ""
-      } items-center justify-center gap-2`}
+      } items-center justify-center gap-2 pointer-events-auto`}
     >
       {possibleCourseAction.map((courseAction: CourseAction) => {
         const { color, content, onClick } = buttonProperty[courseAction];
         return (
           <button
             key={courseAction}
-            onClick={onClick}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
             className={`p-2 w-8 h-8 flex justify-content items-center rounded-lg ${color}`}
           >
             {content}

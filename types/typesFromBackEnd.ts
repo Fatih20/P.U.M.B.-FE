@@ -10,7 +10,7 @@ export interface Category extends UniqueObject{
   name : string
 }
 
-export type Teacher = {
+export type TeacherForStudent = {
   user_id : number,
   course_id : number,
   created_at : string,
@@ -20,13 +20,12 @@ export type Teacher = {
     email : string
   }
 }
-
 export type Course = UniqueObject & {
   title : string,
   description : string,
   course_status : CourseStatusInCourse,
   categories : Category[],
-  teacher : Teacher[],
+  teacher : TeacherForStudent[],
   thumbnail_url : string,
 
 }
@@ -37,13 +36,27 @@ export type User = UniqueObject & {
   role : UserRole,
 }
 
-export type CourseStatusInCourse = UniqueObject & {
+export type TeacherForAdmin = User & {
+  first_name : string,
+  last_name : string,
+  role : "TEACHER",
+
+}
+
+export type ObjectStatus = UniqueObject & {
   id : number,
-  course_id : number,
   status : CourseStatus,
   description : string
 }
 
+
+export type CourseStatusInCourse = ObjectStatus & {
+  course_id : number
+}
+
+export type TeacherStatus = ObjectStatus & {
+  user_id : number
+}
 export type Lecture = UniqueObject & {
   title : string,
   course_id : string
