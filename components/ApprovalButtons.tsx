@@ -12,17 +12,17 @@ const ApprovalButtons = ({
   runOnSelect,
   runOnReject,
   runOnApprove,
-  runOnDeselect,
   selected,
   vertical,
 }: ApprovalButtonsProps) => {
-  function onSelectClick() {
-    if (selected) {
-      runOnSelect();
-    } else {
-      runOnDeselect();
-    }
-  }
+  // function onSelectClick() {
+  //   if (selected) {
+  //     console.log("Bruh");
+  //     runOnSelect();
+  //   } else {
+  //     runOnDeselect();
+  //   }
+  // }
 
   const buttonProperty = {
     approve: {
@@ -37,10 +37,17 @@ const ApprovalButtons = ({
     },
     select: {
       color: "bg-gray-400",
-      onClick: onSelectClick,
+      onClick: () => {
+        runOnSelect(selected);
+      },
       content: selected ? <FontAwesomeIcon icon={faSquare} /> : null,
     },
   } as Record<CourseAction, ApprovalButtonProperty>;
+
+  if (selected) {
+    console.log("Bruh3");
+  }
+
   return (
     <div
       className={`flex ${
@@ -53,8 +60,9 @@ const ApprovalButtons = ({
           <button
             key={courseAction}
             onClick={(e) => {
-              e.stopPropagation();
+              console.log(onClick);
               onClick();
+              e.stopPropagation();
             }}
             className={`p-2 w-8 h-8 flex justify-content items-center rounded-lg ${color}`}
           >

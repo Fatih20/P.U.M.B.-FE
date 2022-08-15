@@ -32,7 +32,7 @@ export type CourseProps = {
     title : string;
     thumbnail: string;
     description: string;
-    useDropdownDescription?: Boolean;
+    useDropdownDescription?: boolean;
     absoluteContent?: JSX.Element;
     centerContent: JSX.Element;
     bottomContent?: JSX.Element;
@@ -42,8 +42,8 @@ export type CourseProps = {
   export interface ApprovalButtonFunction {
     runOnReject: () => void;
     runOnApprove: () => void;
-    runOnSelect: () => void;
-    runOnDeselect: () => void;
+    runOnSelect: (selected : boolean) => void;
+    // runOnDeselect: () => void;
   }
 
 export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
@@ -53,7 +53,7 @@ export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
     // Link to the image, not an actual image
     thumbnail: string;
     // The logic for saving what course is selected is left to its parent. It is assumed that the parent will have a state containing an array and the selected props will be given by using array .includes
-    selected: Boolean;
+    selected: boolean;
   };
 
 export type CourseForInstructorProps = UniqueObject & {
@@ -76,13 +76,13 @@ export type CourseForStudentProps = UniqueObject & {
   };
   
   export interface ApprovalButtonsProps extends ApprovalButtonFunction  {
-    selected: Boolean;
-    vertical: Boolean;
+    selected: boolean;
+    vertical: boolean;
   };
 
   export type HeaderProps = {
-    showBackButton: Boolean;
-    showLogoutButton : Boolean
+    showBackButton: boolean;
+    showLogoutButton : boolean
   };
 
   export type InstructorApplicationProps = UniqueObject & ApprovalButtonFunction & {
@@ -132,8 +132,8 @@ export type QuizOrLecture = typeof possibleQuizOrLecture[number];
 
 export type RejectOrApproveInput = {
   id: number;
-  isCourse: Boolean;
-  reject: Boolean;
+  isCourse: boolean;
+  reject: boolean;
 };
 
 export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">

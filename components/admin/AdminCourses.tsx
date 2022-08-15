@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import queryFetchingConfig from "../../config/queryFetchingConfig";
 import {
@@ -41,6 +41,12 @@ const AdminCourses = (props: Props) => {
     }
   );
 
+  useEffect(() => {
+    console.log(selectedCourses);
+
+    return;
+  }, [selectedCourses]);
+
   function courseMapper({
     description,
     id,
@@ -48,13 +54,26 @@ const AdminCourses = (props: Props) => {
     thumbnail_url,
     title,
   }: Course) {
+    const selected = selectedCourses.some((selectedID) => selectedID === id);
+    const runOnSelect = (selected: boolean) => {
+      if (selected) {
+        setSelectedCourses((prevSelectedCourses) => [
+          ...prevSelectedCourses,
+          id,
+        ]);
+      } else {
+        setSelectedCourses((prevSelectedCourses) =>
+          prevSelectedCourses.filter((selectedID) => selectedID !== id)
+        );
+      }
+    };
     return (
       <CourseForAdmin
         description={description}
         id={id}
         instructor={teacher[0].user.username}
         title={title}
-        selected={selectedCourses.some((selectedID) => selectedID === id)}
+        selected={selected}
         thumbnail={thumbnail_url}
         key={id}
         runOnApprove={async () =>
@@ -63,17 +82,7 @@ const AdminCourses = (props: Props) => {
         runOnReject={async () =>
           await modifyCourse({ idArray: [id], status: "REJECTED" })
         }
-        runOnSelect={() =>
-          setSelectedCourses((prevSelectedCourses) => [
-            ...prevSelectedCourses,
-            id,
-          ])
-        }
-        runOnDeselect={() =>
-          setSelectedCourses((prevSelectedCourses) =>
-            prevSelectedCourses.filter((selectedID) => selectedID !== id)
-          )
-        }
+        runOnSelect={runOnSelect}
       />
     );
   }
@@ -110,10 +119,16 @@ const AdminCourses = (props: Props) => {
       {selectedCourses.length === 0 ? null : (
         <CollectiveActionButtons
           runOnApprove={async () =>
-            await modifyCourse({ idArray: selectedCourses, status: "VERIFIED" })
+            await modifyCourse({
+              idArray: selectedCourses,
+              status: "VERIFIED",
+            })
           }
           runOnReject={async () =>
-            await modifyCourse({ idArray: selectedCourses, status: "REJECTED" })
+            await modifyCourse({
+              idArray: selectedCourses,
+              status: "REJECTED",
+            })
           }
         />
       )}

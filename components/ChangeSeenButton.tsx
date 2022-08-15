@@ -2,7 +2,7 @@ import React from "react";
 
 type ChangeSeenButtonProps = {
   runOnClick: () => void;
-  selected: Boolean;
+  selected: boolean;
   buttonText: string;
 };
 

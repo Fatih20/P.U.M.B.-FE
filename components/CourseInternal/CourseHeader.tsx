@@ -6,7 +6,7 @@ type CourseHeaderProps = {
   thumbnail: string;
   title: string;
   description: string;
-  enrolled: Boolean;
+  enrolled: boolean;
   runOnEnroll: () => void;
 };
 
@@ -18,7 +18,7 @@ const CourseHeader = ({
   runOnEnroll,
 }: CourseHeaderProps) => {
   return (
-    <div className="flex flex-col items-start justify-center">
+    <div className='flex flex-col items-start justify-center'>
       <img src={thumbnail} alt={title} />
       <h2>{title}</h2>
       <p>{description}</p>

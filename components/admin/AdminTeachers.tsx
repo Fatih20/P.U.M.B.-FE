@@ -48,6 +48,17 @@ const AdminTeachers = (props: Props) => {
   );
 
   function teacherMapper({ username, id, email }: TeacherForAdmin) {
+    const selected = selectedTeachers.some((selectedID) => selectedID === id);
+    const runOnSelect = selected
+      ? () =>
+          setSelectedTeachers((prevSelectedTeachers) => [
+            ...prevSelectedTeachers,
+            id,
+          ])
+      : () =>
+          setSelectedTeachers((prevSelectedTeachers) =>
+            prevSelectedTeachers.filter((selectedID) => selectedID !== id)
+          );
     return (
       <InstructorApplication
         email={email}
@@ -61,17 +72,12 @@ const AdminTeachers = (props: Props) => {
         runOnReject={async () =>
           await modifyTeacher({ idArray: [id], status: "REJECTED" })
         }
-        runOnSelect={() =>
-          setSelectedTeachers((prevSelectedTeachers) => [
-            ...prevSelectedTeachers,
-            id,
-          ])
-        }
-        runOnDeselect={() =>
-          setSelectedTeachers((prevSelectedTeachers) =>
-            prevSelectedTeachers.filter((selectedID) => selectedID !== id)
-          )
-        }
+        runOnSelect={runOnSelect}
+        // runOnDeselect={() =>
+        //   setSelectedTeachers((prevSelectedTeachers) =>
+        //     prevSelectedTeachers.filter((selectedID) => selectedID !== id)
+        //   )
+        // }
       />
     );
   }
