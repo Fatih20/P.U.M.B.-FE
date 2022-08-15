@@ -37,9 +37,7 @@ const ApprovalButtons = ({
     },
     select: {
       color: "bg-gray-400",
-      onClick: () => {
-        runOnSelect(selected);
-      },
+      onClick: runOnSelect,
       content: selected ? <FontAwesomeIcon icon={faSquare} /> : null,
     },
   } as Record<CourseAction, ApprovalButtonProperty>;
@@ -60,7 +58,6 @@ const ApprovalButtons = ({
           <button
             key={courseAction}
             onClick={(e) => {
-              console.log(onClick);
               onClick();
               e.stopPropagation();
             }}

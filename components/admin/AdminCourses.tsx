@@ -54,18 +54,16 @@ const AdminCourses = (props: Props) => {
     thumbnail_url,
     title,
   }: Course) {
-    const selected = selectedCourses.some((selectedID) => selectedID === id);
-    const runOnSelect = (selected: boolean) => {
-      if (selected) {
-        setSelectedCourses((prevSelectedCourses) => [
-          ...prevSelectedCourses,
-          id,
-        ]);
-      } else {
-        setSelectedCourses((prevSelectedCourses) =>
-          prevSelectedCourses.filter((selectedID) => selectedID !== id)
-        );
-      }
+    const selected = selectedCourses.includes(id);
+    const runOnSelect = () => {
+      console.log("Bruh");
+      setSelectedCourses((prevSelectedCourses) => [...prevSelectedCourses, id]);
+    };
+    const runOnDeselect = () => {
+      console.log("Bruh");
+      setSelectedCourses((prevSelectedCourses) =>
+        prevSelectedCourses.filter((selectedID) => selectedID !== id)
+      );
     };
     return (
       <CourseForAdmin
@@ -82,7 +80,7 @@ const AdminCourses = (props: Props) => {
         runOnReject={async () =>
           await modifyCourse({ idArray: [id], status: "REJECTED" })
         }
-        runOnSelect={runOnSelect}
+        runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
   }

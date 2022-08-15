@@ -42,7 +42,7 @@ export type CourseProps = {
   export interface ApprovalButtonFunction {
     runOnReject: () => void;
     runOnApprove: () => void;
-    runOnSelect: (selected : boolean) => void;
+    runOnSelect: () => void;
     // runOnDeselect: () => void;
   }
 
