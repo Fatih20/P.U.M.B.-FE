@@ -11,25 +11,37 @@ import BaseLayout from "../layout/BaseLayout";
 
 import { useRouter } from "next/router";
 
-import { useQuery } from "react-query";
+import { isError, useQuery } from "react-query";
 import { getMe } from "../utils/api/auth";
+import useMe from "../hooks/useMe";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { data, isLoading, isFetching } = useQuery("me", getMe, {
-    onSuccess: () => {
-      router.push("/courses");
-    },
-    onError: () => {
-      router.push("/login");
-    },
-  });
+  const { user, error, isLoading } = useMe();
 
-  if (isLoading || isFetching) {
-    return <h2>Loading...</h2>;
+  if (isLoading) {
+    return (
+      <BaseLayout>
+        <div className='flex flex-grow items-center justify-center'>
+          <h2>Loading...</h2>
+        </div>
+      </BaseLayout>
+    );
   }
 
-  return <h2>Redirecting...</h2>;
+  if (user.role === "ADMIN") {
+    router.push("/admin");
+  } else {
+    router.push("/courses");
+  }
+
+  return (
+    <BaseLayout>
+      <div className='flex flex-grow items-center justify-center'>
+        <h2>Redirecting...</h2>
+      </div>
+    </BaseLayout>
+  );
 };
 
 export default Home;

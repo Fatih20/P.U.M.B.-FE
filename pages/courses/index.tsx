@@ -45,6 +45,10 @@ const CoursesPage = (props: CoursesPage) => {
     );
   }
 
+  if (user.role === "ADMIN") {
+    router.push("/admin");
+  }
+
   const UsedCoursesComponent =
     user.role === "STUDENT" ? CoursesStudent : CoursesInstructor;
 

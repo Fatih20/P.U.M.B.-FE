@@ -3,13 +3,13 @@ import Header from "../components/Header";
 
 type BaseLayoutProps = {
   children: ReactNode;
-  showBackButton: Boolean;
+  showBackButton?: Boolean;
   showLogoutButton?: Boolean;
 };
 
 const BaseLayout = ({
   children,
-  showBackButton,
+  showBackButton = true,
   showLogoutButton = true,
 }: BaseLayoutProps) => {
   return (

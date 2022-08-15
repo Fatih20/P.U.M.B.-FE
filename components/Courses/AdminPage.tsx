@@ -53,7 +53,6 @@ const AdminPage = ({}: AdminPageProps) => {
       : modifyTeacherStatus;
     return await modifierFunction(id, reject ? "REJECTED" : "VERIFIED");
   }
-
   const { mutateAsync: modifyCourse } = useMutation(
     async (details: Omit<RejectOrApproveInput, "isCourse">) => {
       await rejectOrApprove({ ...details, isCourse: true });
