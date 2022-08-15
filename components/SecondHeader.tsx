@@ -19,7 +19,7 @@ const Header = ({ showBackButton }: HeaderProps) => {
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
-        <h1>App Name</h1>
+        <h1 className="font-bold">App Name</h1>
         <button className={`${showBackButton ? "invisible" : "hidden"}`}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>

@@ -117,3 +117,8 @@ export type SearchBarProps = {
     password: string;
     confirmPassword: string;
   };
+
+  export type LectureTitleType = {
+    title: string,
+    course_id: number
+  }
