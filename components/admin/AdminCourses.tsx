@@ -94,6 +94,14 @@ const AdminCourses = (props: Props) => {
     );
   }
 
+  if (courseVerifyingData.length === 0) {
+    return (
+      <div className='flex flex-col flex-grow justify-center items-center'>
+        <h2>No course on the waiting list</h2>
+      </div>
+    );
+  }
+
   return (
     <>
       <CoursesContainer>
