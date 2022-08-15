@@ -9,74 +9,25 @@ import {
   modifyTeacherStatus,
 } from "../../utils/api/courses";
 import ChangeSeenButton from "../ChangeSeenButton";
+import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
+import CourseForAdmin from "../CourseExternal/CourseForAdmin";
+import AdminCourses from "./AdminCourses";
+import AdminTeachers from "./AdminTeachers";
+import CoursesContainer from "./Courses";
 
 type AdminPageProps = {
   //   courses: Course[];
   //   teachers: Teacher[];
 };
 
-type RejectOrApproveInput = {
-  id: number;
-  isCourse: Boolean;
-  reject: Boolean;
-};
-
 const AdminPage = ({}: AdminPageProps) => {
   const [seeCourses, setSeeCourses] = useState(true);
+  const [selectedCourses, setSelectedCourses] = useState([] as number[]);
   const queryClient = useQueryClient();
-  const {
-    data: courseVerifyingData,
-    isLoading: isCourseVerifyingLoading,
-    isError: isCourseVerifyingError,
-  } = useQuery("unverified courses", getCoursesUnverified, queryFetchingConfig);
-  const {
-    data: teacherVerifyingData,
-    isLoading: isteacherVerifyingLoading,
-    isError: isteacherVerifyingError,
-  } = useQuery(
-    "unverified teachers",
-    getTeachersUnverified,
-    queryFetchingConfig
-  );
 
-  async function rejectOrApprove({
-    id,
-    reject,
-    isCourse,
-  }: {
-    id: number;
-    reject: Boolean;
-    isCourse: Boolean;
-  }) {
-    const modifierFunction = isCourse
-      ? modifyCourseStatus
-      : modifyTeacherStatus;
-    return await modifierFunction(id, reject ? "REJECTED" : "VERIFIED");
-  }
-  const { mutateAsync: modifyCourse } = useMutation(
-    async (details: Omit<RejectOrApproveInput, "isCourse">) => {
-      await rejectOrApprove({ ...details, isCourse: true });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("unverified courses");
-      },
-    }
-  );
-
-  const { mutateAsync: modifyTeacher } = useMutation(
-    async (details: Omit<RejectOrApproveInput, "isCourse">) => {
-      await rejectOrApprove({ ...details, isCourse: true });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("unverified teachers");
-      },
-    }
-  );
   return (
-    <div className=''>
-      <div>
+    <div className='flex flex-col items-center py-4 flex-grow relative'>
+      <ChangeSeenButtonContainer>
         <ChangeSeenButton
           runOnClick={() => {
             setSeeCourses(true);
@@ -91,8 +42,8 @@ const AdminPage = ({}: AdminPageProps) => {
           selected={!seeCourses}
           buttonText='Teachers'
         />
-      </div>
-      <div></div>
+      </ChangeSeenButtonContainer>
+      {seeCourses ? <AdminCourses /> : <AdminTeachers />}
     </div>
   );
 };

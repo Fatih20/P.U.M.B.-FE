@@ -129,3 +129,9 @@ export type SeenCourse = typeof possibleSeenCourse[number];
 
 export const possibleQuizOrLecture = ["quiz", "lecture"] as const;
 export type QuizOrLecture = typeof possibleQuizOrLecture[number];
+
+export type RejectOrApproveInput = {
+  id: number;
+  isCourse: Boolean;
+  reject: Boolean;
+};

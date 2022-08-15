@@ -1,5 +1,5 @@
 import axios from "axios"
-import { Course, CourseStatusAdminModified, Lecture, Quiz, Teacher } from "../../types/typesFromBackEnd";
+import { Course, CourseStatusAdminModified, CourseStatusModifier, Lecture, Quiz, Teacher } from "../../types/typesFromBackEnd";
 import { bearerHeader, errorWrapper } from "./api"
 
 export async function getCourses() {
@@ -32,13 +32,14 @@ export async function getTeachersUnverified () {
     return result.data as Teacher[];
 }
 
-export async function modifyCourseStatus (id : number, status : CourseStatusAdminModified) {
-    const result =  await axios.patch(`/admin/courses/${id}` ,bearerHeader());
-    return result;
-    
+export async function modifyCourseStatus (idArray : number[], status : CourseStatusAdminModified) {
+    const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
+    const result =  await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader());
+    return result; 
 }
 
-export async function modifyTeacherStatus (id : number, status : CourseStatusAdminModified) {
-    const result =  await axios.patch(`/admin/teachers/${id}` ,bearerHeader());
-    return result;
+export async function modifyTeacherStatus (idArray : number[], status : CourseStatusAdminModified) {
+    const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
+    const result =  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader());
+    return result; 
 }

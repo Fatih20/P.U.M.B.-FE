@@ -52,3 +52,8 @@ export type Lecture = UniqueObject & {
 export type Quiz = Lecture;
 
 export type CourseStatusAdminModified = Exclude<CourseStatus, "VERIFYING">
+
+export type CourseStatusModifier = {
+  status : CourseStatusAdminModified,
+  description : string
+} & UniqueObject
