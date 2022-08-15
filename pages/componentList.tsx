@@ -1,6 +1,7 @@
 import YoutubeEmbed from "../components/Lecture/youtubeEmbed"
 import ImageLecture from "../components/Lecture/imageLecture"
 import FileDownloadButton from "../components/Lecture/fileDownloadButton"
+import AddDropDownButton from "../components/Lecture/addDropDownButton"
 
 export default function ComponentList() {
 
@@ -19,6 +20,7 @@ export default function ComponentList() {
                     
                     <FileDownloadButton url="https://www.adobe.com/be_en/active-use/pdf/Alice_in_Wonderland.pdf" />
                     
+                    <AddDropDownButton />
 
 
                 </div>
