@@ -16,18 +16,13 @@ const YoutubeEmbed = ({ embedId }: { embedId: string }) => {
     // const embedId = youtube_parser(youtubeUrl)
     return (
         <>
-
-            <div className="max-w-sm rounded overflow-hidden shadow-lg p-3 bg-white">
-                <iframe className="w-full"
-                    src={`https://www.youtube.com/embed/${embedId}`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="Embedded youtube"
-                />
-            </div>
-
-
+            <iframe className="w-full"
+                src={`https://www.youtube.com/embed/${embedId}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Embedded youtube"
+            />
         </>
     )
 }
