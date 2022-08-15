@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
-import CourseForInstructor from "../../components/CourseExternal/CourseForInstructor";
-import CourseForStudent from "../../components/CourseExternal/CourseForStudent";
-import CoursesInstructor from "../../components/Courses/CoursesInstructor";
-import CoursesStudent from "../../components/Courses/CoursesStudent";
+import CourseForInstructor from "../../components/courseExternal/CourseForInstructor";
+import CourseForStudent from "../../components/courseExternal/CourseForStudent";
+import CoursesInstructor from "../../components/courses/CoursesInstructor";
+import CoursesStudent from "../../components/courses/CoursesStudent";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
 import { Course } from "../../types/typesFromBackEnd";

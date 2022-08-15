@@ -11,6 +11,7 @@ import {
 } from "../../utils/api/courses";
 import CourseForAdmin from "../courseExternal/CourseForAdmin";
 import CoursesContainer from "../courses/Courses";
+import CollectiveActionButtons from "./CollectiveActionButtons";
 
 type Props = {};
 
@@ -25,13 +26,13 @@ const AdminCourses = (props: Props) => {
 
   const { mutateAsync: modifyCourse } = useMutation(
     async ({
-      id,
+      idArray,
       status,
     }: {
-      id: number;
+      idArray: number[];
       status: CourseStatusAdminModified;
     }) => {
-      return await modifyCourseStatus([id], status);
+      return await modifyCourseStatus(idArray, status);
     },
     {
       onSuccess: () => {
@@ -57,9 +58,11 @@ const AdminCourses = (props: Props) => {
         thumbnail={thumbnail_url}
         key={id}
         runOnApprove={async () =>
-          await modifyCourse({ id, status: "VERIFIED" })
+          await modifyCourse({ idArray: [id], status: "VERIFIED" })
         }
-        runOnReject={async () => await modifyCourse({ id, status: "REJECTED" })}
+        runOnReject={async () =>
+          await modifyCourse({ idArray: [id], status: "REJECTED" })
+        }
         runOnSelect={() =>
           setSelectedCourses((prevSelectedCourses) => [
             ...prevSelectedCourses,
@@ -91,10 +94,20 @@ const AdminCourses = (props: Props) => {
     );
   }
 
-  console.log(courseVerifyingData);
-
   return (
-    <CoursesContainer>{courseVerifyingData.map(courseMapper)}</CoursesContainer>
+    <>
+      <CoursesContainer>
+        {courseVerifyingData.map(courseMapper)}
+      </CoursesContainer>
+      <CollectiveActionButtons
+        runOnApprove={async () =>
+          await modifyCourse({ idArray: selectedCourses, status: "VERIFIED" })
+        }
+        runOnReject={async () =>
+          await modifyCourse({ idArray: selectedCourses, status: "REJECTED" })
+        }
+      />
+    </>
   );
 };
 

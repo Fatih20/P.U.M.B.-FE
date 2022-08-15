@@ -11,6 +11,7 @@ import {
   modifyTeacherStatus,
 } from "../../utils/api/courses";
 import CoursesContainer from "../courses/Courses";
+import CollectiveActionButtons from "./CollectiveActionButtons";
 import InstructorApplication from "./InstructorApplication";
 
 type Props = {};
@@ -31,13 +32,13 @@ const AdminTeachers = (props: Props) => {
 
   const { mutateAsync: modifyTeacher } = useMutation(
     async ({
-      id,
+      idArray,
       status,
     }: {
-      id: number;
+      idArray: number[];
       status: CourseStatusAdminModified;
     }) => {
-      return await modifyTeacherStatus([id], status);
+      return await modifyTeacherStatus(idArray, status);
     },
     {
       onSuccess: () => {
@@ -55,10 +56,10 @@ const AdminTeachers = (props: Props) => {
         key={id}
         selected={selectedTeachers.some((selectedID) => selectedID === id)}
         runOnApprove={async () =>
-          await modifyTeacher({ id, status: "VERIFIED" })
+          await modifyTeacher({ idArray: [id], status: "VERIFIED" })
         }
         runOnReject={async () =>
-          await modifyTeacher({ id, status: "REJECTED" })
+          await modifyTeacher({ idArray: [id], status: "REJECTED" })
         }
         runOnSelect={() =>
           setSelectedTeachers((prevSelectedTeachers) => [
@@ -92,9 +93,19 @@ const AdminTeachers = (props: Props) => {
   }
 
   return (
-    <CoursesContainer>
-      {teacherVerifyingData.map(teacherMapper)}
-    </CoursesContainer>
+    <>
+      <CoursesContainer>
+        {teacherVerifyingData.map(teacherMapper)}
+      </CoursesContainer>
+      <CollectiveActionButtons
+        runOnApprove={async () =>
+          await modifyTeacher({ idArray: selectedTeachers, status: "VERIFIED" })
+        }
+        runOnReject={async () =>
+          await modifyTeacher({ idArray: selectedTeachers, status: "REJECTED" })
+        }
+      />
+    </>
   );
 };
 

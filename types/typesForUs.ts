@@ -135,3 +135,5 @@ export type RejectOrApproveInput = {
   isCourse: Boolean;
   reject: Boolean;
 };
+
+export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">

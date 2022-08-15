@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
-import CourseForAdmin from "../components/CourseExternal/CourseForAdmin";
-import CourseForStudent from "../components/CourseExternal/CourseForStudent";
-import CourseForInstructor from "../components/CourseExternal/CourseForInstructor";
+import CourseForAdmin from "../components/courseExternal/CourseForAdmin";
+import CourseForStudent from "../components/courseExternal/CourseForStudent";
+import CourseForInstructor from "../components/courseExternal/CourseForInstructor";
 
 import Header from "../components/Header";
 import SearchBar from "../components/SearchBar";
 import TagName from "../components/TagName";
-import InstructorApplication from "../components/InstructorApplication";
+import InstructorApplication from "../components/admin/InstructorApplication";
 import BaseLayout from "../layout/BaseLayout";
 
 import { useRouter } from "next/router";
