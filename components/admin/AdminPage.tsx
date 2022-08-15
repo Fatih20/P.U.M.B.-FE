@@ -10,10 +10,10 @@ import {
 } from "../../utils/api/courses";
 import ChangeSeenButton from "../ChangeSeenButton";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import CourseForAdmin from "../CourseExternal/CourseForAdmin";
+import CourseForAdmin from "../courseExternal/CourseForAdmin";
 import AdminCourses from "./AdminCourses";
 import AdminTeachers from "./AdminTeachers";
-import CoursesContainer from "./Courses";
+import CoursesContainer from "../courses/Courses";
 
 type AdminPageProps = {
   //   courses: Course[];

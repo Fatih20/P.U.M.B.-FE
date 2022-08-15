@@ -8,7 +8,7 @@ import {
 } from "../../types/typesForUs";
 import { Course, CourseStatusInCourse } from "../../types/typesFromBackEnd";
 import ChangeSeenButton from "../ChangeSeenButton";
-import CourseForInstructor from "../CourseExternal/CourseForInstructor";
+import CourseForInstructor from "../courseExternal/CourseForInstructor";
 import CoursesContainer from "./Courses";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 

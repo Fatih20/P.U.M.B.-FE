@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CoursesProps } from "../../types/typesForUs";
 import ChangeSeenButton from "../ChangeSeenButton";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import CourseForStudent from "../CourseExternal/CourseForStudent";
+import CourseForStudent from "../courseExternal/CourseForStudent";
 import CoursesContainer from "./Courses";
 
 const CoursesStudent = ({ listOfCourse }: CoursesProps) => {

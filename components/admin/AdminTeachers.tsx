@@ -10,7 +10,7 @@ import {
   getTeachersUnverified,
   modifyTeacherStatus,
 } from "../../utils/api/courses";
-import CoursesContainer from "./Courses";
+import CoursesContainer from "../courses/Courses";
 import InstructorApplication from "./InstructorApplication";
 
 type Props = {};

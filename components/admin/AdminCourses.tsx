@@ -9,8 +9,8 @@ import {
   getCoursesUnverified,
   modifyCourseStatus,
 } from "../../utils/api/courses";
-import CourseForAdmin from "../CourseExternal/CourseForAdmin";
-import CoursesContainer from "./Courses";
+import CourseForAdmin from "../courseExternal/CourseForAdmin";
+import CoursesContainer from "../courses/Courses";
 
 type Props = {};
 
