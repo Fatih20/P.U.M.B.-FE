@@ -8,6 +8,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import useMe from "../../hooks/useMe";
 import { CourseProps } from "../../types/typesForUs";
 
 const Course = ({
@@ -22,10 +23,15 @@ const Course = ({
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
   const router = useRouter();
+  const { user } = useMe();
+  const targetRoute =
+    (user?.role ?? "TEACHER") === "ADMIN"
+      ? `${router.asPath}/courses/${id}`
+      : `${router.asPath}/${id}`;
 
   return (
     <div
-      onClick={() => router.push(`${router.asPath}/${id}`)}
+      onClick={() => router.push(targetRoute)}
       className='relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all'
     >
       {absoluteContent ?? null}
