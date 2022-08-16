@@ -13,7 +13,7 @@ const ChangeSeenButton = ({
 }: ChangeSeenButtonProps) => {
   return (
     <button
-      className={`p-1 ${
+      className={`py-1 px-2 ${
         selected ? "bg-gray-400 text-white" : "bg-transparent"
       } rounded-md `}
       onClick={runOnClick}

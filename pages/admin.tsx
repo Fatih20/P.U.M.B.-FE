@@ -11,7 +11,6 @@ const Admin = (props: Props) => {
   const router = useRouter();
 
   if (userIsLoading) {
-    console.log("Bruh2");
     return (
       <BaseLayout showBackButton={false} showLogoutButton={true}>
         <div className='flex flex-grow justify-center items-center'>

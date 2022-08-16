@@ -18,8 +18,13 @@ export async function getLectures(id : string) {
 }
 
 export async function getQuizzes(id : string) {
-    const result =  await axios.get(`/courses/${id}/quiz` ,bearerHeader())
+    const result =  await axios.get(`/courses/${id}/quizzes` ,bearerHeader())
     return result.data as Quiz[];
+}
+
+export async function subscribeToCourse (id : string) {
+    const result = await axios.post(`/courses/${id}/subscribe`, {}, bearerHeader())
+    return result;
 }
 
 export async function getCoursesUnverified () {

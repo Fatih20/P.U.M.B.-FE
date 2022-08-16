@@ -6,22 +6,27 @@ import { CourseContentElementProps } from "../../types/typesForUs";
 const CourseContentElement = ({
   title,
   type,
+  isTeacher = false,
   runOnDelete,
   runOnEdit,
 }: CourseContentElementProps) => {
   return (
-    <div className="w-full flex gap p-2">
-      <h3 className="block">{title}</h3>
-      <div className="flex flex-grow"></div>
-      <div className="flex flex-row items-center justify-center">
+    <div className='w-full flex gap p-2 bg-indigo-600 text-white rounded-md'>
+      <h3 className='block'>{title}</h3>
+      <div className='flex flex-grow'></div>
+      <div
+        className={`flex flex-row items-center justify-center ${
+          isTeacher ? "" : "hidden"
+        }`}
+      >
         <button
-          className="flex items-center justify-center p-2"
+          className='flex items-center justify-center p-2'
           onClick={runOnEdit}
         >
           <FontAwesomeIcon icon={faPencil} />
         </button>
         <button
-          className="flex items-center justify-center p-2"
+          className='flex items-center justify-center p-2'
           onClick={runOnDelete}
         >
           <FontAwesomeIcon icon={faTrash} />

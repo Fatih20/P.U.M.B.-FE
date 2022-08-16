@@ -4,6 +4,10 @@ import { useQuery } from "react-query";
 import { getCourse, getLectures, getQuizzes } from "../../utils/api/courses";
 import technicalConfig from "../../config/technicalConfig";
 import queryFetchingConfig from "../../config/queryFetchingConfig";
+import useMe from "../../hooks/useMe";
+import BaseLayout from "../../layout/BaseLayout";
+import CourseHeader from "../../components/courseInternal/CourseHeader";
+import CourseContentContainer from "../../components/courseInternal/CourseContentContainer";
 
 type Props = {};
 
@@ -20,59 +24,33 @@ function idValid(id: string | string[] | undefined) {
 }
 
 const CourseIndividual = (props: Props) => {
+  const { user, isLoading } = useMe();
   const router = useRouter();
   const { id } = router.query;
-  const {
-    data: courseData,
-    isLoading: isCourseLoading,
-    isError: isCourseError,
-  } = useQuery(
-    `courses/${id}`,
-    async () => await getCourse(idValid(id)),
-    queryFetchingConfig
+
+  if (isLoading || !user) {
+    return (
+      <BaseLayout>
+        <h2>Loading...</h2>
+      </BaseLayout>
+    );
+  }
+
+  return (
+    <BaseLayout>
+      <div
+        className={
+          "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8"
+        }
+      >
+        <CourseHeader courseID={idValid(id)} />
+        <CourseContentContainer
+          isTeacher={user.role === "TEACHER"}
+          courseID={idValid(id)}
+        />
+      </div>
+    </BaseLayout>
   );
-
-  const {
-    data: lectureData,
-    isLoading: isLectureLoading,
-    isError: isLectureError,
-  } = useQuery(
-    `course/${id}/lecture`,
-    async () => getLectures(idValid(id)),
-    queryFetchingConfig
-  );
-
-  const {
-    data: quizData,
-    isLoading: isQuizLoading,
-    isError: isQuizError,
-  } = useQuery(
-    `course/${id}/quiz`,
-    async () => getQuizzes(idValid(id)),
-    queryFetchingConfig
-  );
-
-  //   if (!isLoading) {
-  //     console.log(lectureData);
-  //   }
-  //   return <div>CourseIndividual</div>;
-  // };
-
-  // export async function getServerSideProps(context) {
-  //     const res = await ;
-  //     switch (res.url) {
-  //         case 'checkout': {
-  //             return {
-  //                 props: {
-  //                     //my other props
-  //                 },
-  //             };
-  //         }
-  //         default:
-  //             return {
-  //                 notFound: true
-  //             };
-  //     }
 };
 
 export default CourseIndividual;

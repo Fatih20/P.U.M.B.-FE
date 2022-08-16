@@ -1,67 +1,61 @@
-import React, { useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 import {
   CourseContentElementProps,
   CourseContentElementType,
 } from "../../types/typesForUs";
+import { Lecture, Quiz } from "../../types/typesFromBackEnd";
 import CourseContentElement from "./CourseContentElement";
 
 type CourseContentProps = {
-  courseContentComponents: CourseContentElementProps[];
-  runOnAddQuiz: () => void;
-  runOnAddLecture: () => void;
+  fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
+  runOnDelete: () => void;
+  runOnEdit: () => void;
+  queryName: string;
+  type: CourseContentElementType;
+  isTeacher?: boolean;
 };
 
 const CourseContent = ({
-  courseContentComponents,
-  runOnAddLecture,
-  runOnAddQuiz,
+  fetcherFunction,
+  runOnDelete,
+  runOnEdit,
+  queryName,
+  type,
+  isTeacher = false,
 }: CourseContentProps) => {
-  const [seenContentType, setSeenContentType] = useState(
-    "quiz" as CourseContentElementType
-  );
+  const { data, isLoading } = useQuery(queryName, fetcherFunction);
 
-  function handleAddingContentType() {
-    if (seenContentType === "lecture") {
-      runOnAddLecture();
-    } else {
-      runOnAddQuiz();
-    }
+  if (isLoading || !data) {
+    return (
+      <div className='flex flex-col flex-grow w-full justify-start items-center'>
+        <h2>Loading...</h2>
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className='flex flex-col flex-grow w-full justify-center items-center'>
+        <h2>No {type} for this course</h2>
+      </div>
+    );
   }
 
   return (
-    <div className="flex w-full gap-4 items-center flex-col">
-      <div className="flex gap-4">
-        <button
-          onClick={() => {
-            setSeenContentType("lecture");
-          }}
-        >
-          Lectures
-        </button>
-        <button
-          onClick={() => {
-            setSeenContentType("quiz");
-          }}
-        >
-          Quiz
-        </button>
-      </div>
-      <button onClick={handleAddingContentType}>Add {seenContentType}</button>
-      <div className="flex flex-col w-full ">
-        {courseContentComponents.map(
-          ({ title, type, runOnDelete, runOnEdit }) => {
-            return (
-              <CourseContentElement
-                key={title}
-                title={title}
-                runOnDelete={runOnDelete}
-                runOnEdit={runOnEdit}
-                type={type}
-              />
-            );
-          }
-        )}
-      </div>
+    <div className='flex flex-col flex-grow w-full justify-start items-center'>
+      {data.map(({ title, course_id, id }) => {
+        return (
+          <CourseContentElement
+            key={id}
+            title={title}
+            type={type}
+            runOnDelete={runOnDelete}
+            runOnEdit={runOnEdit}
+            isTeacher={isTeacher}
+          />
+        );
+      })}
     </div>
   );
 };
