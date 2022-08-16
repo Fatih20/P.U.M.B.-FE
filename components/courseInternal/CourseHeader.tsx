@@ -30,7 +30,7 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
     );
   }
   return (
-    <div className='flex flex-col items-center justify-start gap-3'>
+    <div className='flex flex-col items-start justify-center gap-3'>
       <img src={data.thumbnail_url} alt={data.title} />
       <div className='flex flex-col items-start justify-start'>
         <h2 className='text-3xl font-bold'>{data.title}</h2>
