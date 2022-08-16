@@ -118,7 +118,12 @@ export type SearchBarProps = {
     confirmPassword: string;
   };
 
-  export type LectureTitleType = {
+  export type LectureTitlePost = {
     title: string,
     course_id: number
   }
+
+  export type LectureTitlePatch = {
+    title: string
+  }
+  

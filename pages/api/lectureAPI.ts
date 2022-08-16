@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "../../utils/api/api";
 import { getAccessToken } from "../../utils/utils";
-import { LectureTitleType } from "../../types/TypesForUs";
+import { LectureTitlePost, LectureTitlePatch } from "../../types/TypesForUs";
 
 const config = () => {
   return {
@@ -13,12 +13,25 @@ export const configExternal = () => {
   return config()
 }
 
-export async function postLectureTitle(data:LectureTitleType) {
-
-  console.log(data);
+export async function postLectureTitle(data:LectureTitlePost) {
 
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
     '/lectures',
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
+export async function patchLectureTitle(id:any,data:LectureTitlePatch) {
+
+  console.log(id);
+  console.log(data);
+  
+
+  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+    `/lectures/${id}`,
     data,
     config()
   ).then().catch(console.log));

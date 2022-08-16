@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { postLectureTitle } from "../../pages/api/lectureAPI"
-import { LectureTitleType } from "../../types/TypesForUs";
+import { patchLectureTitle } from "../../pages/api/lectureAPI"
+import { LectureTitlePatch } from "../../types/TypesForUs";
 import { useRouter } from 'next/router'
 import { getLectureById } from '../../pages/api/lectureAPI'
 
@@ -37,32 +37,22 @@ export default function LectureTitleForm() {
     } = useForm<FormInput>();
 
     const transformToForm = () => {
-        setTitle({ ...title, visibility: !title.visibility })
-        setForm({ ...form, visibility: !form.visibility })
+        setTitle({ ...title, visibility: false })
+        setForm({ ...form, visibility: true })
     }
 
     const handleTitleSubmit: SubmitHandler<FormInput> = (data) => {
 
-        const payload: LectureTitleType = {
-            title: data.titleForm,
-            course_id: 1
+        const payload: LectureTitlePatch = {
+            title: data.titleForm
         }
 
-        // check if lecture data already created
-        if (title.id == null) {
-            // POST new Lecture
-            const resp = postLectureTitle(payload)
-            resp.then((data) => {
-                console.log(data);
-                console.log(data.result.data);
-                setTitle({ ...title, id: data.result.data.id, visibility: true, text: data.result.data.title })
-                setForm({ ...form, visibility: false })
-
-            })
-        } else {
-            // PATCH Lecture with id
-            alert("you need edit instead of create new")
-        }
+        // PATCH Lecture with id
+        patchLectureTitle(lectureId, payload).then((data) => {
+            console.log(data);
+            setTitle({ ...title,text:data.result.data.title, visibility: true, id:data.result.data.id })
+            setForm({ ...form, visibility: false })
+        })
 
     }
 
