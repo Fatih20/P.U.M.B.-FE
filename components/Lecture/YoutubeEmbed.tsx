@@ -16,8 +16,8 @@ const YoutubeEmbed = ({ url }: { url: string }) => {
     const embedId = youtube_parser(url)
     return (
         <>
-            <iframe className="w-full"
-                src={`https://www.youtube.com/embed/${embedId}`}
+            <iframe className="w-full h-44 sm:h-80"
+                src={"https://www.youtube.com/embed/" + embedId}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
