@@ -9,6 +9,10 @@ const config = () => {
   };
 }
 
+export const configExternal = () => {
+  return config()
+}
+
 export async function postLectureTitle(data:LectureTitleType) {
 
   console.log(data);
@@ -27,6 +31,15 @@ export async function getLectures() {
     '/lectures',
     config()
   ).then(console.log).catch(console.log));
+
+  return errorWrappedResult;
+}
+
+export async function getLectureById(lectureId:any) {
+  const errorWrappedResult = await errorWrapper(async () => await axios.get(
+    `/lectures/${lectureId}`,
+    config()
+  ).then().catch(console.log));
 
   return errorWrappedResult;
 }

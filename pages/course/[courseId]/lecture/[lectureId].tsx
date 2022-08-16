@@ -1,17 +1,13 @@
 import SecondBaseLayout from "../../../../layout/SecondBaseLayout"
-import YoutubeEmbed from "../../../../components/Lecture/youtubeEmbed"
-import LectureTitle from "../../../../components/Lecture/lectureTitle"
-import { getLectures, postLectureTitle } from "../../../api/lectureAPI"
+import LectureTitleForm from "../../../../components/Lecture/lectureTitle"
 
-export default function LecturePage() {
-    // getLectures()
-    
+export default function LecturePage() {        
     return (
         <>
             <SecondBaseLayout showBackButton={true}>
                 {/* <h1>Halo, saya uzumaki naruto</h1> */}
                 <div className="space-y-3 w-full ">
-                    <LectureTitle />
+                    <LectureTitleForm  />
                     {/* <YoutubeEmbed embedId="EWfHJI3M0Fs" /> */}
 
                 </div>
@@ -20,4 +16,5 @@ export default function LecturePage() {
         </>
     )
 }
+
 
