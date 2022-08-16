@@ -24,7 +24,7 @@ function idValid(id: string | string[] | undefined) {
 }
 
 const CourseIndividual = (props: Props) => {
-  const { user, isLoading } = useMe();
+  const { user, isLoading, error } = useMe();
   const router = useRouter();
   const { id } = router.query;
 
@@ -34,6 +34,10 @@ const CourseIndividual = (props: Props) => {
         <h2>Loading...</h2>
       </BaseLayout>
     );
+  }
+
+  if (error) {
+    router.push("/login");
   }
 
   return (
