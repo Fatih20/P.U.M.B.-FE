@@ -14,7 +14,7 @@ export default function LecturePage() {
 
     // Initiate State
     const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({ show: false, type: "" })
-    const [lectureItems, setLectureItems] = useState({ items: {}, fetched: false })
+    const [lectureItems, setLectureItems] = useState({ items: [] as object[], fetched: false })
 
     // Show Hide Lecture Item Form
     function handleLectureItemFormTrigger(formType: string) {
