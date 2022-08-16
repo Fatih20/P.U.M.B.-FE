@@ -50,7 +50,7 @@ export default function LectureTitleForm() {
         // PATCH Lecture with id
         patchLectureTitle(lectureId, payload).then((data) => {
             console.log(data);
-            setTitle({ ...title,text:data.result.data.title, visibility: true, id:data.result.data.id })
+            setTitle({ ...title, text: data.result.data.title, visibility: true, id: data.result.data.id })
             setForm({ ...form, visibility: false })
         })
 
@@ -65,7 +65,7 @@ export default function LectureTitleForm() {
 
             {/* Form */}
             {form.visibility &&
-                <form onSubmit={handleSubmit(handleTitleSubmit)}>
+                <form className="rounded shadow-lg bg-white" onSubmit={handleSubmit(handleTitleSubmit)}>
                     <div className="mb-6">
                         <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             {...register("titleForm", { required: true })}

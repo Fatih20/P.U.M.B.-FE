@@ -11,32 +11,22 @@ export default function LecturePage() {
     // Initiate Router
     const router = useRouter()
     const { courseId } = router.query
-    
+
     // Initiate State
     const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({ generate: false, type: "" })
-    const [lectureItems, setLectureItems] = useState({ items:{} , fetched:false})
+    const [lectureItems, setLectureItems] = useState({ items: {}, fetched: false })
 
     // Show Hide Lecture Item Form
     function handleLectureItemFormTrigger(formType: string) {
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, generate: true, type: formType })
     }
 
-
-    
-      
-
     // Fetching data
     useEffect(() => {
         if (courseId && lectureItems.fetched == false) {
             getLectureItems(courseId).then((data) => {
-                console.log(data.result.data);
-
                 let lectureItem = data.result.data
-                setLectureItems({...lectureItems, items:lectureItem, fetched:true})
-                // lectureItem.forEach((element:object) => {
-                //     console.log(element);
-                // });
-
+                setLectureItems({ ...lectureItems, items: lectureItem, fetched: true })
             })
         }
     })
@@ -47,8 +37,12 @@ export default function LecturePage() {
                 <div className="space-y-3 w-full ">
                     <LectureTitleForm />
 
-                    {lectureItemFormTrigger.generate && <LectureItemFormFactory/>}
                     {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} />}
+
+                    <div className="rounded h-fit shadow-lg bg-white">
+                        {lectureItemFormTrigger.generate && <LectureItemFormFactory />}
+                    </div>
+
                     <AddDropDownButton handleTrigger={handleLectureItemFormTrigger} />
                 </div>
 
