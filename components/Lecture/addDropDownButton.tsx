@@ -28,7 +28,7 @@ export default function AddDropDownButton({handleTrigger}:{handleTrigger:any}) {
                                 </a>
                             </li>
                             <li>
-                                <a onClick={() => handleTrigger("youtube")} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                <a onClick={() => handleTrigger("VIDEO")} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Youtube Video Link
                                 </a>
                             </li>

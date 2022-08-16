@@ -27,9 +27,23 @@ export default function LecturePage() {
             getLectureItems(courseId).then((data) => {
                 let lectureItem = data.result.data
                 setLectureItems({ ...lectureItems, items: lectureItem, fetched: true })
+                console.log(lectureItem);
+                console.log(typeof lectureItem);
             })
         }
     })
+
+    function updateLectureItems(data:any) {        
+        let newItem = data.result.data
+        let itemsCopy = lectureItems.items
+
+        itemsCopy.push(newItem)
+        
+        setLectureItems({ ...lectureItems, items: itemsCopy, fetched: true })
+        setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: false, type: "" })
+
+    }
+    
 
     return (
         <>
@@ -40,7 +54,7 @@ export default function LecturePage() {
                     {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} />}
 
                     <div className="rounded h-fit shadow-lg bg-white">
-                        {lectureItemFormTrigger.show && <LectureItemFormFactory />}
+                        {lectureItemFormTrigger.show && <LectureItemFormFactory type={lectureItemFormTrigger.type} callback={updateLectureItems} />}
                     </div>
 
                     <AddDropDownButton handleTrigger={handleLectureItemFormTrigger} />
