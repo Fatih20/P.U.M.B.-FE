@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import {
   CourseContentElementProps,
@@ -21,6 +22,7 @@ const CourseContentContainer = ({
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );
+  const router = useRouter();
 
   // function handleAddingContentType() {
   //   if (seenContentType === "lecture") {
@@ -59,6 +61,9 @@ const CourseContentContainer = ({
       {seenContentType === "lecture" ? (
         <CourseContent
           fetcherFunction={async () => await getLectures(courseID)}
+          runOnClick={(elementID: string) => {
+            router.push(`${router.asPath}/${seenContentType}/${elementID}`);
+          }}
           queryName={seenContentType}
           type={seenContentType}
           runOnDelete={() => {
@@ -73,6 +78,9 @@ const CourseContentContainer = ({
           fetcherFunction={async () => await getQuizzes(courseID)}
           queryName={seenContentType}
           type={seenContentType}
+          runOnClick={(elementID: string) => {
+            router.push(`${router.asPath}/${seenContentType}/${elementID}`);
+          }}
           runOnDelete={() => {
             return;
           }}

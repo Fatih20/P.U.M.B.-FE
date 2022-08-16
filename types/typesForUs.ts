@@ -17,6 +17,7 @@ export interface CourseContentElementProps {
     title : string,
     runOnEdit : () => void,
     runOnDelete : () => void,
+    runOnClick : () => void
     isTeacher : boolean
 
 }

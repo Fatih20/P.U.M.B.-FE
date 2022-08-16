@@ -5,13 +5,16 @@ import { CourseContentElementProps } from "../../types/typesForUs";
 
 const CourseContentElement = ({
   title,
-  type,
   isTeacher = false,
   runOnDelete,
   runOnEdit,
+  runOnClick,
 }: CourseContentElementProps) => {
   return (
-    <div className='w-full flex gap p-2 bg-indigo-600 text-white rounded-md'>
+    <div
+      onClick={runOnClick}
+      className='w-full flex gap p-2 bg-indigo-600 text-white rounded-md cursor-pointer'
+    >
       <h3 className='block'>{title}</h3>
       <div className='flex flex-grow'></div>
       <div

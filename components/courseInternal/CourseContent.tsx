@@ -11,6 +11,7 @@ type CourseContentProps = {
   fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
   runOnDelete: () => void;
   runOnEdit: () => void;
+  runOnClick: (id: string) => void;
   queryName: string;
   type: CourseContentElementType;
   isTeacher?: boolean;
@@ -20,6 +21,7 @@ const CourseContent = ({
   fetcherFunction,
   runOnDelete,
   runOnEdit,
+  runOnClick,
   queryName,
   type,
   isTeacher = false,
@@ -52,6 +54,7 @@ const CourseContent = ({
             type={type}
             runOnDelete={runOnDelete}
             runOnEdit={runOnEdit}
+            runOnClick={() => runOnClick(id.toString())}
             isTeacher={isTeacher}
           />
         );
