@@ -28,7 +28,6 @@ export default function LectureItemFormFactory({callback,type}:{callback:any,typ
         }
 
         postLectureItem(lectureId, payload).then((data) => {
-            console.log(data);
             callback(data)
         })
 

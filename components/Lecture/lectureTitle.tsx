@@ -22,7 +22,6 @@ export default function LectureTitleForm() {
     useEffect(() => {
         if (lectureId && title.id == null) {
             getLectureById(lectureId).then((data) => {
-                console.log(data);
                 setTitle({ ...title, id: data.result.data.id, visibility: true, text: data.result.data.title })
             })
         }
@@ -47,7 +46,6 @@ export default function LectureTitleForm() {
 
         // PATCH Lecture with id
         patchLectureTitle(lectureId, payload).then((data) => {
-            console.log(data);
             setTitle({ ...title, text: data.result.data.title, visibility: true, id: data.result.data.id })
             setForm({ ...form, visibility: false })
         })

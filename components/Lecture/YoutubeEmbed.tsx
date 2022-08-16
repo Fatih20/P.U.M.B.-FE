@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 function youtube_parser(url: string): any {
     let videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
     if (videoid != null) {
-        console.log("video id = ", videoid[1]);
+        // console.log("video id = ", videoid[1]);
         return videoid[1]
     } else {
-        console.log("The youtube url is not valid.");
+        // console.log("The youtube url is not valid.");
     }
 }
 // possibly it's best to store embedId in the db, not the url

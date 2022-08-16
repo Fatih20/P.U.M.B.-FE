@@ -27,8 +27,6 @@ export default function LecturePage() {
             getLectureItems(courseId).then((data) => {
                 let lectureItem = data.result.data
                 setLectureItems({ ...lectureItems, items: lectureItem, fetched: true })
-                console.log(lectureItem);
-                console.log(typeof lectureItem);
             })
         }
     })
