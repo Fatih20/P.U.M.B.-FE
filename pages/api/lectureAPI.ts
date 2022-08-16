@@ -13,6 +13,17 @@ export const configExternal = () => {
   return config()
 }
 
+// GET Lecture by ID
+export async function getLectureById(lectureId:any) {
+  const errorWrappedResult = await errorWrapper(async () => await axios.get(
+    `/lectures/${lectureId}`,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
+// --- Lecture Title Start --- 
 export async function postLectureTitle(data:LectureTitlePost) {
 
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
@@ -38,21 +49,15 @@ export async function patchLectureTitle(id:any,data:LectureTitlePatch) {
 
   return errorWrappedResult;
 }
+// --- Lecture Title End --- 
 
-export async function getLectures() {
+// --- Lecture Item Start --- 
+export async function getLectureItems(lectureId:any) {
   const errorWrappedResult = await errorWrapper(async () => await axios.get(
-    '/lectures',
-    config()
-  ).then(console.log).catch(console.log));
-
-  return errorWrappedResult;
-}
-
-export async function getLectureById(lectureId:any) {
-  const errorWrappedResult = await errorWrapper(async () => await axios.get(
-    `/lectures/${lectureId}`,
+    `/lectures/${lectureId}/resources`,
     config()
   ).then().catch(console.log));
 
   return errorWrappedResult;
 }
+

@@ -12,8 +12,8 @@ function youtube_parser(url: string): any {
     }
 }
 // possibly it's best to store embedId in the db, not the url
-const YoutubeEmbed = ({ embedId }: { embedId: string }) => {
-    // const embedId = youtube_parser(youtubeUrl)
+const YoutubeEmbed = ({ url }: { url: string }) => {
+    const embedId = youtube_parser(url)
     return (
         <>
             <iframe className="w-full"
@@ -28,7 +28,7 @@ const YoutubeEmbed = ({ embedId }: { embedId: string }) => {
 }
 
 YoutubeEmbed.propTypes = {
-    embedId: PropTypes.string.isRequired
+    url: PropTypes.string.isRequired
 };
 
 export default YoutubeEmbed;

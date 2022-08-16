@@ -1,5 +1,5 @@
 
-export default function LectureItemFactory() {
+export default function LectureItemFormFactory() {
     
     return (
         <>
