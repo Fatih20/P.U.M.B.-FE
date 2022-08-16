@@ -13,12 +13,12 @@ export default function LecturePage() {
     const { courseId } = router.query
 
     // Initiate State
-    const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({ generate: false, type: "" })
+    const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({ show: false, type: "" })
     const [lectureItems, setLectureItems] = useState({ items: {}, fetched: false })
 
     // Show Hide Lecture Item Form
     function handleLectureItemFormTrigger(formType: string) {
-        setLectureItemFormTrigger({ ...lectureItemFormTrigger, generate: true, type: formType })
+        setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: true, type: formType })
     }
 
     // Fetching data
@@ -40,7 +40,7 @@ export default function LecturePage() {
                     {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} />}
 
                     <div className="rounded h-fit shadow-lg bg-white">
-                        {lectureItemFormTrigger.generate && <LectureItemFormFactory />}
+                        {lectureItemFormTrigger.show && <LectureItemFormFactory />}
                     </div>
 
                     <AddDropDownButton handleTrigger={handleLectureItemFormTrigger} />

@@ -127,3 +127,9 @@ export type SearchBarProps = {
     title: string
   }
   
+  export type ResourcePost = {
+    name: string,
+    type: string,
+    url: string,
+    lecture_id: any
+}

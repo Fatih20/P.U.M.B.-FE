@@ -9,8 +9,6 @@ type FormInput = {
     titleForm: string,
 }
 
-
-
 export default function LectureTitleForm() {
     // Initiate Router
     const router = useRouter()

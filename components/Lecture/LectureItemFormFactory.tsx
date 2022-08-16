@@ -1,12 +1,44 @@
+import { useRouter } from "next/router";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { postLectureItem } from "../../pages/api/lectureAPI"
+import { ResourcePost } from "../../types/TypesForUs";
+
 
 export default function LectureItemFormFactory() {
+
+    // Initiate Router
+    const router = useRouter()
+    const { lectureId } = router.query
     
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<ResourcePost>();
+
+    
+
+    const handleVideoSubmit: SubmitHandler<ResourcePost> = (data) => {
+
+        const payload: ResourcePost = {...data,
+            name:"youtube video",
+            lecture_id:1,
+            type:"VIDEO",
+        }
+
+        // PATCH Lecture with id
+        postLectureItem(lectureId, payload).then((data) => {
+            console.log(data);
+        })
+
+    }
+
     return (
         <>
-            <form>
+            <form onSubmit={handleSubmit(handleVideoSubmit)}>
                 <div className="mb-6">
                     <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        // {...register("titleForm", { required: true })}
+                        {...register("url", { required: true })}
 
                         // defaultValue="Youtube Video URL.."
                         placeholder="Youtube Video URL.." />
