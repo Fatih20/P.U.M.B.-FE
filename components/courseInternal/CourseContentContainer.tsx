@@ -1,14 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import {
-  CourseContentElementProps,
-  CourseContentElementType,
-} from "../../types/typesForUs";
+import { CourseContentElementType } from "../../types/typesForUs";
 import { getLectures, getQuizzes } from "../../utils/api/courses";
 import ChangeSeenButton from "../ChangeSeenButton";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 import CourseContent from "./CourseContent";
-import CourseContentElement from "./CourseContentElement";
 
 type CourseContentProps = {
   courseID: string;
@@ -23,14 +19,6 @@ const CourseContentContainer = ({
     "quiz" as CourseContentElementType
   );
   const router = useRouter();
-
-  // function handleAddingContentType() {
-  //   if (seenContentType === "lecture") {
-  //     runOnAddLecture();
-  //   } else {
-  //     runOnAddQuiz();
-  //   }
-  // }
 
   return (
     <div className='flex w-full gap-4 items-center flex-col flex-grow'>

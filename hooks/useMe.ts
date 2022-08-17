@@ -7,12 +7,11 @@ import { getMe } from "../utils/api/auth";
 
 function useMe () {
     const router = useRouter();
-    const queryClient = useQueryClient();
-    const {data, isLoading, error, isSuccess, isError} = useQuery("me", getMe, {
+    const {data, isLoading, error, status} = useQuery("me", getMe, {
         onError : () => router.push("/login")
     })
 
-    if (isError) {
+    if (status === "error") {
         router.push("/login");
     }
 
