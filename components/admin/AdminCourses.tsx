@@ -13,6 +13,7 @@ import CourseForAdmin from "../courseExternal/CourseForAdmin";
 import CoursesContainer from "../courses/Courses";
 import OverlayScreen from "../loading/OverlayScreen";
 import CollectiveActionButtons from "./CollectiveActionButtons";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -73,12 +74,28 @@ const AdminCourses = (props: Props) => {
         selected={selected}
         thumbnail={thumbnail_url}
         key={id}
-        runOnApprove={async () =>
-          await modifyCourse({ idArray: [id], status: "VERIFIED" })
-        }
-        runOnReject={async () =>
-          await modifyCourse({ idArray: [id], status: "REJECTED" })
-        }
+        runOnApprove={async () => {
+          const { error } = await modifyCourse({
+            idArray: [id],
+            status: "VERIFIED",
+          });
+          if (!error) {
+            toast.success("Course succesfully approved");
+          } else {
+            toast.error("Course failed to be approve");
+          }
+        }}
+        runOnReject={async () => {
+          const { error } = await modifyCourse({
+            idArray: [id],
+            status: "REJECTED",
+          });
+          if (!error) {
+            toast.success("Course succesfully rejected");
+          } else {
+            toast.error("Course failed to be rejected");
+          }
+        }}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
@@ -103,9 +120,10 @@ const AdminCourses = (props: Props) => {
 
   if (courseVerifyingData.length === 0) {
     return (
-      <div className='flex flex-col flex-grow justify-center items-center'>
-        <h2>No course on the waiting list</h2>
-      </div>
+      <OverlayScreen
+        displayedText='No courses on the waiting list'
+        overlayType='plain'
+      />
     );
   }
 
@@ -116,18 +134,28 @@ const AdminCourses = (props: Props) => {
       </CoursesContainer>
       {selectedCourses.length === 0 ? null : (
         <CollectiveActionButtons
-          runOnApprove={async () =>
-            await modifyCourse({
+          runOnApprove={async () => {
+            const { error } = await modifyCourse({
               idArray: selectedCourses,
               status: "VERIFIED",
-            })
-          }
-          runOnReject={async () =>
-            await modifyCourse({
+            });
+            if (!error) {
+              toast.success("Course succesfully approved");
+            } else {
+              toast.error("Course failed to be approve");
+            }
+          }}
+          runOnReject={async () => {
+            const { error } = await modifyCourse({
               idArray: selectedCourses,
               status: "REJECTED",
-            })
-          }
+            });
+            if (!error) {
+              toast.success("Selected courses succesfully rejected");
+            } else {
+              toast.error("Selected courses failed to be rejected");
+            }
+          }}
         />
       )}
     </>

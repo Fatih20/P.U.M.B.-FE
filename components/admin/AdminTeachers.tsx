@@ -98,7 +98,12 @@ const AdminTeachers = (props: Props) => {
   }
 
   if (teacherVerifyingData.length === 0) {
-    return <h2>No teacher on the waiting list</h2>;
+    return (
+      <OverlayScreen
+        displayedText='No teacher on the waiting list'
+        overlayType='plain'
+      />
+    );
   }
 
   return (

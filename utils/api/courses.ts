@@ -44,12 +44,20 @@ export async function getTeachersUnverified () {
 
 export async function modifyCourseStatus (idArray : number[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
-    const result =  await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader());
-    return result; 
+    try {
+        const result = errorWrapper(async () => await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader())) ;
+        return {result, error : null}
+    } catch (error) {
+        return {result : null, error}
+    }
 }
 
 export async function modifyTeacherStatus (idArray : number[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
-    const result =  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader());
-    return result; 
+    try {
+        const result = errorWrapper(async () =>  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader())) ;
+        return {result, error : null}
+    } catch (error) {
+        return {result : null, error}
+    }
 }
