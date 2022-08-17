@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import React from "react";
 import AdminPage from "../../components/admin/AdminPage";
 import OverlayScreen from "../../components/loading/OverlayScreen";
-import OVerlayScreen from "../../components/loading/OverlayScreen";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
 
@@ -12,7 +11,7 @@ const Admin = (props: Props) => {
   const { user, isLoading: userIsLoading, error: errorGettingMe } = useMe();
   const router = useRouter();
 
-  if (userIsLoading) {
+  if (userIsLoading || !user) {
     return (
       <BaseLayout showBackButton={false} showLogoutButton={true}>
         <OverlayScreen
