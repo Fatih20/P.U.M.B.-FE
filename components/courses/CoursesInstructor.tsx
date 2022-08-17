@@ -100,9 +100,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
         )}
       </ChangeSeenButtonContainer>
       {seenCourses?.length === 0 ? (
-        <div className='w-full h-full flex flex-col items-center justify-center'>
-          <h2>No course found</h2>
-        </div>
+        <OverlayScreen displayedText='No courses found' />
       ) : (
         <CoursesContainer>{seenCourses?.map(mapCourse)}</CoursesContainer>
       )}
