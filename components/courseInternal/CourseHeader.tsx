@@ -23,7 +23,10 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
 
   if (isLoading || !data) {
     return (
-      <OverlayScreen displayedText="Loading course data" overlayType="loading"/>
+      <OverlayScreen
+        displayedText='Loading course data'
+        overlayType='loading'
+      />
     );
   }
   return (
@@ -35,7 +38,7 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
       </div>
       <button
         className={`${
-          true ? "" : "hidden"
+          data.enrolled ? "hidden" : ""
         } self-start bg-indigo-600 text-white py-1 px-2 rounded-md`}
         onClick={async () => await enroll()}
       >
