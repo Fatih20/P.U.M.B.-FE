@@ -28,19 +28,12 @@ const CoursesStudentAll = (props: Props) => {
   }
 
   if (courseAllIsError) {
-    try {
-      const statusCode = (courseAllError as any).response.status;
-      if (statusCode >= 500) {
-        return (
-          <OverlayScreen
-            displayedText='Error getting courses, please try again'
-            overlayType='error'
-          />
-        );
-      } else if (statusCode >= 400) {
-        router.push("/login");
-      }
-    } catch (error) {}
+    return (
+      <OverlayScreen
+        displayedText='Error getting all courses data'
+        overlayType='error'
+      />
+    );
   }
 
   if (courseAllData.length === 0) {

@@ -39,11 +39,7 @@ const CourseContent = ({
   }
 
   if (data.length === 0) {
-    return (
-      <div className='flex flex-col flex-grow w-full justify-center items-center'>
-        <h2>No {type} for this course</h2>
-      </div>
-    );
+    return <OverlayScreen displayedText={`No ${type} for this course`} />;
   }
 
   return (

@@ -41,6 +41,15 @@ const CoursesInstructor = ({}: CoursesProps) => {
     );
   }
 
+  if (courseAllIsError) {
+    return (
+      <OverlayScreen
+        displayedText='Error getting courses data'
+        overlayType='error'
+      />
+    );
+  }
+
   function filterCourse(
     {
       course_status: { status },

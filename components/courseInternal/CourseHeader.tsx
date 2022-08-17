@@ -29,6 +29,16 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
       />
     );
   }
+
+  if (isError) {
+    return (
+      <OverlayScreen
+        displayedText='Error getting course data'
+        overlayType='error'
+      />
+    );
+  }
+
   return (
     <div className='flex flex-col items-start justify-center gap-3'>
       <img src={data.thumbnail_url} alt={data.title} />

@@ -91,19 +91,15 @@ const AdminTeachers = (props: Props) => {
 
   if (!teacherVerifyingData || isTeacherVerifyingError) {
     return (
-      <div className='flex flex-col items-center py-4 flex-grow justify-center relative'>
-        <h2>Error getting data</h2>
-      </div>
+      <OverlayScreen
+        displayedText='Error getting teacher data'
+        overlayType='error'
+      />
     );
   }
 
   if (teacherVerifyingData.length === 0) {
-    return (
-      <OverlayScreen
-        displayedText='No teacher on the waiting list'
-        overlayType='plain'
-      />
-    );
+    return <OverlayScreen displayedText='No teacher on the waiting list' />;
   }
 
   return (

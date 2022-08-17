@@ -112,19 +112,15 @@ const AdminCourses = (props: Props) => {
 
   if (!courseVerifyingData || isCourseVerifyingError) {
     return (
-      <div className='flex flex-col items-center py-4 flex-grow justify-center relative'>
-        <h2>Error getting data</h2>
-      </div>
+      <OverlayScreen
+        displayedText='Error getting courses data'
+        overlayType='error'
+      />
     );
   }
 
   if (courseVerifyingData.length === 0) {
-    return (
-      <OverlayScreen
-        displayedText='No courses on the waiting list'
-        overlayType='plain'
-      />
-    );
+    return <OverlayScreen displayedText='No courses on the waiting list' />;
   }
 
   return (
