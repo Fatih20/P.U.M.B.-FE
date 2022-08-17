@@ -1,14 +1,10 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
-import CourseForInstructor from "../../components/courseExternal/CourseForInstructor";
-import CourseForStudent from "../../components/courseExternal/CourseForStudent";
 import CoursesInstructor from "../../components/courses/CoursesInstructor";
 import CoursesStudent from "../../components/courses/CoursesStudent";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
-import { Course } from "../../types/typesFromBackEnd";
-import { getMe } from "../../utils/api/auth";
 import { getCourses } from "../../utils/api/courses";
 
 type CoursesPage = {};

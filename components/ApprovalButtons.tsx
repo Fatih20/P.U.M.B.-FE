@@ -15,15 +15,6 @@ const ApprovalButtons = ({
   selected,
   vertical,
 }: ApprovalButtonsProps) => {
-  // function onSelectClick() {
-  //   if (selected) {
-  //     console.log("Bruh");
-  //     runOnSelect();
-  //   } else {
-  //     runOnDeselect();
-  //   }
-  // }
-
   const buttonProperty = {
     approve: {
       color: "bg-green-500",

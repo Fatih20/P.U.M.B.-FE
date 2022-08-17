@@ -4,10 +4,7 @@ import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 import AdminCourses from "./AdminCourses";
 import AdminTeachers from "./AdminTeachers";
 
-type AdminPageProps = {
-  //   courses: Course[];
-  //   teachers: Teacher[];
-};
+type AdminPageProps = {};
 
 const AdminPage = ({}: AdminPageProps) => {
   const [seeCourses, setSeeCourses] = useState(false);

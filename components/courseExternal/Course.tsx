@@ -3,9 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, {
-  ReactComponentElement,
-  ReactElement,
-  useEffect,
   useState,
 } from "react";
 import useMe from "../../hooks/useMe";

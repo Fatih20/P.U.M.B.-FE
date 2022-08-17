@@ -5,17 +5,11 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { HeaderProps } from "../types/typesForUs";
-import { useMutation, useQueryClient } from "react-query";
+import { useQueryClient } from "react-query";
 import { logout } from "../utils/api/auth";
 
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();
-
-  // const { mutateAsync: handleLogout } = useMutation(logout, {
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries("me");
-  //   },
-  // });
 
   return (
     <div

@@ -14,7 +14,6 @@ import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 
 const CoursesInstructor = ({ listOfCourse }: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
-  //   console.log(listOfCourse);
 
   function filterCourse(
     {

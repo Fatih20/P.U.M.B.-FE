@@ -1,11 +1,9 @@
-import Image from "next/image";
 import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryFetchingConfig from "../../config/queryFetchingConfig";
 import { getCourse, subscribeToCourse } from "../../utils/api/courses";
 
 type CourseHeaderProps = {
-  // Thumbnail is a link
   courseID: string;
 };
 

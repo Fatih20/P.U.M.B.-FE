@@ -56,11 +56,9 @@ const AdminCourses = (props: Props) => {
   }: Course) {
     const selected = selectedCourses.includes(id);
     const runOnSelect = () => {
-      console.log("Bruh");
       setSelectedCourses((prevSelectedCourses) => [...prevSelectedCourses, id]);
     };
     const runOnDeselect = () => {
-      console.log("Bruh");
       setSelectedCourses((prevSelectedCourses) =>
         prevSelectedCourses.filter((selectedID) => selectedID !== id)
       );

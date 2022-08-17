@@ -5,7 +5,6 @@ import ApprovalButtons from "../ApprovalButtons";
 const InstructorApplication = ({
   email,
   runOnApprove,
-  runOnDeselect,
   runOnReject,
   runOnSelect,
   username,
@@ -20,7 +19,6 @@ const InstructorApplication = ({
       <div className='flex-grow' />
       <ApprovalButtons
         runOnApprove={runOnApprove}
-        runOnDeselect={runOnDeselect}
         runOnReject={runOnReject}
         runOnSelect={runOnSelect}
         vertical={false}

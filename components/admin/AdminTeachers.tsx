@@ -57,7 +57,6 @@ const AdminTeachers = (props: Props) => {
       ]);
     };
     const runOnDeselect = () => {
-      console.log("Bruh");
       setSelectedTeachers((prevSelectedTeachers) =>
         prevSelectedTeachers.filter((selectedID) => selectedID !== id)
       );
@@ -76,11 +75,6 @@ const AdminTeachers = (props: Props) => {
           await modifyTeacher({ idArray: [id], status: "REJECTED" })
         }
         runOnSelect={selected ? runOnDeselect : runOnSelect}
-        // runOnDeselect={() =>
-        //   setSelectedTeachers((prevSelectedTeachers) =>
-        //     prevSelectedTeachers.filter((selectedID) => selectedID !== id)
-        //   )
-        // }
       />
     );
   }

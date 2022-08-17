@@ -5,9 +5,6 @@ import {
 } from "../../types/typesForUs";
 
 import Course from "./Course";
-import TagName from "../TagName";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { CourseStatus } from "../../types/typesFromBackEnd";
 
 const statusColorAndText = {
@@ -24,8 +21,6 @@ const CourseForInstructor = ({
   thumbnail,
   id,
 }: CourseForInstructorProps) => {
-  // console.log(status);
-  // console.log(statusColorAndText[status]);
   const bottomContent = (
     <div
       className={`p-2 ${statusColorAndText[status]["color"]} w-full flex items-center justify-center`}
@@ -35,7 +30,7 @@ const CourseForInstructor = ({
   );
   const centerContent = (
     <>
-      <h2 className="text-2xl font-bold whitespace-normal">{title}</h2>
+      <h2 className='text-2xl font-bold whitespace-normal'>{title}</h2>
     </>
   );
   return (

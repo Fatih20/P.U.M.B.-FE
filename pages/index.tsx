@@ -1,18 +1,6 @@
 import type { NextPage } from "next";
-import CourseForAdmin from "../components/courseExternal/CourseForAdmin";
-import CourseForStudent from "../components/courseExternal/CourseForStudent";
-import CourseForInstructor from "../components/courseExternal/CourseForInstructor";
-
-import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
-import TagName from "../components/TagName";
-import InstructorApplication from "../components/admin/InstructorApplication";
 import BaseLayout from "../layout/BaseLayout";
-
 import { useRouter } from "next/router";
-
-import { isError, useQuery } from "react-query";
-import { getMe } from "../utils/api/auth";
 import useMe from "../hooks/useMe";
 
 const Home: NextPage = () => {
