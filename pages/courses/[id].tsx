@@ -36,10 +36,6 @@ const CourseIndividual = (props: Props) => {
     );
   }
 
-  if (error) {
-    router.push("/login");
-  }
-
   return (
     <BaseLayout>
       <div

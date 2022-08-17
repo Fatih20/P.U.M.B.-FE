@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   const router = useRouter();
   const { user, error, isLoading } = useMe();
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <BaseLayout>
         <OverlayScreen
