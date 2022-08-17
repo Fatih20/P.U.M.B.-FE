@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { deleteLectureItem } from "../../pages/api/lectureAPI";
 
 // use youtube_parser when storing embedId to db later
 function youtube_parser(url: string): any {
@@ -12,8 +13,14 @@ function youtube_parser(url: string): any {
     }
 }
 // possibly it's best to store embedId in the db, not the url
-const YoutubeEmbed = ({ url }: { url: string }) => {
+const YoutubeEmbed = ({ url,id }: { url: string, id: any }) => {
     const embedId = youtube_parser(url)
+
+
+    function handleDelete(id:any) {
+        deleteLectureItem(id).then(console.log);
+    }
+
     return (
         <div className="relative">
 
@@ -26,7 +33,7 @@ const YoutubeEmbed = ({ url }: { url: string }) => {
                     title="Embedded youtube"
                 />
 
-                <button type="button" style={{ top: '1px', right: '-5px', height: 40 }}
+                <button  onClick={() => handleDelete(id)} type="button" style={{ top: '1px', right: '-5px', height: 40 }}
                     className="shadow-lg absolute w-fit flex items-center justify-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />

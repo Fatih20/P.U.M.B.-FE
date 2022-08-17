@@ -3,6 +3,7 @@ import FileDownloadButton from "../../components/Lecture/FileDownloadButton"
 import ImageLecture from "../../components/Lecture/ImageLecture"
 
 type Item = {
+    id:any,
     type: string,
     name: string,
     url: string
@@ -16,7 +17,7 @@ export default function LectureItemFactory({ Items }: { Items: any }) {
                 // Video
                 if (item.type == "VIDEO") {
                     return (
-                        <YoutubeEmbed url={item.url} />
+                        <YoutubeEmbed id={item.id} url={item.url} />
                     )
                 }
                 else if (item.type == "DOCUMENT") {

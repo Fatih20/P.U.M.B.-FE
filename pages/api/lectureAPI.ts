@@ -73,6 +73,15 @@ export async function getLectureItems(lectureId:any) {
   return errorWrappedResult;
 }
 
+export async function deleteLectureItem(lectureId:any) {
+  const errorWrappedResult = await errorWrapper(async () => await axios.delete(
+    `/resources/${lectureId}`,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
 
 
 

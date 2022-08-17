@@ -31,6 +31,7 @@ export default function LecturePage() {
         }
     })
 
+    // Update LectureItems State
     function updateLectureItems(data:any) {        
         let newItem = data.result.data
         let itemsCopy = lectureItems.items
@@ -39,7 +40,6 @@ export default function LecturePage() {
         
         setLectureItems({ ...lectureItems, items: itemsCopy, fetched: true })
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: false, type: "" })
-
     }
     
 
