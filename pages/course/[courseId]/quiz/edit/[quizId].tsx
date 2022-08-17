@@ -50,7 +50,7 @@ export default function LecturePage() {
     return (
         <>
             <SecondBaseLayout showBackButton={true}>
-                <div className="space-y-3 w-full ">
+                <div className="space-y-3 w-full">
                 <QuizTitleForm text={title} editable={true}/>
                 <QuizEdit/>
                 <AddQuestionButton/>

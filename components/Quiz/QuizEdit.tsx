@@ -1,18 +1,18 @@
+import SingleForm from "./SingleForm"
+import Statement from "./Statement"
 
 export default function QuizEdit() {
     return (
         <>
-            <div className="max-w-sm rounded overflow-hidden  shadow-lg p-3">
+            <div className="rounded overflow-hidden  shadow-lg p-3">
                 <div className="space-y-3">
-                    {/* Question Form */}
-                    <form className="rounded  bg-white">
-                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            // {...register("title", { required: true })}
-                            // defaultValue={text}
-                            placeholder="question.." />
-                    </form>
 
-                    <div className="ml-5 space-y-3">
+                    {/* Question */}
+                    {/* <SingleForm placeholder="question.." /> */}
+                    <Statement text="This is Question Statement"/>
+                    
+
+                    <div className="ml-5 space-y-3 ">
 
                         {/* Answer Radio */}
                         <form >
@@ -27,19 +27,17 @@ export default function QuizEdit() {
                         </form>
 
                         {/* Add Answer Button */}
-                        <button className="text-sm">
+                        <button className="text-sm ">
                             {/* <a href="#" className=""></a> */}
                             + Add Answer
                         </button>
                     </div>
 
-                    {/* Feedback Form */}
-                    <form className="rounded  bg-white">
-                        <input type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            // {...register("title", { required: true })}
-                            // defaultValue={text}
-                            placeholder="feedback.." />
-                    </form>
+                    {/* Feedback */}
+                    {/* <SingleForm placeholder="feedback.." /> */}
+                    <hr />
+                    <Statement text="This is Feedback Statement"/>
+
 
                 </div>
             </div>
