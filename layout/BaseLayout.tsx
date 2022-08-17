@@ -2,9 +2,11 @@ import React, { ReactNode } from "react";
 import Header from "../components/Header";
 
 type BaseLayoutProps = {
-  children: ReactNode;
+  children?: ReactNode;
   showBackButton?: boolean;
   showLogoutButton?: boolean;
+  loadingbyProp?: boolean;
+  loadingText?: string;
 };
 
 const BaseLayout = ({
@@ -18,6 +20,7 @@ const BaseLayout = ({
         showBackButton={showBackButton}
         showLogoutButton={showLogoutButton}
       />
+
       <div className='flex justify-start items-center flex-col w-full flex-grow mt-10 px-3 md:px-4'>
         {children}
       </div>

@@ -139,3 +139,5 @@ export type RejectOrApproveInput = {
 };
 
 export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">
+
+export type OverlayType = "loading" | "error"

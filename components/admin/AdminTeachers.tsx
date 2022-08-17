@@ -11,6 +11,7 @@ import {
   modifyTeacherStatus,
 } from "../../utils/api/courses";
 import CoursesContainer from "../courses/Courses";
+import OverlayScreen from "../loading/OverlayScreen";
 import CollectiveActionButtons from "./CollectiveActionButtons";
 import InstructorApplication from "./InstructorApplication";
 
@@ -81,9 +82,10 @@ const AdminTeachers = (props: Props) => {
 
   if (isTeacherVerifyingLoading) {
     return (
-      <div className='flex flex-col items-center py-4 flex-grow justify-center relative'>
-        <h2>Loading...</h2>
-      </div>
+      <OverlayScreen
+        displayedText='Loading teachers data'
+        overlayType='loading'
+      />
     );
   }
 

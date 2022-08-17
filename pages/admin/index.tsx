@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
 import AdminPage from "../../components/admin/AdminPage";
+import OverlayScreen from "../../components/loading/OverlayScreen";
+import OVerlayScreen from "../../components/loading/OverlayScreen";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
 
@@ -13,9 +15,10 @@ const Admin = (props: Props) => {
   if (userIsLoading) {
     return (
       <BaseLayout showBackButton={false} showLogoutButton={true}>
-        <div className='flex flex-grow justify-center items-center'>
-          <h2>Loading...</h2>
-        </div>
+        <OverlayScreen
+          displayedText='Loading credentials'
+          overlayType='loading'
+        />
       </BaseLayout>
     );
   }
@@ -23,8 +26,6 @@ const Admin = (props: Props) => {
   if (user.role !== "ADMIN") {
     router.push("/courses");
   }
-
-  //   console.log("Bruh");
 
   return (
     <BaseLayout showBackButton={false}>
