@@ -14,13 +14,7 @@ export default function LecturePage() {
     const { courseId } = router.query
 
     // Initiate State
-    const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({ show: false, type: "" })
     const [lectureItems, setLectureItems] = useState({ items: [] as object[], fetched: false })
-
-    // Show Hide Lecture Item Form
-    function handleLectureItemFormTrigger(formType: string) {
-        setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: true, type: formType })
-    }
     
     useEffect(() => {
         // Fetching data
@@ -32,44 +26,16 @@ export default function LecturePage() {
         }
     })
 
-    // Update LectureItems State
-    function updateLectureItems(data: any) {
-        let newItem = data.result.data
-        let itemsCopy = lectureItems.items
-
-        itemsCopy.push(newItem)
-
-        setLectureItems({ ...lectureItems, items: itemsCopy, fetched: true })
-        setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: false, type: "" })
-    }
-
-    // Listening Lecture Item Delete
-    Emitter.on('LECTURE_ITEM_DELETE', (data: any) => {
-        
-        let itemsCopy = lectureItems.items
-        let result = itemsCopy.filter((item:any)=>{
-            if (item.id != data.id){
-                return item
-            }
-        })
-        setLectureItems({ ...lectureItems, items: result, fetched: true })
-    });
-
     return (
         <>
             <SecondBaseLayout showBackButton={true}>
                 <div className="space-y-3 w-full ">
-                    <LectureTitleForm />
+                    
+                    <LectureTitleForm editable={false} />
 
-                    {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} />}
+                    {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} editable={false} />}
 
-                    <div className="rounded h-fit shadow-lg bg-white">
-                        {lectureItemFormTrigger.show && <LectureItemFormFactory type={lectureItemFormTrigger.type} callback={updateLectureItems} />}
-                    </div>
-
-                    <AddDropDownButton handleTrigger={handleLectureItemFormTrigger} />
                 </div>
-
             </SecondBaseLayout>
         </>
     )

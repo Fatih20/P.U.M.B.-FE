@@ -9,7 +9,7 @@ type Item = {
     url: string
 }
 
-export default function LectureItemFactory({ Items }: { Items: any }) {
+export default function LectureItemFactory({ Items,editable }: { Items: any, editable:boolean }) {
 
     return (
         <>
@@ -17,7 +17,7 @@ export default function LectureItemFactory({ Items }: { Items: any }) {
                 // Video
                 if (item.type == "VIDEO") {
                     return (
-                        <YoutubeEmbed id={item.id} url={item.url} />
+                        <YoutubeEmbed id={item.id} url={item.url} editable={editable} />
                     )
                 }
                 else if (item.type == "DOCUMENT") {

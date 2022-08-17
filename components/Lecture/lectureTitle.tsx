@@ -9,7 +9,7 @@ type FormInput = {
     titleForm: string,
 }
 
-export default function LectureTitleForm() {
+export default function LectureTitleForm({editable}:{editable:boolean}) {
     // Initiate Router
     const router = useRouter()
     const { lectureId } = router.query
@@ -34,8 +34,10 @@ export default function LectureTitleForm() {
     } = useForm<FormInput>();
 
     const transformToForm = () => {
-        setTitle({ ...title, visibility: false })
-        setForm({ ...form, visibility: true })
+        if(editable){
+            setTitle({ ...title, visibility: false })
+            setForm({ ...form, visibility: true })
+        }
     }
 
     const handleTitleSubmit: SubmitHandler<FormInput> = (data) => {

@@ -5,7 +5,7 @@ import { postLectureItem } from "../../pages/api/lectureAPI"
 import { ResourcePost } from "../../types/TypesForUs";
 
 
-export default function LectureItemFormFactory({callback,type}:{callback:any,type:string}) {
+export default function LectureItemFormFactory({callback,type}:{callback?:any,type:string}) {
 
     // Initiate Router
     const router = useRouter()
