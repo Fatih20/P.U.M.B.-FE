@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryFetchingConfig from "../../config/queryFetchingConfig";
 import { getCourse, subscribeToCourse } from "../../utils/api/courses";
 import OverlayScreen from "../loading/OverlayScreen";
+import toast from "react-hot-toast";
 
 type CourseHeaderProps = {
   courseID: string;
@@ -18,7 +19,7 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
 
   const { mutateAsync: enroll } = useMutation(
     async () => await subscribeToCourse(courseID),
-    { onSuccess: () => queryClient.invalidateQueries("me") }
+    { onSuccess: () => queryClient.invalidateQueries(`courses/${courseID}`) }
   );
 
   if (isLoading || !data) {
@@ -50,7 +51,14 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
         className={`${
           data.enrolled ? "hidden" : ""
         } self-start bg-indigo-600 text-white py-1 px-2 rounded-md`}
-        onClick={async () => await enroll()}
+        onClick={async () => {
+          const { error } = await enroll();
+          if (!error) {
+            toast.success("Succesfully enrolled in this course");
+          } else {
+            toast.error("Failed to enroll in this course. Please try again");
+          }
+        }}
       >
         Enroll
       </button>

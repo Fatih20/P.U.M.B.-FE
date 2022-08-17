@@ -28,8 +28,8 @@ export async function getQuizzes(id : string) {
 }
 
 export async function subscribeToCourse (id : string) {
-    const result = await axios.post(`/courses/${id}/subscribe`, {}, bearerHeader())
-    return result;
+    const errorWrappedResult = errorWrapper(async () => {await axios.post(`/courses/${id}/subscribe`, {}, bearerHeader())})
+    return errorWrappedResult;
 }
 
 export async function getCoursesUnverified () {
@@ -44,20 +44,13 @@ export async function getTeachersUnverified () {
 
 export async function modifyCourseStatus (idArray : number[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
-    try {
-        const result = errorWrapper(async () => await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader())) ;
-        return {result, error : null}
-    } catch (error) {
-        return {result : null, error}
-    }
+    const errorWrappedResult = errorWrapper(async () => await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader()));
+    return errorWrappedResult;
 }
 
 export async function modifyTeacherStatus (idArray : number[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
-    try {
-        const result = errorWrapper(async () =>  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader())) ;
-        return {result, error : null}
-    } catch (error) {
-        return {result : null, error}
-    }
+    const errorWrappedResult = errorWrapper(async () =>  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader())) ;
+
+    return errorWrappedResult;
 }

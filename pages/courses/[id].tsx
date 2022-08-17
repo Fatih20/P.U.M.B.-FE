@@ -40,7 +40,7 @@ const CourseIndividual = (props: Props) => {
     <BaseLayout>
       <div
         className={
-          "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8"
+          "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8 gap-3"
         }
       >
         <CourseHeader courseID={idValid(id)} />
