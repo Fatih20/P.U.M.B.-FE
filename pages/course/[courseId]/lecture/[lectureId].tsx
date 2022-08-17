@@ -30,20 +30,6 @@ export default function LecturePage() {
                 setLectureItems({ ...lectureItems, items: lectureItem, fetched: true })
             })
         }
-
-        // Listening Lecture Item Delete
-        Emitter.on('LECTURE_ITEM_DELETE', (data: any) => {
-        
-            let itemsCopy = lectureItems.items
-            let result = itemsCopy.filter((item:any)=>{
-                if (item.id != data.id){
-                    return item
-                }
-            })
-
-            setLectureItems({ ...lectureItems, items: result, fetched: true })
-            
-        });
     })
 
     // Update LectureItems State
@@ -57,9 +43,17 @@ export default function LecturePage() {
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: false, type: "" })
     }
 
-    
-    
-
+    // Listening Lecture Item Delete
+    Emitter.on('LECTURE_ITEM_DELETE', (data: any) => {
+        
+        let itemsCopy = lectureItems.items
+        let result = itemsCopy.filter((item:any)=>{
+            if (item.id != data.id){
+                return item
+            }
+        })
+        setLectureItems({ ...lectureItems, items: result, fetched: true })
+    });
 
     return (
         <>
