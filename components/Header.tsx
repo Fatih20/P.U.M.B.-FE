@@ -13,25 +13,27 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
 
   return (
     <div
-      className={`w-full flex items-center justify-between flex-row bg-indigo-600 fixed z-10 h-10 text-white px-3`}
+      className={`w-full flex items-center justify-center bg-indigo-600 fixed z-10 h-10 text-white px-3`}
     >
-      <button
-        className={`${showBackButton ? "" : "invisible"}`}
-        onClick={() => {
-          location.assign("/");
-        }}
-      >
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
-      <h1 className='font-semibold'>App Name</h1>
-      <button
-        onClick={async () =>
-          await logout(() => queryClient.invalidateQueries("me"))
-        }
-        className={`${showLogoutButton ? "" : "invisible"}`}
-      >
-        <FontAwesomeIcon icon={faRightFromBracket} />
-      </button>
+      <div className='flex items-center justify-between max-w-3xl w-full'>
+        <button
+          className={`${showBackButton ? "" : "invisible"}`}
+          onClick={() => {
+            location.assign("/");
+          }}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+        <h1 className='font-semibold'>App Name</h1>
+        <button
+          onClick={async () =>
+            await logout(() => queryClient.invalidateQueries("me"))
+          }
+          className={`${showLogoutButton ? "" : "invisible"}`}
+        >
+          <FontAwesomeIcon icon={faRightFromBracket} />
+        </button>
+      </div>
     </div>
   );
 };
