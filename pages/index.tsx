@@ -10,13 +10,17 @@ const Home: NextPage = () => {
 
   if (isLoading || !user) {
     return (
-      <BaseLayout>
+      <BaseLayout showBackButton={false} showLogoutButton={false}>
         <OverlayScreen
           displayedText='Loading your credentials'
           overlayType='loading'
         />
       </BaseLayout>
     );
+  }
+
+  if (error) {
+    router.push("/login");
   }
 
   if (user.role === "ADMIN") {
@@ -26,7 +30,7 @@ const Home: NextPage = () => {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout showBackButton={false} showLogoutButton={false}>
       <OverlayScreen displayedText='Redirecting you...' />
     </BaseLayout>
   );
