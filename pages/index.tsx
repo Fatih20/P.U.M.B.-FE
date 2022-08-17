@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import BaseLayout from "../layout/BaseLayout";
 import { useRouter } from "next/router";
 import useMe from "../hooks/useMe";
+import OverlayScreen from "../components/loading/OverlayScreen";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -10,9 +11,10 @@ const Home: NextPage = () => {
   if (isLoading) {
     return (
       <BaseLayout>
-        <div className='flex flex-grow items-center justify-center'>
-          <h2>Loading...</h2>
-        </div>
+        <OverlayScreen
+          displayedText='Loading your credentials'
+          overlayType='loading'
+        />
       </BaseLayout>
     );
   }

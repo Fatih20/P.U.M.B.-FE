@@ -2,6 +2,7 @@ import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryFetchingConfig from "../../config/queryFetchingConfig";
 import { getCourse, subscribeToCourse } from "../../utils/api/courses";
+import OverlayScreen from "../loading/OverlayScreen";
 
 type CourseHeaderProps = {
   courseID: string;
@@ -22,9 +23,7 @@ const CourseHeader = ({ courseID }: CourseHeaderProps) => {
 
   if (isLoading || !data) {
     return (
-      <div className='flex flex-col items-start justify-center'>
-        <h2>Loading...</h2>
-      </div>
+      <OverlayScreen displayedText="Loading course data" overlayType="loading"/>
     );
   }
   return (

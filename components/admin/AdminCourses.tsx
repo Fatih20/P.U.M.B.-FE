@@ -11,6 +11,7 @@ import {
 } from "../../utils/api/courses";
 import CourseForAdmin from "../courseExternal/CourseForAdmin";
 import CoursesContainer from "../courses/Courses";
+import OverlayScreen from "../loading/OverlayScreen";
 import CollectiveActionButtons from "./CollectiveActionButtons";
 
 type Props = {};
@@ -85,9 +86,10 @@ const AdminCourses = (props: Props) => {
 
   if (isCourseVerifyingLoading) {
     return (
-      <div className='flex flex-col items-center py-4 flex-grow justify-center relative'>
-        <h2>Loading...</h2>
-      </div>
+      <OverlayScreen
+        displayedText='Loading courses data'
+        overlayType='loading'
+      />
     );
   }
 

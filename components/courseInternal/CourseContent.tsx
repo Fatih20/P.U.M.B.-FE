@@ -5,6 +5,7 @@ import {
   CourseContentElementType,
 } from "../../types/typesForUs";
 import { Lecture, Quiz } from "../../types/typesFromBackEnd";
+import OverlayScreen from "../loading/OverlayScreen";
 import CourseContentElement from "./CourseContentElement";
 
 type CourseContentProps = {
@@ -30,9 +31,10 @@ const CourseContent = ({
 
   if (isLoading || !data) {
     return (
-      <div className='flex flex-col flex-grow w-full justify-start items-center'>
-        <h2>Loading...</h2>
-      </div>
+      <OverlayScreen
+        displayedText={`Loading ${type} in this course`}
+        overlayType='loading'
+      />
     );
   }
 
