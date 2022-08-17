@@ -5,6 +5,8 @@ import SecondBaseLayout from "../../../../../layout/SecondBaseLayout"
 import QuizTitleForm from "../../../../../components/Quiz/QuizTitle"
 import { getQuizById, patchQuiz } from "../../../../api/quizAPI"
 import { QuizPatch } from "../../../../../types/TypesForUs"
+import AddQuestionButton from "../../../../../components/Quiz/AddQuestionButton"
+import QuizEdit from "../../../../../components/Quiz/QuizEdit"
 
 export default function LecturePage() {
     // Initiate Router
@@ -50,7 +52,8 @@ export default function LecturePage() {
             <SecondBaseLayout showBackButton={true}>
                 <div className="space-y-3 w-full ">
                 <QuizTitleForm text={title} editable={true}/>
-
+                <QuizEdit/>
+                <AddQuestionButton/>
                 </div>
             </SecondBaseLayout>
         </>
