@@ -7,6 +7,11 @@ export async function getCourses() {
     return result.data as Course[];
 }
 
+export async function getCoursesMine() {
+    const result =  await axios.get("/courses/me" ,bearerHeader())
+    return result.data as Course[];
+}
+
 export async function getCourse(id : string) {
     const result =  await axios.get(`/courses/${id}` ,bearerHeader())
     return result.data as Course;

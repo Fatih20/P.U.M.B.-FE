@@ -1,46 +1,38 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import { CoursesProps } from "../../types/typesForUs";
+import { getCourses } from "../../utils/api/courses";
 import ChangeSeenButton from "../ChangeSeenButton";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 import CourseForStudent from "../courseExternal/CourseForStudent";
+import OverlayScreen from "../loading/OverlayScreen";
 import CoursesContainer from "./Courses";
+import CoursesStudentAll from "./CoursesStudentAll";
+import CoursesStudentEnrolled from "./CoursesStudentEnrolled";
 
-const CoursesStudent = ({ listOfCourse }: CoursesProps) => {
+const CoursesStudent = ({}: CoursesProps) => {
   const [seeAll, setSeeAll] = useState(true);
-  console.log(listOfCourse);
+
   return (
-    <div className='flex flex-col items-center py-4 min-h-full'>
+    <div className='flex flex-col items-center py-4 min-h-full flex-grow'>
       <ChangeSeenButtonContainer>
         <ChangeSeenButton
           buttonText='All Courses'
           runOnClick={() => {
-            return;
+            setSeeAll(true);
           }}
           selected={seeAll}
         />
         <ChangeSeenButton
           buttonText='My Courses'
           runOnClick={() => {
-            return;
+            setSeeAll(false);
           }}
           selected={!seeAll}
         />
       </ChangeSeenButtonContainer>
-      <CoursesContainer>
-        {listOfCourse.map(
-          ({ id, categories, description, title, teacher, thumbnail_url }) => (
-            <CourseForStudent
-              id={id}
-              tags={categories}
-              description={description}
-              instructorName={teacher[0].user.username}
-              title={title}
-              thumbnail={thumbnail_url}
-              key={id}
-            />
-          )
-        )}
-      </CoursesContainer>
+      {seeAll ? <CoursesStudentAll /> : <CoursesStudentEnrolled />}
     </div>
   );
 };

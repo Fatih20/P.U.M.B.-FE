@@ -5,10 +5,13 @@ import { OverlayType } from "../../types/typesForUs";
 
 type LoadingScreenProps = {
   displayedText: string;
-  overlayType: OverlayType;
+  overlayType?: OverlayType;
 };
 
-const OverlayScreen = ({ displayedText, overlayType }: LoadingScreenProps) => {
+const OverlayScreen = ({
+  displayedText,
+  overlayType = "plain",
+}: LoadingScreenProps) => {
   const overlayContent = {
     error: <FontAwesomeIcon icon={faFaceFrown} size='2x' />,
     loading: (
@@ -16,6 +19,7 @@ const OverlayScreen = ({ displayedText, overlayType }: LoadingScreenProps) => {
         <FontAwesomeIcon icon={faSpinner} size='2x'></FontAwesomeIcon>
       </div>
     ),
+    plain: <></>,
   } as Record<OverlayType, JSX.Element>;
 
   return (

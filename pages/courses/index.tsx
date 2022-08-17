@@ -13,25 +13,8 @@ type CoursesPage = {};
 const CoursesPage = (props: CoursesPage) => {
   const { user, isLoading: userIsLoading, error: errorGettingMe } = useMe();
   const router = useRouter();
-  const {
-    data: courseData,
-    error: courseError,
-    isError: courseIsError,
-    isLoading: courseIsLoading,
-  } = useQuery("courses", getCourses);
 
-  if (courseIsError) {
-    try {
-      const statusCode = (courseError as any).response.status;
-      if (statusCode >= 500) {
-        return <div>Error getting data, please try again.</div>;
-      } else if (statusCode >= 400) {
-        router.push("/login");
-      }
-    } catch (error) {}
-  }
-
-  if (courseIsLoading || !courseData || userIsLoading) {
+  if (userIsLoading || !user || userIsLoading) {
     return (
       <BaseLayout>
         <OverlayScreen
@@ -51,7 +34,7 @@ const CoursesPage = (props: CoursesPage) => {
 
   return (
     <BaseLayout showBackButton={false}>
-      <UsedCoursesComponent listOfCourse={courseData} />
+      <UsedCoursesComponent />
     </BaseLayout>
   );
 };

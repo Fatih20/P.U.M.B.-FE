@@ -123,7 +123,7 @@ export type SearchBarProps = {
 export type UseMeDataStatus = "authorized" | "unauthorized" | "serverError" | "fetching"
 
 export type CoursesProps = {
-    listOfCourse : Course[]  
+    // listOfCourse : Course[]  
 };
 
 export const possibleSeenCourse = [...possibleCourseStatus, "ALL"] as const;
@@ -140,4 +140,4 @@ export type RejectOrApproveInput = {
 
 export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">
 
-export type OverlayType = "loading" | "error"
+export type OverlayType = "loading" | "error" | "plain"

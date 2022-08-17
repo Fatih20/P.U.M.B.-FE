@@ -11,6 +11,11 @@ function useMe () {
     const {data, isLoading, error, isSuccess, isError} = useQuery("me", getMe, {
         onError : () => router.push("/login")
     })
+
+    if (isError) {
+        router.push("/login");
+    }
+
     return {
         user : (data?.data) as User ?? undefined,
         isLoading,
