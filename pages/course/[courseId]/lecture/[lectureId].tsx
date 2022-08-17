@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
+import Emitter from "../../../../utils/emiiter"
 import SecondBaseLayout from "../../../../layout/SecondBaseLayout"
 import LectureTitleForm from "../../../../components/Lecture/lectureTitle"
 import AddDropDownButton from "../../../../components/Lecture/addDropDownButton"
@@ -20,28 +21,45 @@ export default function LecturePage() {
     function handleLectureItemFormTrigger(formType: string) {
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: true, type: formType })
     }
-
-    // Fetching data
+    
     useEffect(() => {
+        // Fetching data
         if (courseId && lectureItems.fetched == false) {
             getLectureItems(courseId).then((data) => {
                 let lectureItem = data.result.data
                 setLectureItems({ ...lectureItems, items: lectureItem, fetched: true })
             })
         }
+
+        // Listening Lecture Item Delete
+        Emitter.on('LECTURE_ITEM_DELETE', (data: any) => {
+        
+            let itemsCopy = lectureItems.items
+            let result = itemsCopy.filter((item:any)=>{
+                if (item.id != data.id){
+                    return item
+                }
+            })
+
+            setLectureItems({ ...lectureItems, items: result, fetched: true })
+            
+        });
     })
 
     // Update LectureItems State
-    function updateLectureItems(data:any) {        
+    function updateLectureItems(data: any) {
         let newItem = data.result.data
         let itemsCopy = lectureItems.items
 
         itemsCopy.push(newItem)
-        
+
         setLectureItems({ ...lectureItems, items: itemsCopy, fetched: true })
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: false, type: "" })
     }
+
     
+    
+
 
     return (
         <>

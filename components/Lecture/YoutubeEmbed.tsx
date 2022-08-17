@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { deleteLectureItem } from "../../pages/api/lectureAPI";
+import Emitter from "../../utils/emiiter";
 
 // use youtube_parser when storing embedId to db later
 function youtube_parser(url: string): any {
@@ -16,9 +17,12 @@ function youtube_parser(url: string): any {
 const YoutubeEmbed = ({ url,id }: { url: string, id: any }) => {
     const embedId = youtube_parser(url)
 
-
     function handleDelete(id:any) {
-        deleteLectureItem(id).then(console.log);
+        deleteLectureItem(id).then(data =>{
+            // console.log(data);
+            Emitter.emit('LECTURE_ITEM_DELETE', data.result.data);
+        });
+
     }
 
     return (
