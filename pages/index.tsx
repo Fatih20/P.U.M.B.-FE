@@ -27,9 +27,7 @@ const Home: NextPage = () => {
 
   return (
     <BaseLayout>
-      <div className='flex flex-grow items-center justify-center'>
-        <h2>Redirecting...</h2>
-      </div>
+      <OverlayScreen displayedText='Redirecting you...' />
     </BaseLayout>
   );
 };
