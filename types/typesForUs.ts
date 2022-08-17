@@ -138,6 +138,16 @@ export type RejectOrApproveInput = {
   reject: boolean;
 };
 
-export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">
+export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">;
 
-export type OverlayType = "loading" | "error" | "plain"
+export type OverlayType = "loading" | "error" | "plain";
+
+export type CreateCourseInput = {
+  title : string,
+  description : string,
+  categories : string
+}
+
+export type CategoryInput = {
+  name : string
+}

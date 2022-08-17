@@ -1,5 +1,6 @@
 import axios from "axios"
-import { Course, CourseStatusAdminModified, CourseStatusModifier, Lecture, Quiz, TeacherForAdmin } from "../../types/typesFromBackEnd";
+import { CreateCourseInput } from "../../types/typesForUs";
+import { Category, Course, CourseStatusAdminModified, CourseStatusModifier, CreateCourseInputBody, Lecture, Quiz, TeacherForAdmin } from "../../types/typesFromBackEnd";
 import { bearerHeader, errorWrapper } from "./api"
 
 export async function getCourses() {
@@ -54,3 +55,11 @@ export async function modifyTeacherStatus (idArray : number[], status : CourseSt
 
     return errorWrappedResult;
 }
+
+export async function createCourse (createCourseInput : CreateCourseInputBody) {
+    const errorWrappedResult = errorWrapper<{data : Course}>(async () =>  await axios.post(`/courses`, createCourseInput ,bearerHeader())) ;
+
+    return errorWrappedResult;
+}
+
+

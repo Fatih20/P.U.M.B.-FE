@@ -1,3 +1,5 @@
+import { CategoryInput, CreateCourseInput } from "./typesForUs";
+
 export type UserRole = "STUDENT" | "TEACHER" | "ADMIN";
 export const possibleCourseStatus = ["REJECTED" , "VERIFYING" , "VERIFIED"] as const;
 export type CourseStatus = typeof possibleCourseStatus[number];
@@ -70,3 +72,8 @@ export type CourseStatusModifier = {
   status : CourseStatusAdminModified,
   description : string
 } & UniqueObject
+
+export type CreateCourseInputBody = Omit<CreateCourseInput, "categories"> & {
+  thumbnail_url : string,
+  categories : CategoryInput[]
+}
