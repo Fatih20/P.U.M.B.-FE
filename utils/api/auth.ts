@@ -16,8 +16,6 @@ export async function signup(data:RegisterInputs) {
 }
 
 export async function logout(invalidateFunction : () => void) {
-    // const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/login",)))
-    // return errorWrappedResult;
     localStorage.removeItem(technicalConfig.accessTokenKey);
     invalidateFunction();
 }
