@@ -35,10 +35,6 @@ const ApprovalButtons = ({
     },
   } as Record<CourseAction, ApprovalButtonProperty>;
 
-  if (selected) {
-    console.log("Bruh3");
-  }
-
   return (
     <div
       className={`flex justify-around ${
