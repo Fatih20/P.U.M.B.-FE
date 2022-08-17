@@ -27,6 +27,11 @@ const CoursesPage = (props: CoursesPage) => {
 
   if (user.role === "ADMIN") {
     router.push("/admin");
+    return (
+      <BaseLayout>
+        <OverlayScreen displayedText='Redirecting' overlayType='loading' />
+      </BaseLayout>
+    );
   }
 
   const UsedCoursesComponent =
