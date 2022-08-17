@@ -17,19 +17,21 @@ const ApprovalButtons = ({
 }: ApprovalButtonsProps) => {
   const buttonProperty = {
     approve: {
-      color: "bg-green-500",
+      color: "bg-green-500 text-white",
       onClick: runOnApprove,
       content: <FontAwesomeIcon icon={faCheck} />,
     },
+    select: {
+      color: "bg-yellow-400 text-yellow-600",
+      onClick: runOnSelect,
+      content: selected ? (
+        <FontAwesomeIcon icon={faSquare} fontWeight={900} />
+      ) : null,
+    },
     reject: {
-      color: "bg-red-800",
+      color: "bg-red-500 text-white",
       onClick: runOnReject,
       content: <FontAwesomeIcon icon={faX} />,
-    },
-    select: {
-      color: "bg-gray-400",
-      onClick: runOnSelect,
-      content: selected ? <FontAwesomeIcon icon={faSquare} /> : null,
     },
   } as Record<CourseAction, ApprovalButtonProperty>;
 
@@ -39,9 +41,9 @@ const ApprovalButtons = ({
 
   return (
     <div
-      className={`flex ${
+      className={`flex justify-around ${
         vertical ? "flex-col" : ""
-      } items-center justify-center gap-2 pointer-events-auto`}
+      } items-center gap-2 pointer-events-auto`}
     >
       {possibleCourseAction.map((courseAction: CourseAction) => {
         const { color, content, onClick } = buttonProperty[courseAction];
@@ -52,7 +54,7 @@ const ApprovalButtons = ({
               onClick();
               e.stopPropagation();
             }}
-            className={`p-2 w-8 h-8 flex justify-content items-center rounded-lg ${color}`}
+            className={`p-2 w-8 h-8 flex justify-center items-center rounded-lg ${color}`}
           >
             {content}
           </button>

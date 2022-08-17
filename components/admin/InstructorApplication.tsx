@@ -11,9 +11,9 @@ const InstructorApplication = ({
   selected,
 }: InstructorApplicationProps) => {
   return (
-    <div className='flex w-64 bg-gray-300 rounded-lg p-3 break-all flex-col'>
+    <div className='flex bg-indigo-400 rounded-lg p-3 break-all flex-col gap-2 w-full max-w-sm'>
       <div className='flex flex-col items-start justify-start w-full h-full'>
-        <h3>{username}</h3>
+        <h3 className='text-lg font-bold'>{username}</h3>
         <h4>{email}</h4>
       </div>
       <div className='flex-grow' />

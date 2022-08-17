@@ -10,7 +10,7 @@ const AdminPage = ({}: AdminPageProps) => {
   const [seeCourses, setSeeCourses] = useState(false);
 
   return (
-    <div className='flex flex-col items-center py-4 flex-grow relative'>
+    <div className='flex flex-col items-center py-4 flex-grow relative w-full'>
       <ChangeSeenButtonContainer>
         <ChangeSeenButton
           runOnClick={() => {
