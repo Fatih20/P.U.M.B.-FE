@@ -133,3 +133,12 @@ export type SearchBarProps = {
     url: string,
     lecture_id: any
 }
+
+export type QuizPost = {
+  title: string,
+  course_id: number
+}
+
+export type QuizPatch = {
+  title: string
+}
