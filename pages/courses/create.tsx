@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,7 +13,16 @@ type Props = {};
 const CreateCoursePage = (props: Props) => {
   const { user, isLoading, error } = useMe();
   const router = useRouter();
-  const { register, handleSubmit, reset } = useForm<CreateCourseInput>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formError, isValid: formValid },
+  } = useForm<CreateCourseInput>();
+
+  useEffect(() => {
+    console.log(formError);
+  }, [formError]);
 
   if (isLoading) {
     return (
@@ -61,11 +70,9 @@ const CreateCoursePage = (props: Props) => {
     });
 
     if (!result) {
-      console.log(error);
       toast.error("Failed to create course. Please try again.");
       return;
     }
-    console.log(result);
     toast.success("Succesfully created the course");
     const { id } = result.data;
     router.push(`/courses/${id}`);
@@ -89,10 +96,16 @@ const CreateCoursePage = (props: Props) => {
             </label>
             <input
               id='title'
-              {...register("title")}
+              {...register("title", {
+                // required: "The course must have a description!",
+                required: true,
+              })}
               placeholder='Course title'
               className='w-full p-2'
             />
+            {formError.title && (
+              <p className='text-red-400'>{formError.title.message}</p>
+            )}
           </div>
           <div className='flex flex-col w-full gap-2'>
             <label htmlFor='categories' className='w-full'>
@@ -101,9 +114,15 @@ const CreateCoursePage = (props: Props) => {
             <input
               className='w-full p-2'
               id='categories'
-              {...register("categories")}
+              {...register("categories", {
+                // required: "The course must have at least one category!",
+                required: true,
+              })}
               placeholder='Course tag'
             />
+            {formError.categories && (
+              <p className='text-red-400'>{formError.categories.message}</p>
+            )}
           </div>
           <div className='flex flex-col w-full gap-2'>
             <label htmlFor='description' className='w-full'>
@@ -112,14 +131,23 @@ const CreateCoursePage = (props: Props) => {
             <textarea
               className='w-full p-2'
               id='description'
-              {...register("description")}
+              {...register("description", {
+                // required: "The course must have a description!",
+                required: true,
+              })}
               placeholder='Course description'
             />
+            {formError.description && (
+              <p className='text-red-400'>{formError.description.message}</p>
+            )}
           </div>
 
           <button
             type='submit'
-            className='w-full bg-indigo-600 text-white py-2 px-3 rounded-lg'
+            disabled={!formValid}
+            className={`w-full ${
+              formValid ? "bg-indigo-600" : "bg-gray-500"
+            } text-white py-2 px-3 rounded-lg`}
           >
             Create course
           </button>
