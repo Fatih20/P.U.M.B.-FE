@@ -21,7 +21,7 @@ export default function LecturePage() {
     function handleLectureItemFormTrigger(formType: string) {
         setLectureItemFormTrigger({ ...lectureItemFormTrigger, show: true, type: formType })
     }
-    
+
     useEffect(() => {
         // Fetching data
         if (courseId && lectureItems.fetched == false) {
@@ -45,25 +45,29 @@ export default function LecturePage() {
 
     // Listening Lecture Item Delete
     Emitter.on('LECTURE_ITEM_DELETE', (data: any) => {
-        
-        let itemsCopy = lectureItems.items
-        let result = itemsCopy.filter((item:any)=>{
-            if (item.id != data.id){
-                return item
-            }
-        })
-        setLectureItems({ ...lectureItems, items: result, fetched: true })
+        try {
+            let itemsCopy = lectureItems.items
+            let result = itemsCopy.filter((item: any) => {
+                if (item.id != data.id) {
+                    return item
+                }
+            })
+            setLectureItems({ ...lectureItems, items: result, fetched: true })
+        } catch (error) {
+            console.log(error);
+        }
+
     });
 
     return (
         <>
             <SecondBaseLayout showBackButton={true}>
                 <div className="space-y-3 w-full ">
-                    
+
                     <LectureTitleForm editable={true} />
 
 
-                    {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} editable={true}/>}
+                    {lectureItems.fetched && <LectureItemFactory Items={lectureItems.items} editable={true} />}
 
                     <div className="rounded h-fit shadow-lg bg-white">
                         {lectureItemFormTrigger.show && <LectureItemFormFactory type={lectureItemFormTrigger.type} callback={updateLectureItems} />}
