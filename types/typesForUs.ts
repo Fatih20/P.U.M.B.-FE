@@ -154,7 +154,22 @@ export type SingleFormType = {
 
 export type QuestionStatement = {
   statement: string,
-  quiz_id: number
+  quiz_id: string
+}
+
+export type OptionType = {
+  id: number,
+  content: string,
+  question_id: number
+}
+
+export type QuestionType = {
+
+  id: number,
+  statement: string,
+  quiz_id: number,
+  options: OptionType[]
+
 }
 
 export type UseMeDataStatus = "authorized" | "unauthorized" | "serverError" | "fetching"

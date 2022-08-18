@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { patchLectureTitle } from "../../pages/api/lectureAPI"
-import { LectureTitlePatch } from "../../types/TypesForUs";
+import { LectureTitlePatch } from "../../types/typesForUs";
 import { useRouter } from 'next/router'
 import { getLectureById } from '../../pages/api/lectureAPI'
 

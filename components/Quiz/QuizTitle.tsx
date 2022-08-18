@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { QuizPatch } from "../../types/TypesForUs";
+import { QuizPatch } from "../../types/typesForUs";
 import { useRouter } from 'next/router'
 import Emitter from "../../utils/emiiter";
 

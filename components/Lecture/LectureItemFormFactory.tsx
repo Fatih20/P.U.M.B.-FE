@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { callbackify } from "util";
 import { postLectureItem } from "../../pages/api/lectureAPI"
-import { ResourcePost } from "../../types/TypesForUs";
+import { ResourcePost } from "../../types/typesForUs";
 
 
 export default function LectureItemFormFactory({callback,type}:{callback?:any,type:string}) {

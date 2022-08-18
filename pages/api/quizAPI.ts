@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "../../utils/api/api";
 import { getAccessToken } from "../../utils/utils";
-import { QuizPatch, QuizPost, QuestionStatement } from "../../types/TypesForUs";
+import { QuizPatch, QuizPost, QuestionStatement } from "../../types/typesForUs";
 
 const config = () => {
   return {
@@ -60,6 +60,16 @@ export async function postQuestionStatement(data:QuestionStatement) {
   return errorWrappedResult;
 }
 
+// Delete Question by ID
+export async function deleteQuestion(id:any) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.delete(
+    `/questions/${id}`,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
 
 
 
