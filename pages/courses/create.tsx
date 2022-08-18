@@ -7,11 +7,13 @@ import { useRouter } from "next/router";
 import { CategoryInput, CreateCourseInput } from "../../types/typesForUs";
 import { createCourse } from "../../utils/api/courses";
 import toast from "react-hot-toast";
+import { useQueryClient } from "react-query";
 
 type Props = {};
 
 const CreateCoursePage = (props: Props) => {
   const { user, isLoading, error } = useMe();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const {
     register,
@@ -76,6 +78,7 @@ const CreateCoursePage = (props: Props) => {
     }
     toast.success("Succesfully created the course");
     const { id } = result.data;
+    queryClient.invalidateQueries("coursesMineTeacher");
     router.push(`/courses/${id}`);
     reset();
   }
@@ -100,7 +103,7 @@ const CreateCoursePage = (props: Props) => {
               type='file'
               id='thumbnail'
               {...register("thumbnail", {
-                required: "The course must have a thumnail!",
+                required: "The course must have a thumbnail!",
               })}
               placeholder='Course thumbnail'
               className='w-full p-2'
