@@ -56,7 +56,7 @@ export async function modifyTeacherStatus (idArray : number[], status : CourseSt
     return errorWrappedResult;
 }
 
-export async function createCourse (createCourseInput : CreateCourseInputBody) {
+export async function createCourse (createCourseInput : FormData) {
     const errorWrappedResult = errorWrapper<{data : Course}>(async () =>  await axios.post(`/courses`, createCourseInput ,bearerHeader())) ;
 
     return errorWrappedResult;

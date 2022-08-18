@@ -145,7 +145,8 @@ export type OverlayType = "loading" | "error" | "plain";
 export type CreateCourseInput = {
   title : string,
   description : string,
-  categories : string
+  categories : string,
+  thumbnail : FileList
 }
 
 export type CategoryInput = {

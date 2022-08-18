@@ -29,7 +29,10 @@ export type Course = UniqueObject & {
   categories : Category[],
   teacher : TeacherForStudent[],
   thumbnail_url : string,
-  enrolled : boolean
+  enrolled : boolean,
+  _count : {
+    followers : number
+  }
 }
 
 export type User = UniqueObject & {

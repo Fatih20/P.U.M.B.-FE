@@ -57,19 +57,25 @@ const CreateCoursePage = (props: Props) => {
     categories,
     description,
     title,
+    thumbnail,
   }: CreateCourseInput) {
+    if (!formValid) {
+      return;
+    }
     const categoriesProcessed = categories.split(",").map((category) => {
       return { name: category.trim() } as CategoryInput;
     });
-    const { result, error } = await createCourse({
-      description,
-      title,
-      categories: categoriesProcessed,
-      thumbnail_url:
-        "https://designshack.net/wp-content/uploads/placeholder-image.png",
-    });
+
+    const formDataSubmitted = new FormData();
+    formDataSubmitted.append("title", title);
+    formDataSubmitted.append("description", description);
+    formDataSubmitted.append("categories", JSON.stringify(categoriesProcessed));
+    formDataSubmitted.append("thumbnail", thumbnail[0]);
+
+    const { result, error } = await createCourse(formDataSubmitted);
 
     if (!result) {
+      console.log(error);
       toast.error("Failed to create course. Please try again.");
       return;
     }
@@ -90,6 +96,25 @@ const CreateCoursePage = (props: Props) => {
           onSubmit={handleSubmit(handleCreateCourse)}
           className='flex flex-col items-center justify-start flex-grow w-full gap-3'
         >
+          <div className='flex flex-col w-full gap-2'>
+            <label htmlFor='thumbnail' className='w-full'>
+              Title
+            </label>
+            <input
+              accept='image/png, image/jpeg'
+              type='file'
+              id='thumbnail'
+              {...register("thumbnail", {
+                // required: "The course must have a description!",
+                required: true,
+              })}
+              placeholder='Course thumbnail'
+              className='w-full p-2'
+            />
+            {formError.title && (
+              <p className='text-red-400'>{formError.title.message}</p>
+            )}
+          </div>
           <div className='flex flex-col w-full gap-2'>
             <label htmlFor='title' className='w-full'>
               Title
