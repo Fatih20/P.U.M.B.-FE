@@ -42,7 +42,7 @@ const CourseForInstructor = ({
   );
   const centerContent = (
     <>
-      <h2 className='text-2xl font-bold whitespace-normal'>{title}</h2>
+      <h2 className='text-2xl font-bold truncate'>{title}</h2>
     </>
   );
   return (

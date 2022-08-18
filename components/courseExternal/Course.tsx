@@ -30,10 +30,14 @@ const Course = ({
       className='relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all'
     >
       {absoluteContent ?? null}
-      <div className='h-56'>
-        <img src={thumbnail} alt={title} className='object-cover' />
+      <div className='h-56 flex flex-col items-center justify-center'>
+        <img
+          src={thumbnail}
+          alt={title}
+          className='object-cover flex-grow min-h-full min-w-full'
+        />
       </div>
-      <div className='bg-indigo-400 p-4 w-full flex flex-col items-start justify-start'>
+      <div className='bg-blue-600 p-4 w-full flex flex-col items-start justify-start'>
         {centerContent}
         <p
           className={`block max-w-full ${
