@@ -71,6 +71,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
     title,
     course_status,
     thumbnail_url,
+    _count: { followers },
   }: Course) {
     return (
       <CourseForInstructor
@@ -80,6 +81,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
         title={title}
         thumbnail={thumbnail_url}
         key={id}
+        peopleEnrolled={followers ?? undefined}
       />
     );
   }
