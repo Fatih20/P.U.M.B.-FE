@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import useMe from "../../hooks/useMe";
 import BaseLayout from "../../layout/BaseLayout";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useFormState } from "react-hook-form";
 import OverlayScreen from "../../components/loading/OverlayScreen";
 import { useRouter } from "next/router";
 import { CategoryInput, CreateCourseInput } from "../../types/typesForUs";
@@ -16,13 +16,19 @@ const CreateCoursePage = (props: Props) => {
   const {
     register,
     handleSubmit,
+    formState: { errors: formErrors },
     reset,
-    formState: { errors: formError, isValid: formValid },
   } = useForm<CreateCourseInput>();
 
-  useEffect(() => {
-    console.log(formError);
-  }, [formError]);
+  // console.log("isValid", errors);
+  // const formValid = useMemo(() => formState.isValid, [formState]);
+
+  // useEffect(() => {
+  // console.log(formError);
+  // console.log(formValid);
+  // console.log(formState);
+  // console.log(formState.errors);
+  // }, [formState]);
 
   if (isLoading) {
     return (
@@ -59,9 +65,7 @@ const CreateCoursePage = (props: Props) => {
     title,
     thumbnail,
   }: CreateCourseInput) {
-    if (!formValid) {
-      return;
-    }
+    const loadingToast = toast.loading("Creating the course...");
     const categoriesProcessed = categories.split(",").map((category) => {
       return { name: category.trim() } as CategoryInput;
     });
@@ -70,9 +74,10 @@ const CreateCoursePage = (props: Props) => {
     formDataSubmitted.append("title", title);
     formDataSubmitted.append("description", description);
     formDataSubmitted.append("categories", JSON.stringify(categoriesProcessed));
-    formDataSubmitted.append("thumbnail", thumbnail[0]);
+    formDataSubmitted.append("file", thumbnail[0]);
 
     const { result, error } = await createCourse(formDataSubmitted);
+    toast.dismiss(loadingToast);
 
     if (!result) {
       console.log(error);
@@ -101,18 +106,17 @@ const CreateCoursePage = (props: Props) => {
               Title
             </label>
             <input
-              accept='image/png, image/jpeg'
+              accept='image/*'
               type='file'
               id='thumbnail'
               {...register("thumbnail", {
-                // required: "The course must have a description!",
-                required: true,
+                required: "The course must have a thumnail!",
               })}
               placeholder='Course thumbnail'
               className='w-full p-2'
             />
-            {formError.title && (
-              <p className='text-red-400'>{formError.title.message}</p>
+            {formErrors.title && (
+              <p className='text-red-400'>{formErrors.title.message}</p>
             )}
           </div>
           <div className='flex flex-col w-full gap-2'>
@@ -122,14 +126,13 @@ const CreateCoursePage = (props: Props) => {
             <input
               id='title'
               {...register("title", {
-                // required: "The course must have a description!",
-                required: true,
+                required: "The course must have a description!",
               })}
               placeholder='Course title'
               className='w-full p-2'
             />
-            {formError.title && (
-              <p className='text-red-400'>{formError.title.message}</p>
+            {formErrors.title && (
+              <p className='text-red-400'>{formErrors.title.message}</p>
             )}
           </div>
           <div className='flex flex-col w-full gap-2'>
@@ -140,13 +143,12 @@ const CreateCoursePage = (props: Props) => {
               className='w-full p-2'
               id='categories'
               {...register("categories", {
-                // required: "The course must have at least one category!",
-                required: true,
+                required: "The course must have at least one category!",
               })}
               placeholder='Course tag'
             />
-            {formError.categories && (
-              <p className='text-red-400'>{formError.categories.message}</p>
+            {formErrors.categories && (
+              <p className='text-red-400'>{formErrors.categories.message}</p>
             )}
           </div>
           <div className='flex flex-col w-full gap-2'>
@@ -157,22 +159,18 @@ const CreateCoursePage = (props: Props) => {
               className='w-full p-2'
               id='description'
               {...register("description", {
-                // required: "The course must have a description!",
-                required: true,
+                required: "The course must have a description!",
               })}
               placeholder='Course description'
             />
-            {formError.description && (
-              <p className='text-red-400'>{formError.description.message}</p>
+            {formErrors.description && (
+              <p className='text-red-400'>{formErrors.description.message}</p>
             )}
           </div>
 
           <button
             type='submit'
-            // disabled={!formValid}
-            className={`w-full ${
-              formValid ? "bg-indigo-600" : "bg-gray-500"
-            } text-white py-2 px-3 rounded-lg`}
+            className={`w-full bg-indigo-600 text-white py-2 px-3 rounded-lg`}
           >
             Create course
           </button>
