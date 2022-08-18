@@ -144,7 +144,7 @@ const CreateCoursePage = (props: Props) => {
 
           <button
             type='submit'
-            disabled={!formValid}
+            // disabled={!formValid}
             className={`w-full ${
               formValid ? "bg-indigo-600" : "bg-gray-500"
             } text-white py-2 px-3 rounded-lg`}
