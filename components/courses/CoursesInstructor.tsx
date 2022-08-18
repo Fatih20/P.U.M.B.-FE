@@ -12,7 +12,7 @@ import CourseForInstructor from "../courseExternal/CourseForInstructor";
 import CoursesContainer from "./Courses";
 import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
 import OverlayScreen from "../loading/OverlayScreen";
-import { getCourses } from "../../utils/api/courses";
+import { getCoursesMine } from "../../utils/api/courses";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 
@@ -25,7 +25,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
     error: courseAllError,
     isError: courseAllIsError,
     isLoading: courseAllIsLoading,
-  } = useQuery("coursesAll", getCourses);
+  } = useQuery("coursesMineTeacher", getCoursesMine);
 
   const seenCourses = useMemo(
     () => courseAllData?.filter((course) => filterCourse(course, seenType)),

@@ -37,7 +37,9 @@ const CourseForInstructor = ({
     <div
       className={`p-2 bg-${statusColorAndText[status]["color"]} text-${statusColorAndText[status]["textColor"]} font-medium w-full flex items-center justify-center`}
     >
-      <p>{`${peopleEnrolled ?? ""}${statusColorAndText[status]["text"]}`}</p>
+      <p>{`${status === "VERIFIED" ? peopleEnrolled : ""}${
+        statusColorAndText[status]["text"]
+      }`}</p>
     </div>
   );
   const centerContent = (
