@@ -5,7 +5,8 @@ export type CourseAction = typeof possibleCourseAction[number];
 
 export interface CourseColorAndText {
     color : string,
-    text: string
+    text: string,
+    textColor : string
 }
 
 export const possibleCourseContentElement = ["quiz", "lecture"] as const;
