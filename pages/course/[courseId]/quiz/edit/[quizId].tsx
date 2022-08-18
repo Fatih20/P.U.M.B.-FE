@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import Emitter from "../../../../../utils/emiiter"
 import SecondBaseLayout from "../../../../../layout/SecondBaseLayout"
 import QuizTitleForm from "../../../../../components/Quiz/QuizTitle"
-import { getQuizById, patchQuiz } from "../../../../api/quizAPI"
-import { QuizPatch } from "../../../../../types/TypesForUs"
+import { getQuizById, patchQuiz, postQuestionStatement } from "../../../../api/quizAPI"
+import { QuizPatch, QuestionStatement } from "../../../../../types/TypesForUs"
 import AddQuestionButton from "../../../../../components/Quiz/AddQuestionButton"
 import QuizEdit from "../../../../../components/Quiz/QuizEdit"
 
@@ -41,6 +41,24 @@ export default function LecturePage() {
                 })
             }
 
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+    // Listening on Question Submit
+    Emitter.on('QUESTION_SUBMIT', (data:QuestionStatement) => {
+        try {
+            if(typeof quizId !== 'undefined'){
+                postQuestionStatement({...data, quiz_id:parseInt(quizId as string)}).then(resp => {
+                    // Butuh update question state, tapi harus fetching data dulu
+                    // ada masalah di requestnya ke kirim berkali"
+                    console.log(resp);
+    
+                })
+            }
+            
         } catch (error) {
             console.log(error);
         }

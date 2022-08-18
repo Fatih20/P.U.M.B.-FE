@@ -142,3 +142,14 @@ export type QuizPost = {
 export type QuizPatch = {
   title: string
 }
+
+
+export type SingleFormType = {
+  placeholder: string,
+  event: string
+}
+
+export type QuestionStatement = {
+  statement: string,
+  quiz_id: number
+}

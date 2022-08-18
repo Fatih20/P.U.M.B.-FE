@@ -1,15 +1,41 @@
 import SingleForm from "./SingleForm"
 import Statement from "./Statement"
+import { useState } from "react";
+import Emitter from "../../utils/emiiter";
+import { QuestionStatement } from "../../types/TypesForUs";
 
 export default function QuizEdit() {
+    const [question, setQuestion] = useState({edit:false});
+
+    Emitter.once('QUESTION_STATEMENT_CLICK', () => {
+        try {
+            setQuestion({...question, edit:true})
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+    Emitter.once('QUESTION_SUBMIT', (data:QuestionStatement) => {
+        try {
+            setQuestion({...question, edit:false})
+            // console.log(data);
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
     return (
         <>
             <div className="rounded overflow-hidden  shadow-lg p-3">
                 <div className="space-y-3">
 
                     {/* Question */}
-                    {/* <SingleForm placeholder="question.." /> */}
-                    <Statement text="This is Question Statement"/>
+                    {!question.edit && <Statement text="This is Question Statement"/>}
+
+                    {question.edit && <SingleForm placeholder="question.." event="QUESTION_SUBMIT" />}
                     
 
                     <div className="ml-5 space-y-3 ">

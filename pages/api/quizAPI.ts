@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "../../utils/api/api";
 import { getAccessToken } from "../../utils/utils";
-import { QuizPatch, QuizPost } from "../../types/TypesForUs";
+import { QuizPatch, QuizPost, QuestionStatement } from "../../types/TypesForUs";
 
 const config = () => {
   return {
@@ -24,7 +24,7 @@ export async function getQuizById(id:any) {
   return errorWrappedResult;
 }
 
-// POST Quiz by ID
+// POST Quiz Title
 export async function postQuiz(data:QuizPost) {
   
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
@@ -36,11 +36,23 @@ export async function postQuiz(data:QuizPost) {
   return errorWrappedResult;
 }
 
-// POST Quiz by ID
+// PATCH Quiz Title by ID
 export async function patchQuiz(id:any,data:QuizPatch) {
   
   const errorWrappedResult = await errorWrapper(async () => await axios.patch(
     `/quizzes/${id}`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
+// POST Quiz Title
+export async function postQuestionStatement(data:QuestionStatement) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.post(
+    "/questions",
     data,
     config()
   ).then().catch(console.log));
