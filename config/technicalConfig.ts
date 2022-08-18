@@ -1,5 +1,5 @@
 const technicalConfig = {
-    accessTokenKey : "accessToken"
+    accessTokenKey : "accessToken",
 }
 
 export default technicalConfig;

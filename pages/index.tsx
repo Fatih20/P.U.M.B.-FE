@@ -1,34 +1,39 @@
 import type { NextPage } from "next";
-import CourseForAdmin from "../components/CourseExternal/CourseForAdmin";
-import CourseForStudent from "../components/CourseExternal/CourseForStudent";
-import CourseForInstructor from "../components/CourseExternal/CourseForInstructor";
-
-import Header from "../components/Header";
-import SearchBar from "../components/SearchBar";
-import TagName from "../components/TagName";
-import InstructorApplication from "../components/InstructorApplication";
 import BaseLayout from "../layout/BaseLayout";
-
-import Router from "next/router";
-
-import { useQuery } from "react-query";
-import { getMe } from "../utils/api/auth";
+import { useRouter } from "next/router";
+import useMe from "../hooks/useMe";
+import OverlayScreen from "../components/loading/OverlayScreen";
 
 const Home: NextPage = () => {
-  const { data, isLoading, isFetching } = useQuery("me", getMe, {
-    onSuccess: () => {
-      Router.push("/courses");
-    },
-    onError: () => {
-      Router.push("/login");
-    },
-  });
+  const router = useRouter();
+  const { user, error, isLoading } = useMe();
 
-  if (isLoading || isFetching) {
-    return <h2>Loading...</h2>;
+  if (isLoading || !user) {
+    return (
+      <BaseLayout showBackButton={false} showLogoutButton={false}>
+        <OverlayScreen
+          displayedText='Loading your credentials'
+          overlayType='loading'
+        />
+      </BaseLayout>
+    );
   }
 
-  return <h2>Redirecting...</h2>;
+  if (error) {
+    router.push("/login");
+  }
+
+  if (user.role === "ADMIN") {
+    router.push("/admin");
+  } else {
+    router.push("/courses");
+  }
+
+  return (
+    <BaseLayout showBackButton={false} showLogoutButton={false}>
+      <OverlayScreen displayedText='Redirecting you...' />
+    </BaseLayout>
+  );
 };
 
 export default Home;

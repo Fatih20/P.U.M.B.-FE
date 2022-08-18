@@ -1,7 +1,7 @@
 import React from "react";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SearchBarProps } from "../types/TypesForUs";
+import { SearchBarProps } from "../types/typesForUs";
 
 const SearchBar = ({ value, setValue, runOnSearch }: SearchBarProps) => {
   return (

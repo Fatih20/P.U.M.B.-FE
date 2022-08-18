@@ -1,13 +1,10 @@
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import React, {
-  ReactComponentElement,
-  ReactElement,
-  useEffect,
-  useState,
-} from "react";
-import { CourseProps } from "../../types/TypesForUs";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import useMe from "../../hooks/useMe";
+import { CourseProps } from "../../types/typesForUs";
 
 const Course = ({
   absoluteContent,
@@ -15,21 +12,32 @@ const Course = ({
   description,
   bottomContent,
   thumbnail,
-  name,
+  title,
+  id,
   useDropdownDescription = true,
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
-  useEffect(() => {
-    console.log(showDescription);
-  });
+  const router = useRouter();
+  const { user } = useMe();
+  const targetRoute =
+    (user?.role ?? "TEACHER") === "ADMIN"
+      ? `${router.asPath}/courses/${id}`
+      : `${router.asPath}/${id}`;
 
   return (
-    <div className="relative  bg-gray-600 overflow-hidden rounded-xl w-64 flex flex-col items-start justify-center break-all">
+    <div
+      onClick={() => router.push(targetRoute)}
+      className='relative text-white bg-indigo-600 overflow-hidden rounded-xl w-full flex flex-col items-start justify-center break-all'
+    >
       {absoluteContent ?? null}
-      <div className="">
-        <img src={thumbnail} alt={name} />
+      <div className='h-56 flex flex-col items-center justify-center'>
+        <img
+          src={thumbnail}
+          alt={title}
+          className='object-cover flex-grow min-h-full min-w-full'
+        />
       </div>
-      <div className="bg-gray-400 p-4 w-full flex flex-col items-start justify-start">
+      <div className='bg-blue-600 p-4 w-full flex flex-col items-start justify-start'>
         {centerContent}
         <p
           className={`block max-w-full ${
@@ -39,14 +47,16 @@ const Course = ({
           {description}
         </p>
         <div
+          onClick={(e) => e.stopPropagation()}
           className={`${
             useDropdownDescription ? "" : "hidden"
           }flex items-center justify-center w-full`}
         >
           <button
-            onClick={() =>
-              setShowDescription((prevShowDescription) => !prevShowDescription)
-            }
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDescription((prevShowDescription) => !prevShowDescription);
+            }}
           >
             <FontAwesomeIcon
               icon={faChevronDown}

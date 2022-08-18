@@ -1,10 +1,14 @@
 import React from "react";
 import { useRouter } from "next/router";
-import useMe from "../../hooks/useMe";
-import BaseLayout from "../../layout/BaseLayout";
-import CourseHeader from "../../components/courseInternal/CourseHeader";
-import CourseContentContainer from "../../components/courseInternal/CourseContentContainer";
-import OverlayScreen from "../../components/loading/OverlayScreen";
+import { useQuery } from "react-query";
+import { getCourse, getLectures, getQuizzes } from "../../../utils/api/courses";
+import technicalConfig from "../../../config/technicalConfig";
+import queryFetchingConfig from "../../../config/queryFetchingConfig";
+import useMe from "../../../hooks/useMe";
+import BaseLayout from "../../../layout/BaseLayout";
+import CourseHeader from "../../../components/courseInternal/CourseHeader";
+import CourseContentContainer from "../../../components/courseInternal/CourseContentContainer";
+import OverlayScreen from "../../../components/loading/OverlayScreen";
 
 type Props = {};
 
@@ -36,18 +40,19 @@ const CourseIndividual = (props: Props) => {
     );
   }
 
+  if (error) {
+    router.push("/login");
+  }
+
   return (
     <BaseLayout>
       <div
         className={
-          "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8 gap-3"
+          "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8"
         }
       >
         <CourseHeader courseID={idValid(id)} />
-        <CourseContentContainer
-          isTeacher={user.role === "TEACHER"}
-          courseID={idValid(id)}
-        />
+        <CourseContentContainer courseID={idValid(id)} />
       </div>
     </BaseLayout>
   );

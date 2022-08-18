@@ -1,13 +1,12 @@
-import { Category, Course, UniqueObject } from "./TypesFromBackEnd";
-
-export type CourseStatus = "verified" | "rejected" | "waiting"
+import { Category, Course, CourseStatus, possibleCourseStatus, UniqueObject } from "./typesFromBackEnd";
 
 export const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
 
 export interface CourseColorAndText {
     color : string,
-    text: string
+    text: string,
+    textColor : string
 }
 
 export const possibleCourseContentElement = ["quiz", "lecture"] as const;
@@ -18,7 +17,9 @@ export interface CourseContentElementProps {
     type : CourseContentElementType,
     title : string,
     runOnEdit : () => void,
-    runOnDelete : () => void
+    runOnDelete : () => void,
+    runOnClick : () => void
+    isTeacher : boolean
 
 }
 
@@ -30,10 +31,11 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
-    name : string;
+    id : number
+    title : string;
     thumbnail: string;
     description: string;
-    useDropdownDescription?: Boolean;
+    useDropdownDescription?: boolean;
     absoluteContent?: JSX.Element;
     centerContent: JSX.Element;
     bottomContent?: JSX.Element;
@@ -44,21 +46,21 @@ export type CourseProps = {
     runOnReject: () => void;
     runOnApprove: () => void;
     runOnSelect: () => void;
-    runOnDeselect: () => void;
+    // runOnDeselect: () => void;
   }
 
 export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
-    name: string;
+    title: string;
     instructor: string;
     description: string;
     // Link to the image, not an actual image
     thumbnail: string;
     // The logic for saving what course is selected is left to its parent. It is assumed that the parent will have a state containing an array and the selected props will be given by using array .includes
-    selected: Boolean;
+    selected: boolean;
   };
 
 export type CourseForInstructorProps = UniqueObject & {
-    name: string;
+    title: string;
     description: string;
     status: CourseStatus;
     peopleEnrolled?: number;
@@ -68,7 +70,7 @@ export type CourseForInstructorProps = UniqueObject & {
 
 
 export type CourseForStudentProps = UniqueObject & {
-    name: string;
+    title: string;
     instructorName: string;
     tags: Category[];
     description: string;
@@ -77,12 +79,13 @@ export type CourseForStudentProps = UniqueObject & {
   };
   
   export interface ApprovalButtonsProps extends ApprovalButtonFunction  {
-    selected: Boolean;
-    vertical: Boolean;
+    selected: boolean;
+    vertical: boolean;
   };
 
   export type HeaderProps = {
-    showBackButton: Boolean;
+    showBackButton: boolean;
+    showLogoutButton : boolean
   };
 
   export type InstructorApplicationProps = UniqueObject & ApprovalButtonFunction & {
@@ -152,4 +155,37 @@ export type SingleFormType = {
 export type QuestionStatement = {
   statement: string,
   quiz_id: number
+}
+
+export type UseMeDataStatus = "authorized" | "unauthorized" | "serverError" | "fetching"
+
+export type CoursesProps = {
+    // listOfCourse : Course[]  
+};
+
+export const possibleSeenCourse = [...possibleCourseStatus, "ALL"] as const;
+export type SeenCourse = typeof possibleSeenCourse[number];
+
+export const possibleQuizOrLecture = ["quiz", "lecture"] as const;
+export type QuizOrLecture = typeof possibleQuizOrLecture[number];
+
+export type RejectOrApproveInput = {
+  id: number;
+  isCourse: boolean;
+  reject: boolean;
+};
+
+export type CollectiveActionButtonProps = Omit<Omit<ApprovalButtonFunction, "runOnSelect">, "runOnDeselect">;
+
+export type OverlayType = "loading" | "error" | "plain";
+
+export type CreateCourseInput = {
+  title : string,
+  description : string,
+  categories : string,
+  thumbnail : FileList
+}
+
+export type CategoryInput = {
+  name : string
 }

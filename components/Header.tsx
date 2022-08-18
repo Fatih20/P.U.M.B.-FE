@@ -1,27 +1,39 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { HeaderProps } from "../types/TypesForUs";
+import {
+  faChevronLeft,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { HeaderProps } from "../types/typesForUs";
+import { useQueryClient } from "react-query";
+import { logout } from "../utils/api/auth";
 
-const Header = ({ showBackButton }: HeaderProps) => {
+const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
+  const queryClient = useQueryClient();
+
   return (
     <div
-      className={`w-full p-4 flex items-center ${
-        showBackButton ? `justify-between` : `justify-center`
-      } flex-row bg-gray-600 fixed z-10 h-8`}
+      className={`w-full flex items-center justify-center bg-indigo-600 fixed z-10 h-10 text-white px-3`}
     >
-      <button
-        className={`${showBackButton ? "" : "hidden"}`}
-        onClick={() => {
-          location.assign("/");
-        }}
-      >
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
-      <h1>App Name</h1>
-      <button className={`${showBackButton ? "invisible" : "hidden"}`}>
-        <FontAwesomeIcon icon={faChevronLeft} />
-      </button>
+      <div className='flex items-center justify-between max-w-3xl w-full'>
+        <button
+          className={`${showBackButton ? "" : "invisible"}`}
+          onClick={() => {
+            location.assign("/");
+          }}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </button>
+        <h1 className='font-semibold'>App Name</h1>
+        <button
+          onClick={async () =>
+            await logout(() => queryClient.invalidateQueries("me"))
+          }
+          className={`${showLogoutButton ? "" : "invisible"}`}
+        >
+          <FontAwesomeIcon icon={faRightFromBracket} />
+        </button>
+      </div>
     </div>
   );
 };
