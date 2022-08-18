@@ -17,18 +17,18 @@ export default function LectureItemFactory({ Items,editable }: { Items: any, edi
                 // Video
                 if (item.type == "VIDEO") {
                     return (
-                        <YoutubeEmbed id={item.id} url={item.url} editable={editable} />
+                        <YoutubeEmbed key={item.id.toString()} id={item.id}  url={item.url} editable={editable} />
                     )
                 }
                 else if (item.type == "DOCUMENT") {
                     return (
-                        <FileDownloadButton name={item.name} url={item.url} />
+                        <FileDownloadButton key={item.id.toString()}  name={item.name} url={item.url} />
                     )
                 }
                 else if (item.type == "IMAGE") {
                     return (
-                        <div className="rounded overflow-hidden shadow-lg p-3 bg-white">
-                            <ImageLecture name={item.name} imgUrl={item.url} />
+                        <div key={item.id.toString()}  className="rounded overflow-hidden shadow-lg p-3 bg-white">
+                            <ImageLecture  name={item.name} imgUrl={item.url} />
                         </div>
                     )
                 }

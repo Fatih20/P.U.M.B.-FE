@@ -23,7 +23,7 @@ export default function LectureItemFormFactory({callback,type}:{callback?:any,ty
 
         const payload: ResourcePost = {...data,
             name:"youtube video",
-            lecture_id:1,
+            lecture_id:parseInt(lectureId as string),
             type:"VIDEO",
         }
 
