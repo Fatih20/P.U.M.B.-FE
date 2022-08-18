@@ -20,16 +20,6 @@ const CreateCoursePage = (props: Props) => {
     reset,
   } = useForm<CreateCourseInput>();
 
-  // console.log("isValid", errors);
-  // const formValid = useMemo(() => formState.isValid, [formState]);
-
-  // useEffect(() => {
-  // console.log(formError);
-  // console.log(formValid);
-  // console.log(formState);
-  // console.log(formState.errors);
-  // }, [formState]);
-
   if (isLoading) {
     return (
       <BaseLayout>
