@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
-import { getCourses, getCoursesMine } from "@/utils/api/courses";
+import { getCoursesMine } from "@/utils/api/courses";
 import CourseForStudent from "@/components/courseExternal/CourseForStudent";
 import OverlayScreen from "@/components/loading/OverlayScreen";
-import CoursesContainer from "./Courses";
+import CoursesContainer from "@/components/courses/Courses";
 
 type Props = {};
 
