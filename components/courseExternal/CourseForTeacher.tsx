@@ -6,6 +6,7 @@ import {
 
 import Course from "@/components/courseExternal/Course";
 import { CourseStatus } from "@/appTypes/typesFromBackEnd";
+import { useRouter } from "next/router";
 
 const statusColorAndText = {
   REJECTED: {
@@ -33,6 +34,7 @@ const CourseForTeacher = ({
   thumbnail,
   id,
 }: CourseForTeacherProps) => {
+  const router = useRouter();
   const bottomContent = (
     <div
       className={`p-2 bg-${statusColorAndText[status]["color"]} text-${statusColorAndText[status]["textColor"]} font-medium w-full flex items-center justify-center`}
@@ -49,7 +51,7 @@ const CourseForTeacher = ({
   );
   return (
     <Course
-      id={id}
+      goToCoursePage={() => router.push(`${router.asPath}/${id}`)}
       centerContent={centerContent}
       thumbnail={thumbnail}
       bottomContent={bottomContent}

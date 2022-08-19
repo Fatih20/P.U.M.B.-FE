@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Course from "./Course";
 import { CourseForAdminProps } from "@/appTypes/typesForUs";
 import ApprovalButtons from "@/components/ApprovalButtons";
+import { useRouter } from "next/router";
 
 const CourseForAdmin = ({
   title,
@@ -14,6 +15,7 @@ const CourseForAdmin = ({
   runOnSelect,
   id,
 }: CourseForAdminProps) => {
+  const router = useRouter();
   const absoluteContent = (
     <div className='absolute p-3 flex w-full top-0 bottom-0 left-0 right-0 items-start justify-end pointer-events-none'>
       <ApprovalButtons
@@ -35,7 +37,7 @@ const CourseForAdmin = ({
 
   return (
     <Course
-      id={id}
+      goToCoursePage={() => router.push(`${router.asPath}/courses/${id}`)}
       thumbnail={thumbnail}
       absoluteContent={absoluteContent}
       centerContent={centerContent}

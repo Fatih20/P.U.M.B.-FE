@@ -34,7 +34,6 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
-    id : string;
     title : string;
     thumbnail: string;
     description: string;
@@ -42,6 +41,7 @@ export type CourseProps = {
     absoluteContent?: JSX.Element;
     centerContent: JSX.Element;
     bottomContent?: JSX.Element;
+    goToCoursePage : () => void;
   };
   
 
