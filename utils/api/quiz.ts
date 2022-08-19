@@ -146,3 +146,18 @@ export async function patchFeedback({id,data}:{id:any,data:any}) {
 
   return errorWrappedResult;
 }
+
+// GET Question Answer
+export async function getQuestionAnswer({queryKey}:any) {
+  const [_, quizId] = queryKey
+
+  if (quizId !== undefined){
+    const errorWrappedResult = await errorWrapper(async () => await axios.get(
+      `/questions/${quizId}/answer`,
+      config()
+    ).then().catch(console.log));
+  
+    return errorWrappedResult;
+  }
+
+}
