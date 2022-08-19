@@ -68,7 +68,7 @@ export default function QuizPage() {
   Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
     if (typeof quizId !== 'undefined') {
       patchQuiz(quizId, data).then(resp => {
-        console.log(resp);
+        // console.log(resp);
         queryClient.invalidateQueries("Quiz");
         refetch()
       })

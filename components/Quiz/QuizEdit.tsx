@@ -16,10 +16,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
   const { data:questionAnswer, status, refetch } = useQuery(["QuestionAnswer", questionId], getQuestionAnswer);
 
-  console.log("QuizEdit");
-  console.log(questionAnswer);
-  
-
+  // console.log("QuizEdit");
+  // console.log(questionAnswer);
 
   // Mutate Question PATCH
   const { mutate: patchFeedbackMutate } = useMutation(patchFeedback, {
