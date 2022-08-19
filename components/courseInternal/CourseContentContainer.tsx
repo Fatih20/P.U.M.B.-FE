@@ -1,20 +1,18 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { CourseContentElementType } from "@/appTypes/typesForUs";
+import {
+  CourseContentContainerProps,
+  CourseContentElementType,
+} from "@/appTypes/typesForUs";
 import { getLectures, getQuizzes } from "@/utils/api/courses";
 import ChangeSeenButton from "@/components/ChangeSeenButton";
 import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
 import CourseContent from "@/components/courseInternal/CourseContent";
 
-type CourseContentProps = {
-  courseID: string;
-  isTeacher?: boolean;
-};
-
 const CourseContentContainer = ({
   courseID,
   isTeacher = false,
-}: CourseContentProps) => {
+}: CourseContentContainerProps) => {
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );

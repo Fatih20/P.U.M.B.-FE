@@ -6,12 +6,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { HeaderProps } from "@/appTypes/typesForUs";
 import { useQueryClient } from "react-query";
-import { logout } from "@/utils/api/auth";
+import { deleteAccessToken } from "@/utils/api/auth";
 import { useRouter } from "next/router";
 
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  function handleLogout() {
+    deleteAccessToken();
+    queryClient.invalidateQueries();
+    router.push("/login");
+  }
 
   return (
     <div
@@ -28,12 +34,7 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
         </button>
         <h1 className='font-bold'>App Name</h1>
         <button
-          onClick={async () =>
-            await logout(() => {
-              queryClient.invalidateQueries();
-              router.push("/login");
-            })
-          }
+          onClick={handleLogout}
           className={`${showLogoutButton ? "" : "invisible"}`}
         >
           <FontAwesomeIcon icon={faRightFromBracket} />

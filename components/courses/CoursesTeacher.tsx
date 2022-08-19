@@ -21,10 +21,9 @@ const CoursesTeacher = ({}: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
   const router = useRouter();
 
-  const { user, isLoading: userLoading, error } = useMe();
+  const { user, isLoading: userLoading } = useMe();
   const {
     data: courseAllData,
-    error: courseAllError,
     isError: courseAllIsError,
     isLoading: courseAllIsLoading,
   } = useQuery("coursesMineTeacher", getCoursesMine);
@@ -67,6 +66,7 @@ const CoursesTeacher = ({}: CoursesProps) => {
     return seenType === status;
   }
 
+  // Produce each course component displayed
   function mapCourse({
     id,
     description,

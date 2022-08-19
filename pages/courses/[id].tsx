@@ -28,7 +28,7 @@ const CourseIndividual = (props: Props) => {
   const router = useRouter();
   const { id: courseID } = router.query;
   const {
-    data,
+    data: courseData,
     isLoading: courseInfoLoading,
     isError,
   } = useQuery(
@@ -37,7 +37,7 @@ const CourseIndividual = (props: Props) => {
     queryFetchingConfig
   );
 
-  if (userLoading || !user) {
+  if (userLoading || !user || !courseData || courseInfoLoading) {
     return (
       <BaseLayout>
         <OverlayScreen
@@ -56,7 +56,7 @@ const CourseIndividual = (props: Props) => {
         }
       >
         <CourseHeader courseID={idValid(courseID)} />
-        {data?.enrolled ? (
+        {courseData?.enrolled ? (
           <CourseContentContainer
             isTeacher={user.role === "TEACHER"}
             courseID={idValid(courseID)}

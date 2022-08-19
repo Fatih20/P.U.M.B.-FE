@@ -48,6 +48,7 @@ const AdminTeachers = (props: Props) => {
     }
   );
 
+  // Produce the function to reject or approve teachers
   const approveOrRejectFactory = (isApprove: boolean, idArray: string[]) => {
     return async () => {
       const loadingToast = toast.loading(
@@ -67,6 +68,7 @@ const AdminTeachers = (props: Props) => {
     };
   };
 
+  // Produce each teacher application that is displayed
   function teacherMapper({ username, id, email }: TeacherForAdmin) {
     const selected = selectedTeachers.includes(id);
     const runOnSelect = () => {

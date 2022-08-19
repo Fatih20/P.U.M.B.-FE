@@ -15,6 +15,7 @@ const Course = ({
   useDropdownDescription = true,
 }: CourseProps) => {
   const [showDescription, setShowDescription] = useState(false);
+  // Absolute content is the content displayed overlaying the courses. Center content is the content after the course thumbnail
   return (
     <div
       onClick={goToCoursePage}

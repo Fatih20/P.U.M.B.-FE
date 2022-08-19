@@ -37,6 +37,7 @@ const AdminCourses = (props: Props) => {
     }
   );
 
+  // Produce the function to reject or approve courses
   const approveOrRejectFactory = (isApprove: boolean, idArray: string[]) => {
     return async () => {
       const loadingToast = toast.loading(
@@ -56,6 +57,7 @@ const AdminCourses = (props: Props) => {
     };
   };
 
+  // Produce each course that is displayed
   function courseMapper({
     description,
     id,

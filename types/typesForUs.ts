@@ -1,4 +1,4 @@
-import { Category, Course, CourseStatus, possibleCourseStatus, UniqueObject } from "./typesFromBackEnd";
+import { Category, Course, CourseStatus, Lecture, possibleCourseStatus, Quiz, UniqueObject } from "./typesFromBackEnd";
 
 const possiblyCreatedRole = ["TEACHER", "STUDENT"] as const;
 export type PossiblyCreatedRole = typeof possiblyCreatedRole[number];
@@ -192,3 +192,27 @@ export type CreateCourseInput = {
 export type CategoryInput = {
   name : string
 }
+
+export type CourseContentProps = {
+  fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
+  runOnDelete: () => void;
+  runOnEdit: () => void;
+  runOnClick: (id: string) => void;
+  queryName: string;
+  type: CourseContentElementType;
+  isTeacher?: boolean;
+};
+
+export type CourseContentContainerProps = {
+  courseID: string;
+  isTeacher?: boolean;
+};
+
+export type CourseHeaderProps = {
+  courseID: string;
+};
+
+export type LoadingScreenProps = {
+  displayedText: string;
+  overlayType?: OverlayType;
+};

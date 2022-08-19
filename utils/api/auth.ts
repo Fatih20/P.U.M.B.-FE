@@ -15,9 +15,8 @@ export async function signup(data:RegisterInputs) {
     return errorWrappedResult;
 }
 
-export async function logout(invalidateFunction : () => void) {
+export async function deleteAccessToken() {
     localStorage.removeItem(technicalConfig.accessTokenKey);
-    invalidateFunction();
 }
 
 export async function getMe() {

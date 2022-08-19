@@ -1,27 +1,13 @@
 import { faSpinner, faFaceFrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { OverlayType } from "@/appTypes/typesForUs";
-
-type LoadingScreenProps = {
-  displayedText: string;
-  overlayType?: OverlayType;
-};
+import { LoadingScreenProps, OverlayType } from "@/appTypes/typesForUs";
+import overlayContent from "@/config/overlayContent";
 
 const OverlayScreen = ({
   displayedText,
   overlayType = "plain",
 }: LoadingScreenProps) => {
-  const overlayContent = {
-    error: <FontAwesomeIcon icon={faFaceFrown} size='2x' />,
-    loading: (
-      <div className='animate-spin'>
-        <FontAwesomeIcon icon={faSpinner} size='2x'></FontAwesomeIcon>
-      </div>
-    ),
-    plain: <></>,
-  } as Record<OverlayType, JSX.Element>;
-
   return (
     <div className='flex items-center justify-center flex-grow flex-col gap-2'>
       {overlayContent[overlayType]}
