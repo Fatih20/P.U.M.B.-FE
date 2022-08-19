@@ -8,21 +8,22 @@ import {
 } from "@/appTypes/typesForUs";
 import { Course, CourseStatusInCourse } from "@/appTypes/typesFromBackEnd";
 import ChangeSeenButton from "@/components/ChangeSeenButton";
-import CourseForInstructor from "@/components/courseExternal/CourseForInstructor";
+import CourseForTeacher from "@/components/courseExternal/CourseForTeacher";
 import CoursesContainer from "@/components/courses/Courses";
 import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import { getCoursesMine } from "@/utils/api/courses";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
+import useMe from "@/hooks/useMe";
 
-const CoursesInstructor = ({}: CoursesProps) => {
+const CoursesTeacher = ({}: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
   const router = useRouter();
 
+  const { user, isLoading: userLoading } = useMe();
   const {
     data: courseAllData,
-    error: courseAllError,
     isError: courseAllIsError,
     isLoading: courseAllIsLoading,
   } = useQuery("coursesMineTeacher", getCoursesMine);
@@ -32,10 +33,10 @@ const CoursesInstructor = ({}: CoursesProps) => {
     [seenType, courseAllData]
   );
 
-  if (!courseAllData || courseAllIsLoading) {
+  if (!courseAllData || courseAllIsLoading || userLoading) {
     return (
       <OverlayScreen
-        displayedText='Loading courses data'
+        displayedText='Loading courses data and your credentials'
         overlayType='loading'
       />
     );
@@ -65,6 +66,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
     return seenType === status;
   }
 
+  // Produce each course component displayed
   function mapCourse({
     id,
     description,
@@ -74,7 +76,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
     _count: { followers },
   }: Course) {
     return (
-      <CourseForInstructor
+      <CourseForTeacher
         id={id}
         status={course_status.status}
         description={description}
@@ -104,7 +106,9 @@ const CoursesInstructor = ({}: CoursesProps) => {
     <div className='flex flex-col items-center py-4 flex-grow relative'>
       <div className='box-border fixed top-0 bottom-0 left-0 right-0 p-4 min-h-full flex items-end justify-end z-10 pointer-events-none'>
         <button
-          className='text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600 pointer-events-auto'
+          className={`${
+            user.status?.status !== "VERIFIED" ? "hidden" : ""
+          } text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600 pointer-events-auto`}
           onClick={() => router.push(`${router.asPath}/create`)}
         >
           <FontAwesomeIcon icon={faPlus} />
@@ -124,4 +128,4 @@ const CoursesInstructor = ({}: CoursesProps) => {
   );
 };
 
-export default CoursesInstructor;
+export default CoursesTeacher;

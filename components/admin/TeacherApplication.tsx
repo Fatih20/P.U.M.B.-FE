@@ -1,15 +1,15 @@
 import React from "react";
-import { InstructorApplicationProps } from "@/appTypes/typesForUs";
+import { TeacherApplicationProps } from "@/appTypes/typesForUs";
 import ApprovalButtons from "@/components/ApprovalButtons";
 
-const InstructorApplication = ({
+const TeacherApplication = ({
   email,
   runOnApprove,
   runOnReject,
   runOnSelect,
   username,
   selected,
-}: InstructorApplicationProps) => {
+}: TeacherApplicationProps) => {
   return (
     <div className='flex text-white bg-indigo-400 rounded-lg p-3 break-all flex-col gap-2 w-full max-w-sm'>
       <div className='flex flex-col items-start justify-start w-full h-full'>
@@ -28,4 +28,4 @@ const InstructorApplication = ({
   );
 };
 
-export default InstructorApplication;
+export default TeacherApplication;

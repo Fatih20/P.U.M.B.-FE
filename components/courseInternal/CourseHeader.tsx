@@ -4,10 +4,7 @@ import queryFetchingConfig from "@/config/queryFetchingConfig";
 import { getCourse, subscribeToCourse } from "@/utils/api/courses";
 import OverlayScreen from "../loading/OverlayScreen";
 import toast from "react-hot-toast";
-
-type CourseHeaderProps = {
-  courseID: string;
-};
+import { CourseHeaderProps } from "@/appTypes/typesForUs";
 
 const CourseHeader = ({ courseID }: CourseHeaderProps) => {
   const queryClient = useQueryClient();

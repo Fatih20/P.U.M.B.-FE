@@ -5,6 +5,9 @@ import BaseLayout from "@/layout/BaseLayout";
 import CourseHeader from "@/components/courseInternal/CourseHeader";
 import CourseContentContainer from "@/components/courseInternal/CourseContentContainer";
 import OverlayScreen from "@/components/loading/OverlayScreen";
+import { useQuery } from "react-query";
+import { getCourse } from "@/utils/api/courses";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
 
 type Props = {};
 
@@ -21,11 +24,20 @@ function idValid(id: string | string[] | undefined) {
 }
 
 const CourseIndividual = (props: Props) => {
-  const { user, isLoading, error } = useMe();
+  const { user, isLoading: userLoading, error } = useMe();
   const router = useRouter();
-  const { id } = router.query;
+  const { id: courseID } = router.query;
+  const {
+    data: courseData,
+    isLoading: courseInfoLoading,
+    isError,
+  } = useQuery(
+    `courses/${idValid(courseID)}`,
+    async () => await getCourse(idValid(courseID)),
+    queryFetchingConfig
+  );
 
-  if (isLoading || !user) {
+  if (userLoading || !user || !courseData || courseInfoLoading) {
     return (
       <BaseLayout>
         <OverlayScreen
@@ -43,11 +55,15 @@ const CourseIndividual = (props: Props) => {
           "flex flex-col items-center justify-start flex-grow w-full max-w-3xl p-8 gap-3"
         }
       >
-        <CourseHeader courseID={idValid(id)} />
-        <CourseContentContainer
-          isTeacher={user.role === "TEACHER"}
-          courseID={idValid(id)}
-        />
+        <CourseHeader courseID={idValid(courseID)} />
+        {courseData?.enrolled ? (
+          <CourseContentContainer
+            isTeacher={user.role === "TEACHER"}
+            courseID={idValid(courseID)}
+          />
+        ) : (
+          <div className='flex flex-grow w-full' />
+        )}
       </div>
     </BaseLayout>
   );

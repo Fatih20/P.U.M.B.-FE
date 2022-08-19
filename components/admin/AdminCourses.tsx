@@ -37,12 +37,27 @@ const AdminCourses = (props: Props) => {
     }
   );
 
-  useEffect(() => {
-    console.log(selectedCourses);
+  // Produce the function to reject or approve courses
+  const approveOrRejectFactory = (isApprove: boolean, idArray: string[]) => {
+    return async () => {
+      const loadingToast = toast.loading(
+        `${isApprove ? "Approving" : "Rejecting"} application`
+      );
+      const resultText = isApprove ? "approved" : "rejected";
+      const { error } = await modifyCourse({
+        idArray,
+        status: isApprove ? "VERIFIED" : "REJECTED",
+      });
+      toast.dismiss(loadingToast);
+      if (!error) {
+        toast.success(`Course succesfully ${resultText}`);
+      } else {
+        toast.error(`Course failed to be ${resultText}`);
+      }
+    };
+  };
 
-    return;
-  }, [selectedCourses]);
-
+  // Produce each course that is displayed
   function courseMapper({
     description,
     id,
@@ -63,33 +78,13 @@ const AdminCourses = (props: Props) => {
       <CourseForAdmin
         description={description}
         id={id}
-        instructor={teacher[0].user.username}
+        teacher={teacher[0].user.username}
         title={title}
         selected={selected}
         thumbnail={thumbnail_url}
         key={id}
-        runOnApprove={async () => {
-          const { error } = await modifyCourse({
-            idArray: [id],
-            status: "VERIFIED",
-          });
-          if (!error) {
-            toast.success("Course succesfully approved");
-          } else {
-            toast.error("Course failed to be approve");
-          }
-        }}
-        runOnReject={async () => {
-          const { error } = await modifyCourse({
-            idArray: [id],
-            status: "REJECTED",
-          });
-          if (!error) {
-            toast.success("Course succesfully rejected");
-          } else {
-            toast.error("Course failed to be rejected");
-          }
-        }}
+        runOnApprove={approveOrRejectFactory(true, [id])}
+        runOnReject={approveOrRejectFactory(false, [id])}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
@@ -98,8 +93,8 @@ const AdminCourses = (props: Props) => {
   if (isCourseVerifyingLoading) {
     return (
       <OverlayScreen
-        displayedText="Loading courses data"
-        overlayType="loading"
+        displayedText='Loading courses data'
+        overlayType='loading'
       />
     );
   }
@@ -107,14 +102,14 @@ const AdminCourses = (props: Props) => {
   if (!courseVerifyingData || isCourseVerifyingError) {
     return (
       <OverlayScreen
-        displayedText="Error getting courses data"
-        overlayType="error"
+        displayedText='Error getting courses data'
+        overlayType='error'
       />
     );
   }
 
   if (courseVerifyingData.length === 0) {
-    return <OverlayScreen displayedText="No courses on the waiting list" />;
+    return <OverlayScreen displayedText='No courses on the waiting list' />;
   }
 
   return (
@@ -124,28 +119,8 @@ const AdminCourses = (props: Props) => {
       </CoursesContainer>
       {selectedCourses.length === 0 ? null : (
         <CollectiveActionButtons
-          runOnApprove={async () => {
-            const { error } = await modifyCourse({
-              idArray: selectedCourses,
-              status: "VERIFIED",
-            });
-            if (!error) {
-              toast.success("Course succesfully approved");
-            } else {
-              toast.error("Course failed to be approve");
-            }
-          }}
-          runOnReject={async () => {
-            const { error } = await modifyCourse({
-              idArray: selectedCourses,
-              status: "REJECTED",
-            });
-            if (!error) {
-              toast.success("Selected courses succesfully rejected");
-            } else {
-              toast.error("Selected courses failed to be rejected");
-            }
-          }}
+          runOnApprove={approveOrRejectFactory(true, selectedCourses)}
+          runOnReject={approveOrRejectFactory(false, selectedCourses)}
         />
       )}
     </>

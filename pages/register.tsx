@@ -2,9 +2,9 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import InstructorOrStudentButton from "@/components/auth/instructorOrStudentButton";
+import TeacherOrStudentButton from "@/components/auth/TeacherOrStudentButton";
 import ErrorMessage from "@/components/errorMessage";
-import { RegisterInputs } from "@/appTypes/typesForUs";
+import { PossiblyCreatedRole, RegisterInputs } from "@/appTypes/typesForUs";
 import { signup } from "@/utils/api/auth";
 
 export default function RegisterPage() {
@@ -16,10 +16,7 @@ export default function RegisterPage() {
   } = useForm<RegisterInputs>();
 
   // Role State
-  const [selectedRole, setRole] = useState("STUDENT");
-  const manageRole = (role: string) => {
-    setRole(role);
-  };
+  const [selectedRole, setRole] = useState("STUDENT" as PossiblyCreatedRole);
   const router = useRouter();
 
   // Error Visibility State
@@ -56,7 +53,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Instructor or Student Button */}
-        <InstructorOrStudentButton role={selectedRole} setRole={setRole} />
+        <TeacherOrStudentButton role={selectedRole} setRole={setRole} />
 
         {/* Error Message */}
         {showError ? (

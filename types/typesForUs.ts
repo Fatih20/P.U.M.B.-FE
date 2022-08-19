@@ -1,4 +1,7 @@
-import { Category, Course, CourseStatus, possibleCourseStatus, UniqueObject } from "./typesFromBackEnd";
+import { Category, Course, CourseStatus, Lecture, possibleCourseStatus, Quiz, UniqueObject } from "./typesFromBackEnd";
+
+const possiblyCreatedRole = ["TEACHER", "STUDENT"] as const;
+export type PossiblyCreatedRole = typeof possiblyCreatedRole[number];
 
 export const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
@@ -31,7 +34,6 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
-    id : string;
     title : string;
     thumbnail: string;
     description: string;
@@ -39,6 +41,7 @@ export type CourseProps = {
     absoluteContent?: JSX.Element;
     centerContent: JSX.Element;
     bottomContent?: JSX.Element;
+    goToCoursePage : () => void;
   };
   
 
@@ -51,7 +54,7 @@ export type CourseProps = {
 
 export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
     title: string;
-    instructor: string;
+    teacher: string;
     description: string;
     // Link to the image, not an actual image
     thumbnail: string;
@@ -59,7 +62,7 @@ export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
     selected: boolean;
   };
 
-export type CourseForInstructorProps = UniqueObject & {
+export type CourseForTeacherProps = UniqueObject & {
     title: string;
     description: string;
     status: CourseStatus;
@@ -71,7 +74,7 @@ export type CourseForInstructorProps = UniqueObject & {
 
 export type CourseForStudentProps = UniqueObject & {
     title: string;
-    instructorName: string;
+    teacherName: string;
     tags: Category[];
     description: string;
     // Link to the image, not an actual image
@@ -88,7 +91,7 @@ export type CourseForStudentProps = UniqueObject & {
     showLogoutButton : boolean
   };
 
-  export type InstructorApplicationProps = UniqueObject & ApprovalButtonFunction & {
+  export type TeacherApplicationProps = UniqueObject & ApprovalButtonFunction & {
     username : string;
     email : string;
     selected : boolean;
@@ -206,3 +209,27 @@ export type CreateCourseInput = {
 export type CategoryInput = {
   name : string
 }
+
+export type CourseContentProps = {
+  fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
+  runOnDelete: () => void;
+  runOnEdit: () => void;
+  runOnClick: (id: string) => void;
+  queryName: string;
+  type: CourseContentElementType;
+  isTeacher?: boolean;
+};
+
+export type CourseContentContainerProps = {
+  courseID: string;
+  isTeacher?: boolean;
+};
+
+export type CourseHeaderProps = {
+  courseID: string;
+};
+
+export type LoadingScreenProps = {
+  displayedText: string;
+  overlayType?: OverlayType;
+};

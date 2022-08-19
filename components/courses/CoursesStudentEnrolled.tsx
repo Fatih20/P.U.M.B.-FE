@@ -5,18 +5,16 @@ import { getCoursesMine } from "@/utils/api/courses";
 import CourseForStudent from "@/components/courseExternal/CourseForStudent";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import CoursesContainer from "@/components/courses/Courses";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
 
 type Props = {};
 
 const CoursesStudentEnrolled = (props: Props) => {
-  const router = useRouter();
-
   const {
     data: courseEnrolledData,
-    error: courseEnrolledError,
     isError: courseEnrolledIsError,
     isLoading: courseEnrolledIsLoading,
-  } = useQuery("coursesEnrolled", getCoursesMine);
+  } = useQuery("coursesEnrolled", getCoursesMine, queryFetchingConfig);
 
   if (!courseEnrolledData || courseEnrolledIsLoading) {
     return (
@@ -48,7 +46,7 @@ const CoursesStudentEnrolled = (props: Props) => {
             id={id}
             tags={categories}
             description={description}
-            instructorName={teacher[0].user.username}
+            teacherName={teacher[0].user.username}
             title={title}
             thumbnail={thumbnail_url}
             key={id}

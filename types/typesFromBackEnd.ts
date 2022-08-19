@@ -31,7 +31,7 @@ export type Course = UniqueObject & {
   thumbnail_url : string,
   enrolled : boolean,
   _count : {
-    followers : number
+    followers : number | null
   }
 }
 
@@ -39,6 +39,7 @@ export type User = UniqueObject & {
   username : string,
   email : string,
   role : UserRole,
+  status : null | TeacherStatus
 }
 
 export type TeacherForAdmin = User & {

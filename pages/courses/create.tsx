@@ -42,8 +42,17 @@ const CreateCoursePage = (props: Props) => {
     );
   }
 
-  if (user.role !== "TEACHER") {
-    router.push("/");
+  if (
+    user.role !== "TEACHER" ||
+    user.status === null ||
+    user.status.status !== "VERIFIED"
+  ) {
+    if (user.role !== "TEACHER" || user.status === null) {
+      router.push("/");
+    } else if (user.status?.status !== "VERIFIED") {
+      router.push("/courses");
+    }
+
     return (
       <BaseLayout>
         <OverlayScreen displayedText='Unauthorized' overlayType='plain' />
