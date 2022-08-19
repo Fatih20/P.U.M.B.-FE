@@ -107,9 +107,7 @@ const CoursesTeacher = ({}: CoursesProps) => {
       <div className='box-border fixed top-0 bottom-0 left-0 right-0 p-4 min-h-full flex items-end justify-end z-10 pointer-events-none'>
         <button
           className={`${
-            user.status === null || user.status.status !== "VERIFIED"
-              ? "hidden"
-              : ""
+            user.status?.status !== "VERIFIED" ? "hidden" : ""
           } text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600 pointer-events-auto`}
           onClick={() => router.push(`${router.asPath}/create`)}
         >
