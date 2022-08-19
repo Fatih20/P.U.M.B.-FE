@@ -47,7 +47,6 @@ const Course = ({
           {description}
         </p>
         <div
-          onClick={(e) => e.stopPropagation()}
           className={`${
             useDropdownDescription ? "" : "hidden"
           }flex items-center justify-center w-full`}
