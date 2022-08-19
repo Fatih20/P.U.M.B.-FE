@@ -6,14 +6,28 @@ import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
 import { useMutation, QueryClient } from "react-query";
-import { postOption } from "@/utils/api/quiz";
+import { postOption, patchQuestionStatement } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
   const queryClient = new QueryClient();
 
+  // Mutate Question PATCH
+  const { mutate:patchQuestionMutate } = useMutation(patchQuestionStatement, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("QUESTION_PATCH", "");
+    }
+  });
+  
   // Mutate Option POST
-  const { mutate:postOptionMutate, isLoading } = useMutation(postOption, {
+  const { mutate:postOptionMutate } = useMutation(postOption, {
     onSuccess: data => {
       Emitter.emit("OPTION_POST",data);
     },
@@ -41,6 +55,15 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
     postOptionMutate({data})
   }
 
+   // Handle Question PATCH
+   function handleQuestionPatch(id:any,data: any) {
+    console.log("handleQuestionPatch");
+
+    if (id !== undefined){
+      patchQuestionMutate({id,data})
+    }
+  }
+
   // Show Question SingleForm
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
     setQuestion({ ...question, edit: true })
@@ -63,7 +86,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
           {/* Question */}
           {!question.edit && <Statement text={item.statement} />}
 
-          {question.edit && <SingleForm placeholder="question.." event="QUESTION_PATCH" id={questionId} />}
+          {question.edit && <SingleForm placeholder="question.." defaultValue={item.statement} callback={handleQuestionPatch} id={questionId} />}
 
 
           <div className="ml-5 space-y-3 ">

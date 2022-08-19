@@ -4,7 +4,7 @@ import Emitter from "@/utils/emiiter";
 import { patchQuestionStatement } from "@/utils/api/quiz";
 import { QueryClient, useMutation } from "react-query";
 
-export default function SingleForm({ placeholder, event, id }: SingleFormType) {
+export default function SingleForm({ placeholder, callback, id, defaultValue }: SingleFormType) {
   const queryClient = new QueryClient();
 
   const {
@@ -13,40 +13,17 @@ export default function SingleForm({ placeholder, event, id }: SingleFormType) {
     formState: { errors },
   } = useForm<QuestionStatement>();
 
-  // Mutate Question PATCH
-  const { mutate, isLoading } = useMutation(patchQuestionStatement, {
-    onSuccess: data => {
-      console.log(data);
-    },
-    onError: () => {
-      alert("there was an error")
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries('Quiz')
-      Emitter.emit("QUESTION_PATCH", "");
-    }
-  });
-
-  // Handle Question PATCH
-  function handleQuestionPatch(id:any,data: any) {
-    console.log("handleQuestionPatch");
-
-    if (id !== undefined){
-      mutate({id,data})
-    }
-  }
-
   return (
     <>
       <form
         className='rounded  bg-white'
-        onSubmit={handleSubmit((data) => handleQuestionPatch(id,data))}
+        onSubmit={handleSubmit((data) => callback(id,data))}
       >
         <input
           type='text'
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
           {...register("statement", { required: true })}
-          // defaultValue={text}
+          defaultValue={defaultValue}
           placeholder={placeholder}
         />
       </form>
