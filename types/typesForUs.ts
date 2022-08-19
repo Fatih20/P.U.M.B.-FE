@@ -1,5 +1,8 @@
 import { Category, Course, CourseStatus, possibleCourseStatus, UniqueObject } from "./typesFromBackEnd";
 
+const possiblyCreatedRole = ["TEACHER", "STUDENT"] as const;
+export type PossiblyCreatedRole = typeof possiblyCreatedRole[number];
+
 export const possibleCourseAction = ["approve", "reject", "select"] as const;
 export type CourseAction = typeof possibleCourseAction[number];
 

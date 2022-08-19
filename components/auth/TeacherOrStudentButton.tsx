@@ -1,21 +1,19 @@
+import { PossiblyCreatedRole } from "@/appTypes/typesForUs";
+
 interface TeacherOrStudentButtonProps {
-  role: string;
-  setRole: (a: string) => void;
+  role: PossiblyCreatedRole;
+  setRole: (a: PossiblyCreatedRole) => void;
 }
 
 export default function TeacherOrStudentButton({
   role,
   setRole,
 }: TeacherOrStudentButtonProps) {
-  const setRoleValue = (value: string) => {
-    setRole(value);
-  };
-
   return (
     <div className='flex space-x-4'>
       <div className='relative basis-1/2 w-full'>
         <button
-          onClick={() => setRoleValue("TEACHER")}
+          onClick={() => setRole("TEACHER")}
           className='border-2 rounded-lg overflow-hidden'
         >
           <img src='https://static.vecteezy.com/system/resources/previews/003/241/285/original/business-instructor-and-tutor-vector.jpg' />
@@ -29,7 +27,7 @@ export default function TeacherOrStudentButton({
       </div>
       <div className='relative basis-1/2 w-full'>
         <button
-          onClick={() => setRoleValue("STUDENT")}
+          onClick={() => setRole("STUDENT")}
           className='border-2 rounded-lg overflow-hidden'
         >
           <img src='https://cdn.pixabay.com/photo/2019/05/21/22/21/boy-4220282__340.png' />

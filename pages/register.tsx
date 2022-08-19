@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import TeacherOrStudentButton from "@/components/auth/TeacherOrStudentButton";
 import ErrorMessage from "@/components/errorMessage";
-import { RegisterInputs } from "@/appTypes/typesForUs";
+import { PossiblyCreatedRole, RegisterInputs } from "@/appTypes/typesForUs";
 import { signup } from "@/utils/api/auth";
 
 export default function RegisterPage() {
@@ -16,10 +16,7 @@ export default function RegisterPage() {
   } = useForm<RegisterInputs>();
 
   // Role State
-  const [selectedRole, setRole] = useState("STUDENT");
-  const manageRole = (role: string) => {
-    setRole(role);
-  };
+  const [selectedRole, setRole] = useState("STUDENT" as PossiblyCreatedRole);
   const router = useRouter();
 
   // Error Visibility State
