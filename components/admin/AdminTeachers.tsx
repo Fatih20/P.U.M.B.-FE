@@ -13,6 +13,7 @@ import CoursesContainer from "@/components/courses/Courses";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import CollectiveActionButtons from "@/components/admin/CollectiveActionButtons";
 import TeacherApplication from "@/components/admin/TeacherApplication";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -50,7 +51,6 @@ const AdminTeachers = (props: Props) => {
   function teacherMapper({ username, id, email }: TeacherForAdmin) {
     const selected = selectedTeachers.includes(id);
     const runOnSelect = () => {
-      console.log("Bruh");
       setSelectedTeachers((prevSelectedTeachers) => [
         ...prevSelectedTeachers,
         id,
@@ -61,6 +61,25 @@ const AdminTeachers = (props: Props) => {
         prevSelectedTeachers.filter((selectedID) => selectedID !== id)
       );
     };
+
+    const approveOrRejectFactory = (isApprove: boolean) => {
+      return async () => {
+        const loadingToast = toast.loading(
+          `${isApprove ? "Approving" : "Rejecting"} application`
+        );
+        const warningText = isApprove ? "approved" : "rejected";
+        const { error } = await modifyTeacher({
+          idArray: [id],
+          status: isApprove ? "VERIFIED" : "REJECTED",
+        });
+        toast.dismiss(loadingToast);
+        if (!error) {
+          toast.success(`Teacher succesfully ${warningText}`);
+        } else {
+          toast.error(`Teacher failed to be ${warningText}`);
+        }
+      };
+    };
     return (
       <TeacherApplication
         email={email}
@@ -68,12 +87,8 @@ const AdminTeachers = (props: Props) => {
         username={username}
         key={id}
         selected={selectedTeachers.some((selectedID) => selectedID === id)}
-        runOnApprove={async () =>
-          await modifyTeacher({ idArray: [id], status: "VERIFIED" })
-        }
-        runOnReject={async () =>
-          await modifyTeacher({ idArray: [id], status: "REJECTED" })
-        }
+        runOnApprove={approveOrRejectFactory(true)}
+        runOnReject={approveOrRejectFactory(false)}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );

@@ -37,12 +37,6 @@ const AdminCourses = (props: Props) => {
     }
   );
 
-  useEffect(() => {
-    console.log(selectedCourses);
-
-    return;
-  }, [selectedCourses]);
-
   function courseMapper({
     description,
     id,
@@ -59,6 +53,24 @@ const AdminCourses = (props: Props) => {
         prevSelectedCourses.filter((selectedID) => selectedID !== id)
       );
     };
+    const approveOrRejectFactory = (isApprove: boolean) => {
+      return async () => {
+        const loadingToast = toast.loading(
+          `${isApprove ? "Approving" : "Rejecting"} application`
+        );
+        const warningText = isApprove ? "approved" : "rejected";
+        const { error } = await modifyCourse({
+          idArray: [id],
+          status: isApprove ? "VERIFIED" : "REJECTED",
+        });
+        toast.dismiss(loadingToast);
+        if (!error) {
+          toast.success(`Course succesfully ${warningText}`);
+        } else {
+          toast.error(`Course failed to be ${warningText}`);
+        }
+      };
+    };
     return (
       <CourseForAdmin
         description={description}
@@ -68,28 +80,8 @@ const AdminCourses = (props: Props) => {
         selected={selected}
         thumbnail={thumbnail_url}
         key={id}
-        runOnApprove={async () => {
-          const { error } = await modifyCourse({
-            idArray: [id],
-            status: "VERIFIED",
-          });
-          if (!error) {
-            toast.success("Course succesfully approved");
-          } else {
-            toast.error("Course failed to be approve");
-          }
-        }}
-        runOnReject={async () => {
-          const { error } = await modifyCourse({
-            idArray: [id],
-            status: "REJECTED",
-          });
-          if (!error) {
-            toast.success("Course succesfully rejected");
-          } else {
-            toast.error("Course failed to be rejected");
-          }
-        }}
+        runOnApprove={approveOrRejectFactory(true)}
+        runOnReject={approveOrRejectFactory(false)}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
