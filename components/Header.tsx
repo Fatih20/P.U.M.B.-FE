@@ -21,7 +21,7 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
         <button
           className={`${showBackButton ? "" : "invisible"}`}
           onClick={() => {
-            location.assign("/");
+            window.history.back();
           }}
         >
           <FontAwesomeIcon icon={faChevronLeft} />
