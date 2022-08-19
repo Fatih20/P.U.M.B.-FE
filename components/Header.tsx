@@ -7,7 +7,7 @@ import {
 import { HeaderProps } from "@/appTypes/typesForUs";
 import { useQueryClient } from "react-query";
 import { logout } from "@/utils/api/auth";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();
