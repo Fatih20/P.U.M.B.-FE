@@ -7,9 +7,11 @@ import {
 import { HeaderProps } from "@/appTypes/typesForUs";
 import { useQueryClient } from "react-query";
 import { logout } from "@/utils/api/auth";
+import { Router, useRouter } from "next/router";
 
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   return (
     <div
@@ -27,7 +29,10 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
         <h1 className='font-bold'>App Name</h1>
         <button
           onClick={async () =>
-            await logout(() => queryClient.invalidateQueries("me"))
+            await logout(() => {
+              queryClient.invalidateQueries("me");
+              router.push("/login");
+            })
           }
           className={`${showLogoutButton ? "" : "invisible"}`}
         >
