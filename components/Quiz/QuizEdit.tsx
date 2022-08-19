@@ -6,7 +6,7 @@ import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
 import { useMutation, QueryClient } from "react-query";
-import { postOption, patchQuestionStatement } from "@/utils/api/quiz";
+import { postOption, patchQuestionStatement, patchOption } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
@@ -43,6 +43,20 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
     }
   });
 
+  // Mutate Option PATCH
+  const { mutate: patchOptionMutate } = useMutation(patchOption, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("REFETCH", "");
+    }
+  });
+
   // Handle Question DELETE 
   function handleQuestionDelete(id: string) {
     deleteQuestion(id).then(resp => {
@@ -62,16 +76,22 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
   // Handle Question PATCH
   function handleQuestionPatch(id: any, data: any) {
     console.log("handleQuestionPatch");
-
     if (id !== undefined) {
       patchQuestionMutate({ id, data })
     }
   }
 
   // Handle Option PATCH
-  function handleOptionPatch() {
+  function handleOptionPatch(id: any, formSubmit: any) {
     console.log("handleOptionPatch");
+    console.log(formSubmit);
+    const data = {
+      content : formSubmit.statement
+    }
     setOptionEdit(undefined)
+    if (id !== undefined) {
+      patchOptionMutate({ id, data })
+    }
   }
 
   // Show Question SingleForm

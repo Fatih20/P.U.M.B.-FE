@@ -100,4 +100,16 @@ export async function postOption({data}:{data:any}) {
   return errorWrappedResult;
 }
 
+// PATCH Option
+export async function patchOption({id,data}:{id:any,data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+    `/options/${id}`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
 

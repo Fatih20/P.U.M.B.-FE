@@ -34,6 +34,11 @@ export default function QuizPage() {
   // console.log(data?.result.data);
 
   // Listening on Question Create New
+  Emitter.on('REFETCH', (data: any) => {
+    refetch()
+  });
+
+  // Listening on Question Create New
   Emitter.on('QUESTION_POST', (data: any) => {
     refetch()
   });
