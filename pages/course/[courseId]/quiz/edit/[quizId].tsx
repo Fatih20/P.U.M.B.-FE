@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react"
-import debounce from 'lodash.debounce';
 import { useRouter } from "next/router"
 import Emitter from "../../../../../utils/emiiter"
 import SecondBaseLayout from "../../../../../layout/SecondBaseLayout"
@@ -7,7 +6,6 @@ import QuizTitleForm from "../../../../../components/Quiz/QuizTitle"
 import { getQuizById, patchQuiz, postQuestionStatement, deleteQuestion } from "../../../../api/quizAPI"
 import { QuizPatch, QuestionStatement, QuestionType } from "../../../../../types/typesForUs"
 import AddQuestionButton from "../../../../../components/Quiz/AddQuestionButton"
-import QuizEdit from "../../../../../components/Quiz/QuizEdit"
 import QuestionFactory from "../../../../../components/Quiz/QuestionFactory"
 
 
@@ -19,10 +17,7 @@ export default function QuizPage() {
     // Initiate State
     const [title, setTitle] = useState("");
     const [questions, setQuestions] = useState([] as QuestionType[]);
-    const [isRequesting, setIsRequesting] = useState(false);
-    const [number, setNumber] = useState(0);
 
-    // let isRequesting = false
 
     // Fetching data
     useEffect(() => {
@@ -45,60 +40,53 @@ export default function QuizPage() {
 
         // Listening on Question Delete
         Emitter.on('QUESTION_DELETE', (id: any) => {
-            Emitter.off('QUESTION_DELETE', "")
-            try {
-                console.log("ini fungsi di main");
 
-                console.log(id);
-
-                if (!isRequesting) {
-                    setIsRequesting(true)
-                    deleteQuestion(id).then(resp => {
-                        console.log(resp);
-                        setIsRequesting(false)
-                    })
-                }
-
-
-            } catch (error) {
-                console.log(error);
-            }
+            deleteQuestion(id).then(resp => {
+                console.log(resp);
+                let itemsCopy = questions
+                let result = itemsCopy.filter((item: any) => {
+                    if (item.id != id) {
+                        return item
+                    }
+                })
+                setQuestions(result)
+            })
 
         });
 
-        // Listening on Question Create New
-        Emitter.on('QUESTION_POST', (data: any) => {
-            debouncedQuestionPost()
-        });
+
+
     })
 
-    function handleQuestionPost() {
-        try {
 
-            if (typeof quizId !== 'undefined') {
-                console.log("running post request");
 
-                const payload: QuestionStatement = {
-                    statement: "Question Statement",
-                    quiz_id: quizId as string
-                }
+    // Listening on Question Create New
+    Emitter.on('QUESTION_POST', (data: any) => {
+        handleQuestionPost()
+    });
 
-                postQuestionStatement(payload).then(resp => {
-                    // Butuh update question state, tapi harus fetching data dulu
-                    // ada masalah di requestnya ke kirim berkali"
-                    console.log("post response");
-                    console.log(resp);
-                })
+
+    async function handleQuestionPost() {
+        if (typeof quizId !== 'undefined') {
+            console.log("running post request");
+
+            const payload: QuestionStatement = {
+                statement: "Question Statement",
+                quiz_id: quizId as string
             }
 
-        } catch (error) {
-            console.log(error);
+            postQuestionStatement(payload).then(resp => {
+
+                console.log("post response");
+                console.log(resp);
+
+                let itemsCopy = questions
+                itemsCopy.push(resp.result.data)
+                setQuestions(itemsCopy)
+            })
         }
     }
 
-    const debouncedQuestionPost = useCallback(
-        debounce(handleQuestionPost, 300)
-        , []);
 
     // Listening Quiz Title Edit
     Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
@@ -124,7 +112,7 @@ export default function QuizPage() {
 
 
 
-    console.log("re-rendered");
+    console.log(questions);
 
 
 
