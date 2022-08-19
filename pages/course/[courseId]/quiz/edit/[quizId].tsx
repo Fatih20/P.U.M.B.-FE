@@ -33,8 +33,8 @@ export default function QuizPage() {
 
   const { data, status, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
 
-  console.log(status);
-  console.log(data?.result.data.questions);
+  // console.log(status);
+  // console.log(data?.result.data.questions);
 
 
 
@@ -76,13 +76,13 @@ export default function QuizPage() {
 
   // Listening on Question Edit
   Emitter.on('QUESTION_PATCH', (data: QuestionStatement) => {
-    console.log(data);
+    refetch()
   });
 
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className="space-y-3 w-full">
+        <div className="mt-3 space-y-3 w-full">
           {data?.result  && <QuizTitleForm text={data?.result.data.title} editable={true} />}
 
           {data?.result  && <QuestionFactory Items={data?.result.data.questions} />}

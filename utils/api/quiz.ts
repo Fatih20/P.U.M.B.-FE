@@ -64,6 +64,27 @@ export async function postQuestionStatement(data:QuestionStatement) {
   return errorWrappedResult;
 }
 
+// PATCH Quiz Title
+export async function patchQuestionStatement({id,data}:{id:any,data:any}) {
+  const [_, quizId] = id
+  
+  console.log("patchQuestionStatement");
+  console.log(quizId);
+  console.log(id);
+  console.log(data);
+  
+  
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+    `/questions/${id}`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  // return null;
+  return errorWrappedResult;
+}
+
 // Delete Question by ID
 export async function deleteQuestion(id:any) {
   

@@ -6,24 +6,21 @@ import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
 
-export default function QuizEdit({ item }: { item: QuestionType }) {
+export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
 
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
+    // Show Question SingleForm
+    setQuestion({ ...question, edit: true })
     try {
-      setQuestion({ ...question, edit: true })
     } catch (error) {
       console.log(error);
     }
   })
-
-  Emitter.once("QUESTION_SUBMIT", (data: QuestionStatement) => {
-    try {
-      setQuestion({ ...question, edit: false });
-      // console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  
+  Emitter.once("QUESTION_PATCH", (data: QuestionStatement) => {
+    // Hide Question SingleForm
+    setQuestion({ ...question, edit: false });
   });
 
   function handleQuestionDelete(id:string) {
@@ -42,7 +39,7 @@ export default function QuizEdit({ item }: { item: QuestionType }) {
           {/* Question */}
           {!question.edit && <Statement text={item.statement} />}
 
-          {question.edit && <SingleForm placeholder="question.." event="QUESTION_SUBMIT" />}
+          {question.edit && <SingleForm placeholder="question.." event="QUESTION_PATCH" id={questionId}/>}
 
 
           <div className="ml-5 space-y-3 ">

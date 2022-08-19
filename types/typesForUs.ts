@@ -149,7 +149,8 @@ export type QuizPatch = {
 
 export type SingleFormType = {
   placeholder: string,
-  event: string
+  event: string,
+  id:string
 }
 
 export type QuestionStatement = {

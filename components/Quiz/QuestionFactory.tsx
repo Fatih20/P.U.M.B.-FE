@@ -9,7 +9,7 @@ export default function QuestionFactory({ Items }: { Items: QuestionType[] }) {
         <>
             {Items.map((item) => {
                 return(
-                    <QuizEdit key={item.id} item={item}/>
+                    <QuizEdit key={item.id} item={item} questionId={item.id}/>
                 )
                 // <p>{</p>
             })}

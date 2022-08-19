@@ -1,19 +1,50 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { QuestionStatement, SingleFormType } from "@/appTypes/typesForUs";
 import Emitter from "@/utils/emiiter";
+import { patchQuestionStatement } from "@/utils/api/quiz";
+import { QueryClient, useMutation } from "react-query";
+import { useRouter } from "next/router";
 
-export default function SingleForm({ placeholder, event }: SingleFormType) {
+export default function SingleForm({ placeholder, event, id }: SingleFormType) {
+  const queryClient = new QueryClient();
+
+  // Initiate Router
+  const router = useRouter()
+  const { quizId } = router.query
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<QuestionStatement>();
 
+
+  const { mutate, isLoading } = useMutation(patchQuestionStatement, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("QUESTION_PATCH", "");
+    }
+  });
+
+  function handleQuestionPatch(id:any,data: any) {
+    console.log("handleQuestionPatch");
+
+    if (id !== undefined){
+      mutate({id,data})
+    }
+  }
+
   return (
     <>
       <form
         className='rounded  bg-white'
-        onSubmit={handleSubmit((data) => Emitter.emit(event, data))}
+        onSubmit={handleSubmit((data) => handleQuestionPatch(id,data))}
       >
         <input
           type='text'
