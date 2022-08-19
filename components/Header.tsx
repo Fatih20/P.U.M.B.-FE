@@ -24,7 +24,7 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
-        <h1 className='font-semibold'>App Name</h1>
+        <h1 className='font-bold'>App Name</h1>
         <button
           onClick={async () =>
             await logout(() => queryClient.invalidateQueries("me"))

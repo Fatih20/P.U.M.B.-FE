@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Emitter from "../../../../../utils/emiiter";
-import SecondBaseLayout from "../../../../../layout/SecondBaseLayout";
+import BaseLayout from "../../../../../layout/BaseLayout";
 import QuizTitleForm from "../../../../../components/Quiz/QuizTitle";
 import {
   getQuizById,
@@ -68,13 +68,13 @@ export default function LecturePage() {
 
   return (
     <>
-      <SecondBaseLayout showBackButton={true}>
+      <BaseLayout showBackButton={true}>
         <div className='space-y-3 w-full'>
           <QuizTitleForm text={title} editable={true} />
           <QuizEdit />
           <AddQuestionButton />
         </div>
-      </SecondBaseLayout>
+      </BaseLayout>
     </>
   );
 }
