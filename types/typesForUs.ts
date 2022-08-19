@@ -31,7 +31,7 @@ export interface ApprovalButtonProperty {
 
 
 export type CourseProps = {
-    id : number
+    id : string;
     title : string;
     thumbnail: string;
     description: string;
@@ -123,7 +123,7 @@ export type SearchBarProps = {
 
   export type LectureTitlePost = {
     title: string,
-    course_id: number
+    course_id: string
   }
 
   export type LectureTitlePatch = {
@@ -139,7 +139,7 @@ export type SearchBarProps = {
 
 export type QuizPost = {
   title: string,
-  course_id: number
+  course_id: string
 }
 
 export type QuizPatch = {
@@ -170,7 +170,7 @@ export const possibleQuizOrLecture = ["quiz", "lecture"] as const;
 export type QuizOrLecture = typeof possibleQuizOrLecture[number];
 
 export type RejectOrApproveInput = {
-  id: number;
+  id: string;
   isCourse: boolean;
   reject: boolean;
 };

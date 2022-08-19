@@ -5,7 +5,7 @@ export const possibleCourseStatus = ["REJECTED" , "VERIFYING" , "VERIFIED"] as c
 export type CourseStatus = typeof possibleCourseStatus[number];
 
 export interface UniqueObject  {
-    id : number
+    id : string
 }
 
 export interface Category extends UniqueObject{
@@ -13,8 +13,8 @@ export interface Category extends UniqueObject{
 }
 
 export type TeacherForStudent = {
-  user_id : number,
-  course_id : number,
+  user_id : string,
+  course_id : string,
   created_at : string,
   updated_at : string,
   user : {
@@ -56,11 +56,11 @@ export type ObjectStatus = UniqueObject & {
 
 
 export type CourseStatusInCourse = ObjectStatus & {
-  course_id : number
+  course_id : string
 }
 
 export type TeacherStatus = ObjectStatus & {
-  user_id : number
+  user_id : string
 }
 export type Lecture = UniqueObject & {
   title : string,
