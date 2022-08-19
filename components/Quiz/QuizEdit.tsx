@@ -12,8 +12,37 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
   const [question, setQuestion] = useState({ edit: false });
   const queryClient = new QueryClient();
 
+  // Mutate Option POST
+  const { mutate:postOptionMutate, isLoading } = useMutation(postOption, {
+    onSuccess: data => {
+      Emitter.emit("OPTION_POST",data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+    }
+  });
+
+  // Handle Question DELETE 
+  function handleQuestionDelete(id: string) {
+    deleteQuestion(id).then(resp => {
+      Emitter.emit("QUESTION_DELETE", id);
+    })
+  }
+
+  // Handle Option POST
+  function handleAddOption() {
+    const data = {
+      question_id:questionId,
+      content : "Answer.."
+    }
+    postOptionMutate({data})
+  }
+
+  // Show Question SingleForm
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
-    // Show Question SingleForm
     setQuestion({ ...question, edit: true })
     try {
     } catch (error) {
@@ -21,41 +50,10 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
     }
   })
 
+  // Hide Question SingleForm
   Emitter.once("QUESTION_PATCH", (data: QuestionStatement) => {
-    // Hide Question SingleForm
     setQuestion({ ...question, edit: false });
   });
-
-  function handleQuestionDelete(id: string) {
-    deleteQuestion(id).then(resp => {
-      console.log(resp);
-      Emitter.emit("QUESTION_DELETE", id);
-    })
-  }
-
-  const { mutate:postOptionMutate, isLoading } = useMutation(postOption, {
-    onSuccess: data => {
-      console.log("postOptionMutate");
-      console.log(data);
-    },
-    onError: () => {
-      alert("there was an error")
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries('Quiz')
-      Emitter.emit("QUESTION_PATCH", "");
-    }
-  });
-
-  function handleAddOption() {
-    const data = {
-      question_id:questionId,
-      content : "Answer.."
-    }
-
-    postOptionMutate({data})
-
-  }
 
 
   return (

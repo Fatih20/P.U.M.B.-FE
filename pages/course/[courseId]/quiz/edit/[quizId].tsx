@@ -26,19 +26,29 @@ export default function QuizPage() {
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState([] as QuestionType[]);
 
-
-
   // React Query
   const queryClient = new QueryClient();
-
   const { data, status, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
 
   console.log("main page");
   console.log(data?.result.data);
 
+  // Listening on Question Create New
+  Emitter.on('QUESTION_POST', (data: any) => {
+    refetch()
+  });
 
+   // Listening on Question Create New
+   Emitter.on('OPTION_POST', (data: any) => {
+    refetch()
+  });
 
+  // Listening on Question Edit
+  Emitter.on('QUESTION_PATCH', (data: QuestionStatement) => {
+    refetch()
+  });
 
+  // Listening to Question Delete
   Emitter.on('QUESTION_DELETE', (id: string) => {
     let itemsCopy = questions
     let result = itemsCopy.filter((item: any) => {
@@ -46,23 +56,12 @@ export default function QuizPage() {
         return item
       }
     })
-    // setQuestions(result)
     refetch()
-
   })
-
-  // Listening on Question Create New
-  Emitter.on('QUESTION_POST', (data: any) => {
-    refetch()
-  });
-
-
 
   // Listening Quiz Title Edit
   Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
-
     if (typeof quizId !== 'undefined') {
-
       patchQuiz(quizId, data).then(resp => {
         console.log(resp);
         queryClient.invalidateQueries("Quiz");
@@ -71,10 +70,6 @@ export default function QuizPage() {
     }
   });
 
-  // Listening on Question Edit
-  Emitter.on('QUESTION_PATCH', (data: QuestionStatement) => {
-    refetch()
-  });
 
   return (
     <>

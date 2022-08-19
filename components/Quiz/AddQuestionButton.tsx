@@ -15,7 +15,7 @@ export default function AddDropDownButton({quizId}:{quizId:string}) {
             alert("there was an error")
         },
         onSettled: () => {
-            queryClient.invalidateQueries('Quiz')
+            queryClient.invalidateQueries("Quiz")
             Emitter.emit("QUESTION_POST", "");
         }
     });

@@ -3,14 +3,9 @@ import { QuestionStatement, SingleFormType } from "@/appTypes/typesForUs";
 import Emitter from "@/utils/emiiter";
 import { patchQuestionStatement } from "@/utils/api/quiz";
 import { QueryClient, useMutation } from "react-query";
-import { useRouter } from "next/router";
 
 export default function SingleForm({ placeholder, event, id }: SingleFormType) {
   const queryClient = new QueryClient();
-
-  // Initiate Router
-  const router = useRouter()
-  const { quizId } = router.query
 
   const {
     register,
@@ -18,7 +13,7 @@ export default function SingleForm({ placeholder, event, id }: SingleFormType) {
     formState: { errors },
   } = useForm<QuestionStatement>();
 
-
+  // Mutate Question PATCH
   const { mutate, isLoading } = useMutation(patchQuestionStatement, {
     onSuccess: data => {
       console.log(data);
@@ -32,6 +27,7 @@ export default function SingleForm({ placeholder, event, id }: SingleFormType) {
     }
   });
 
+  // Handle Question PATCH
   function handleQuestionPatch(id:any,data: any) {
     console.log("handleQuestionPatch");
 
