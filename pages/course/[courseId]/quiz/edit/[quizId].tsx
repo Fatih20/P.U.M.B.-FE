@@ -7,74 +7,124 @@ import {
   getQuizById,
   patchQuiz,
   postQuestionStatement,
+  deleteQuestion
 } from "@/utils/api/quiz";
-import { QuizPatch, QuestionStatement } from "@/appTypes/typesForUs";
+import { QuizPatch, QuestionStatement,QuestionType } from "@/appTypes/typesForUs";
 import AddQuestionButton from "@/components/Quiz/AddQuestionButton";
-import QuizEdit from "@/components/Quiz/QuizEdit";
+import QuestionFactory from "@/components/Quiz/QuestionFactory";
 
-export default function LecturePage() {
+export default function QuizPage() {
   // Initiate Router
-  const router = useRouter();
-  const { quizId } = router.query;
+  const router = useRouter()
+  const { quizId } = router.query
 
   // Initiate State
   const [title, setTitle] = useState("");
+  const [questions, setQuestions] = useState([] as QuestionType[]);
+
 
   useEffect(() => {
     // Fetching data
     if (quizId && title == "") {
       try {
-        getQuizById(quizId).then((data) => {
+        // Get Quiz Title
+        getQuizById(quizId).then(data => {
           console.log(data);
 
-          setTitle(data.result.data.title);
-        });
+          setTitle(data.result.data.title)
+          setQuestions(data.result.data.questions)
+
+        })
       } catch (error) {
         console.log(error);
       }
     }
+
+    // Listening on Question Delete
+    Emitter.on('QUESTION_DELETE', (id: any) => {
+
+      deleteQuestion(id).then(resp => {
+        console.log(resp);
+        let itemsCopy = questions
+        let result = itemsCopy.filter((item: any) => {
+          if (item.id != id) {
+            return item
+          }
+        })
+        setQuestions(result)
+      })
+
+    });
+
+
+
+  })
+
+
+
+  // Listening on Question Create New
+  Emitter.on('QUESTION_POST', (data: any) => {
+    handleQuestionPost()
   });
+
+
+  async function handleQuestionPost() {
+    if (typeof quizId !== 'undefined') {
+      console.log("running post request");
+
+      const payload: QuestionStatement = {
+        statement: "Question Statement",
+        quiz_id: quizId as string
+      }
+
+      postQuestionStatement(payload).then(resp => {
+
+        console.log("post response");
+        console.log(resp);
+
+        let itemsCopy = questions
+        itemsCopy.push(resp.result.data)
+        setQuestions(itemsCopy)
+      })
+    }
+  }
+
 
   // Listening Quiz Title Edit
-  Emitter.once("QUIZ_PATCH", (data: QuizPatch) => {
+  Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
     try {
-      if (typeof quizId !== "undefined") {
-        patchQuiz(quizId, data).then((resp) => {
-          setTitle(data.title);
-        });
+      if (typeof quizId !== 'undefined') {
+        patchQuiz(quizId, data).then(resp => {
+          setTitle(resp.result.data.title)
+        })
       }
-    } catch (error) {
+    }catch (error) {
       console.log(error);
     }
   });
 
-  // Listening on Question Submit
-  Emitter.on("QUESTION_SUBMIT", (data: QuestionStatement) => {
-    try {
-      if (typeof quizId !== "undefined") {
-        postQuestionStatement({
-          ...data,
-          quiz_id: parseInt(quizId as string),
-        }).then((resp) => {
-          // Butuh update question state, tapi harus fetching data dulu
-          // ada masalah di requestnya ke kirim berkali"
-          console.log(resp);
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  // Listening on Question Edit
+  Emitter.on('QUESTION_PATCH', (data: QuestionStatement) => {
+    console.log(data);
   });
+
+  console.log(questions);
 
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className='space-y-3 w-full'>
+        <div className="space-y-3 w-full">
           <QuizTitleForm text={title} editable={true} />
-          <QuizEdit />
+          {/* <QuizEdit /> */}
+
+
+          {questions.length >= 1 && <QuestionFactory Items={questions} />}
+
+
           <AddQuestionButton />
+
         </div>
       </BaseLayout>
     </>
-  );
+  )
 }
