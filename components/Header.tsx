@@ -30,7 +30,7 @@ const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
         <button
           onClick={async () =>
             await logout(() => {
-              queryClient.invalidateQueries("me");
+              queryClient.invalidateQueries();
               router.push("/login");
             })
           }
