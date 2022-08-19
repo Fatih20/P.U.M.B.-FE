@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
   CourseColorAndText,
-  CourseForInstructorProps,
+  CourseForTeacherProps,
 } from "@/appTypes/typesForUs";
 
 import Course from "@/components/courseExternal/Course";
@@ -25,14 +25,14 @@ const statusColorAndText = {
   },
 } as Record<CourseStatus, CourseColorAndText>;
 
-const CourseForInstructor = ({
+const CourseForTeacher = ({
   title,
   description,
   status,
   peopleEnrolled,
   thumbnail,
   id,
-}: CourseForInstructorProps) => {
+}: CourseForTeacherProps) => {
   const bottomContent = (
     <div
       className={`p-2 bg-${statusColorAndText[status]["color"]} text-${statusColorAndText[status]["textColor"]} font-medium w-full flex items-center justify-center`}
@@ -59,4 +59,4 @@ const CourseForInstructor = ({
   );
 };
 
-export default CourseForInstructor;
+export default CourseForTeacher;

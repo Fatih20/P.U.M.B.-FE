@@ -63,7 +63,7 @@ const AdminCourses = (props: Props) => {
       <CourseForAdmin
         description={description}
         id={id}
-        instructor={teacher[0].user.username}
+        teacher={teacher[0].user.username}
         title={title}
         selected={selected}
         thumbnail={thumbnail_url}
@@ -98,8 +98,8 @@ const AdminCourses = (props: Props) => {
   if (isCourseVerifyingLoading) {
     return (
       <OverlayScreen
-        displayedText="Loading courses data"
-        overlayType="loading"
+        displayedText='Loading courses data'
+        overlayType='loading'
       />
     );
   }
@@ -107,14 +107,14 @@ const AdminCourses = (props: Props) => {
   if (!courseVerifyingData || isCourseVerifyingError) {
     return (
       <OverlayScreen
-        displayedText="Error getting courses data"
-        overlayType="error"
+        displayedText='Error getting courses data'
+        overlayType='error'
       />
     );
   }
 
   if (courseVerifyingData.length === 0) {
-    return <OverlayScreen displayedText="No courses on the waiting list" />;
+    return <OverlayScreen displayedText='No courses on the waiting list' />;
   }
 
   return (

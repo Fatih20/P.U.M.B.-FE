@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
-import CoursesInstructor from "@/components/courses/CoursesInstructor";
 import CoursesStudent from "@/components/courses/CoursesStudent";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import useMe from "@/hooks/useMe";
 import BaseLayout from "@/layout/BaseLayout";
 import { getCourses } from "@/utils/api/courses";
+import CoursesTeacher from "@/components/courses/CoursesTeacher";
 
 type CoursesPage = {};
 
@@ -35,7 +35,7 @@ const CoursesPage = (props: CoursesPage) => {
   }
 
   const UsedCoursesComponent =
-    user.role === "STUDENT" ? CoursesStudent : CoursesInstructor;
+    user.role === "STUDENT" ? CoursesStudent : CoursesTeacher;
 
   return (
     <BaseLayout showBackButton={false}>

@@ -12,7 +12,7 @@ import {
 import CoursesContainer from "@/components/courses/Courses";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import CollectiveActionButtons from "@/components/admin/CollectiveActionButtons";
-import InstructorApplication from "@/components/admin/InstructorApplication";
+import TeacherApplication from "@/components/admin/TeacherApplication";
 
 type Props = {};
 
@@ -62,7 +62,7 @@ const AdminTeachers = (props: Props) => {
       );
     };
     return (
-      <InstructorApplication
+      <TeacherApplication
         email={email}
         id={id}
         username={username}
@@ -82,8 +82,8 @@ const AdminTeachers = (props: Props) => {
   if (isTeacherVerifyingLoading) {
     return (
       <OverlayScreen
-        displayedText="Loading teachers data"
-        overlayType="loading"
+        displayedText='Loading teachers data'
+        overlayType='loading'
       />
     );
   }
@@ -91,14 +91,14 @@ const AdminTeachers = (props: Props) => {
   if (!teacherVerifyingData || isTeacherVerifyingError) {
     return (
       <OverlayScreen
-        displayedText="Error getting teacher data"
-        overlayType="error"
+        displayedText='Error getting teacher data'
+        overlayType='error'
       />
     );
   }
 
   if (teacherVerifyingData.length === 0) {
-    return <OverlayScreen displayedText="No teacher on the waiting list" />;
+    return <OverlayScreen displayedText='No teacher on the waiting list' />;
   }
 
   return (

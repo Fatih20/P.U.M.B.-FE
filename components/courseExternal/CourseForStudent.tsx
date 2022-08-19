@@ -6,7 +6,7 @@ import { CourseForStudentProps } from "@/appTypes/typesForUs";
 const CourseForStudent = ({
   title,
   description,
-  instructorName,
+  teacherName,
   tags,
   thumbnail,
   id,
@@ -25,9 +25,7 @@ const CourseForStudent = ({
   const centerContent = (
     <>
       <h2 className='text-2xl font-bold whitespace-normal truncate'>{title}</h2>
-      <h3 className='whitespace-normal text-lg font-medium'>
-        {instructorName}
-      </h3>
+      <h3 className='whitespace-normal text-lg font-medium'>{teacherName}</h3>
     </>
   );
   return (

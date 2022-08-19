@@ -51,7 +51,7 @@ export type CourseProps = {
 
 export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
     title: string;
-    instructor: string;
+    teacher: string;
     description: string;
     // Link to the image, not an actual image
     thumbnail: string;
@@ -59,7 +59,7 @@ export type CourseForAdminProps =  ApprovalButtonFunction & UniqueObject & {
     selected: boolean;
   };
 
-export type CourseForInstructorProps = UniqueObject & {
+export type CourseForTeacherProps = UniqueObject & {
     title: string;
     description: string;
     status: CourseStatus;
@@ -71,7 +71,7 @@ export type CourseForInstructorProps = UniqueObject & {
 
 export type CourseForStudentProps = UniqueObject & {
     title: string;
-    instructorName: string;
+    teacherName: string;
     tags: Category[];
     description: string;
     // Link to the image, not an actual image
@@ -88,7 +88,7 @@ export type CourseForStudentProps = UniqueObject & {
     showLogoutButton : boolean
   };
 
-  export type InstructorApplicationProps = UniqueObject & ApprovalButtonFunction & {
+  export type TeacherApplicationProps = UniqueObject & ApprovalButtonFunction & {
     username : string;
     email : string;
     selected : boolean;

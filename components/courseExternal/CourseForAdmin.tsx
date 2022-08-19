@@ -5,7 +5,7 @@ import ApprovalButtons from "@/components/ApprovalButtons";
 
 const CourseForAdmin = ({
   title,
-  instructor,
+  teacher,
   description,
   selected,
   thumbnail,
@@ -29,7 +29,7 @@ const CourseForAdmin = ({
   const centerContent = (
     <>
       <h2 className='text-2xl font-bold whitespace-normal'>{title}</h2>
-      <h3 className='whitespace-normal text-lg font-medium'>{instructor}</h3>
+      <h3 className='whitespace-normal text-lg font-medium'>{teacher}</h3>
     </>
   );
 

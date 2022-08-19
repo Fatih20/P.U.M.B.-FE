@@ -8,7 +8,7 @@ import {
 } from "@/appTypes/typesForUs";
 import { Course, CourseStatusInCourse } from "@/appTypes/typesFromBackEnd";
 import ChangeSeenButton from "@/components/ChangeSeenButton";
-import CourseForInstructor from "@/components/courseExternal/CourseForInstructor";
+import CourseForTeacher from "@/components/courseExternal/CourseForTeacher";
 import CoursesContainer from "@/components/courses/Courses";
 import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
 import OverlayScreen from "@/components/loading/OverlayScreen";
@@ -17,7 +17,7 @@ import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import useMe from "@/hooks/useMe";
 
-const CoursesInstructor = ({}: CoursesProps) => {
+const CoursesTeacher = ({}: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
   const router = useRouter();
 
@@ -76,7 +76,7 @@ const CoursesInstructor = ({}: CoursesProps) => {
     _count: { followers },
   }: Course) {
     return (
-      <CourseForInstructor
+      <CourseForTeacher
         id={id}
         status={course_status.status}
         description={description}
@@ -130,4 +130,4 @@ const CoursesInstructor = ({}: CoursesProps) => {
   );
 };
 
-export default CoursesInstructor;
+export default CoursesTeacher;

@@ -48,7 +48,7 @@ const CoursesStudentEnrolled = (props: Props) => {
             id={id}
             tags={categories}
             description={description}
-            instructorName={teacher[0].user.username}
+            teacherName={teacher[0].user.username}
             title={title}
             thumbnail={thumbnail_url}
             key={id}
