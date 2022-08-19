@@ -4,6 +4,7 @@ import { useState } from "react";
 import Emitter from "@/utils/emiiter";
 import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
+import { deleteQuestion } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item }: { item: QuestionType }) {
   const [question, setQuestion] = useState({ edit: false });
@@ -24,6 +25,15 @@ export default function QuizEdit({ item }: { item: QuestionType }) {
       console.log(error);
     }
   });
+
+  function handleQuestionDelete(id:string) {
+    
+    deleteQuestion(id).then(resp => {
+      console.log(resp);
+      Emitter.emit("QUESTION_DELETE", id);
+    })
+    
+  }
 
   return (
     <div className="relative">
@@ -66,7 +76,7 @@ export default function QuizEdit({ item }: { item: QuestionType }) {
         </div>
       </div>
       <button
-        onClick={() => Emitter.emit("QUESTION_DELETE", item.id)}
+        onClick={() => handleQuestionDelete(item.id)}
         type="button" style={{ top: '-4px', right: '-17px', height: 40 }}
         className="shadow-lg absolute w-fit flex items-center justify-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
         <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">

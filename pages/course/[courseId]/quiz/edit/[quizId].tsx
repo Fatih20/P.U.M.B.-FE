@@ -9,7 +9,7 @@ import {
   postQuestionStatement,
   deleteQuestion
 } from "@/utils/api/quiz";
-import { QuizPatch, QuestionStatement,QuestionType } from "@/appTypes/typesForUs";
+import { QuizPatch, QuestionStatement, QuestionType } from "@/appTypes/typesForUs";
 import AddQuestionButton from "@/components/Quiz/AddQuestionButton";
 import QuestionFactory from "@/components/Quiz/QuestionFactory";
 
@@ -41,25 +41,20 @@ export default function QuizPage() {
     }
 
     // Listening on Question Delete
-    Emitter.on('QUESTION_DELETE', (id: any) => {
-
-      deleteQuestion(id).then(resp => {
-        console.log(resp);
-        let itemsCopy = questions
-        let result = itemsCopy.filter((item: any) => {
-          if (item.id != id) {
-            return item
-          }
-        })
-        setQuestions(result)
+    Emitter.on('QUESTION_DELETE', (id: string) => {
+      let itemsCopy = questions
+      let result = itemsCopy.filter((item: any) => {
+        if (item.id != id) {
+          return item
+        }
       })
+      setQuestions(result)
 
     });
 
 
 
   })
-
 
 
   // Listening on Question Create New
@@ -98,7 +93,7 @@ export default function QuizPage() {
           setTitle(resp.result.data.title)
         })
       }
-    }catch (error) {
+    } catch (error) {
       console.log(error);
     }
   });

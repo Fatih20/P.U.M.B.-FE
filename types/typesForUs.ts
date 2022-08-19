@@ -165,7 +165,7 @@ export type OptionType = {
 
 export type QuestionType = {
 
-  id: number,
+  id: string,
   statement: string,
   quiz_id: number,
   options: OptionType[]
