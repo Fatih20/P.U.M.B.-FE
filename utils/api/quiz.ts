@@ -112,4 +112,15 @@ export async function patchOption({id,data}:{id:any,data:any}) {
   return errorWrappedResult;
 }
 
+// DELETE Option
+export async function deleteOption(id:any) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.delete(
+    `/options/${id}`,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
 
