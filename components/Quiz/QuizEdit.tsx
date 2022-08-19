@@ -44,16 +44,21 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
           <div className="ml-5 space-y-3 ">
 
-            {/* Answer Radio */}
             <form >
-              <div className="flex items-center mb-4">
-                <input id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">Default radio</label>
-              </div>
-              <div className="flex items-center">
+            {/* Answer Radio */}
+            {item.options.map(option => {
+              return(
+                <div className="flex items-center mb-4">
+                  <input id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
+                  <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
+                </div>
+
+              )
+            })}
+              {/* <div className="flex items-center">
                 <input defaultChecked id="default-radio-2" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                 <label htmlFor="default-radio-2" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">Checked state</label>
-              </div>
+              </div> */}
             </form>
 
             {/* Add Answer Button */}
