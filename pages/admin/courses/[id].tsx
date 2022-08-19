@@ -5,20 +5,9 @@ import BaseLayout from "@/layout/BaseLayout";
 import CourseHeader from "@/components/courseInternal/CourseHeader";
 import CourseContentContainer from "@/components/courseInternal/CourseContentContainer";
 import OverlayScreen from "@/components/loading/OverlayScreen";
+import { idValid } from "@/utils/utils";
 
 type Props = {};
-
-function idValid(id: string | string[] | undefined) {
-  if (!id) {
-    return "1";
-  }
-
-  if (Array.isArray(id)) {
-    return id[0];
-  }
-
-  return id;
-}
 
 const CourseIndividual = (props: Props) => {
   const { user, isLoading, error } = useMe();
@@ -29,8 +18,8 @@ const CourseIndividual = (props: Props) => {
     return (
       <BaseLayout>
         <OverlayScreen
-          displayedText='Loading course data'
-          overlayType='loading'
+          displayedText="Loading course data"
+          overlayType="loading"
         />
       </BaseLayout>
     );

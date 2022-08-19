@@ -8,3 +8,15 @@ export function getAccessToken () {
         return undefined;
     };
 }
+
+export function idValid(id: string | string[] | undefined) {
+    if (!id) {
+      return "1";
+    }
+  
+    if (Array.isArray(id)) {
+      return id[0];
+    }
+  
+    return id;
+  }
