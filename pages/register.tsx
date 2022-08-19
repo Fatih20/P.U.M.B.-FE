@@ -2,10 +2,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import InstructorOrStudentButton from "../components/auth/instructorOrStudentButton";
-import ErrorMessage from "../components/errorMessage";
-import { RegisterInputs } from "../types/typesForUs";
-import { signup } from "../utils/api/auth";
+import InstructorOrStudentButton from "@/components/auth/instructorOrStudentButton";
+import ErrorMessage from "@/components/errorMessage";
+import { RegisterInputs } from "@/appTypes/typesForUs";
+import { signup } from "@/utils/api/auth";
 
 export default function RegisterPage() {
   const {

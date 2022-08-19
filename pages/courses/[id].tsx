@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
-import useMe from "../../hooks/useMe";
-import BaseLayout from "../../layout/BaseLayout";
-import CourseHeader from "../../components/courseInternal/CourseHeader";
-import CourseContentContainer from "../../components/courseInternal/CourseContentContainer";
-import OverlayScreen from "../../components/loading/OverlayScreen";
+import useMe from "@/hooks/useMe";
+import BaseLayout from "@/layout/BaseLayout";
+import CourseHeader from "@/components/courseInternal/CourseHeader";
+import CourseContentContainer from "@/components/courseInternal/CourseContentContainer";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 
 type Props = {};
 

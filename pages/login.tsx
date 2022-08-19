@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
-import technicalConfig from "../config/technicalConfig";
-import { LoginInputs } from "../types/typesForUs";
-import { login } from "../utils/api/auth";
+import technicalConfig from "@/config/technicalConfig";
+import { LoginInputs } from "@/appTypes/typesForUs";
+import { login } from "@/utils/api/auth";
 
 export default function LoginPage() {
   const router = useRouter();

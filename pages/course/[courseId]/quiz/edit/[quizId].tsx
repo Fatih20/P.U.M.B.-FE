@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Emitter from "../../../../../utils/emiiter";
-import BaseLayout from "../../../../../layout/BaseLayout";
-import QuizTitleForm from "../../../../../components/Quiz/QuizTitle";
+import Emitter from "@/utils/emiiter";
+import BaseLayout from "@/layout/BaseLayout";
+import QuizTitleForm from "@/components/Quiz/QuizTitle";
 import {
   getQuizById,
   patchQuiz,
   postQuestionStatement,
-} from "../../../../api/quizAPI";
-import { QuizPatch, QuestionStatement } from "../../../../../types/typesForUs";
-import AddQuestionButton from "../../../../../components/Quiz/AddQuestionButton";
-import QuizEdit from "../../../../../components/Quiz/QuizEdit";
+} from "@/utils/api/quiz";
+import { QuizPatch, QuestionStatement } from "@/appTypes/typesForUs";
+import AddQuestionButton from "@/components/Quiz/AddQuestionButton";
+import QuizEdit from "@/components/Quiz/QuizEdit";
 
 export default function LecturePage() {
   // Initiate Router

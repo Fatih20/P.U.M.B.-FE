@@ -4,9 +4,9 @@ import {
   faChevronLeft,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { HeaderProps } from "../types/typesForUs";
+import { HeaderProps } from "@/appTypes/typesForUs";
 import { useQueryClient } from "react-query";
-import { logout } from "../utils/api/auth";
+import { logout } from "@/utils/api/auth";
 
 const Header = ({ showBackButton, showLogoutButton }: HeaderProps) => {
   const queryClient = useQueryClient();

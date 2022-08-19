@@ -1,5 +1,5 @@
 import React from "react";
-import { CollectiveActionButtonProps } from "../../types/typesForUs";
+import { CollectiveActionButtonProps } from "@/appTypes/typesForUs";
 
 const CollectiveActionButtons = ({
   runOnApprove,

@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Emitter from "../../../../utils/emiiter";
-import BaseLayout from "../../../../layout/BaseLayout";
-import LectureTitleForm from "../../../../components/Lecture/lectureTitle";
-import AddDropDownButton from "../../../../components/Lecture/addDropDownButton";
-import LectureItemFormFactory from "../../../../components/Lecture/LectureItemFormFactory";
-import LectureItemFactory from "../../../../components/Lecture/LectureItemFactory";
-import { getLectureItems } from "../../../api/lectureAPI";
+import BaseLayout from "@/layout/BaseLayout";
+import LectureTitleForm from "@/components/Lecture/lectureTitle";
+import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
+import { getLectureItems } from "@/utils/api/lecture";
 
 export default function LecturePage() {
   // Initiate Router

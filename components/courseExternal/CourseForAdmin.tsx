@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Course from "./Course";
-import { CourseForAdminProps } from "../../types/typesForUs";
-import ApprovalButtons from "../ApprovalButtons";
+import { CourseForAdminProps } from "@/appTypes/typesForUs";
+import ApprovalButtons from "@/components/ApprovalButtons";
 
 const CourseForAdmin = ({
   title,

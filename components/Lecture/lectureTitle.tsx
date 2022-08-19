@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { patchLectureTitle } from "../../pages/api/lectureAPI";
-import { LectureTitlePatch } from "../../types/typesForUs";
+import { patchLectureTitle } from "@/utils/api/lecture";
+import { LectureTitlePatch } from "@/appTypes/typesForUs";
 import { useRouter } from "next/router";
-import { getLectureById } from "../../pages/api/lectureAPI";
+import { getLectureById } from "@/utils/api/lecture";
 
 type FormInput = {
   titleForm: string;

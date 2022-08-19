@@ -1,4 +1,4 @@
-import { getAccessToken } from "../utils";
+import { getAccessToken } from "@/utils/utils";
 
 export async function errorWrapper<T = any>(checkedFunction :  () => any) {
     try {

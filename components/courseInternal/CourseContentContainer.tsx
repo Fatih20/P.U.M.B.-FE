@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { CourseContentElementType } from "../../types/typesForUs";
-import { getLectures, getQuizzes } from "../../utils/api/courses";
-import ChangeSeenButton from "../ChangeSeenButton";
-import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import CourseContent from "./CourseContent";
+import { CourseContentElementType } from "@/appTypes/typesForUs";
+import { getLectures, getQuizzes } from "@/utils/api/courses";
+import ChangeSeenButton from "@/components/ChangeSeenButton";
+import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
+import CourseContent from "@/components/courseInternal/CourseContent";
 
 type CourseContentProps = {
   courseID: string;

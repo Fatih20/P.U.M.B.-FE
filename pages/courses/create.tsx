@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
-import useMe from "../../hooks/useMe";
-import BaseLayout from "../../layout/BaseLayout";
+import useMe from "@/hooks/useMe";
+import BaseLayout from "@/layout/BaseLayout";
 import { useForm, SubmitHandler, useFormState } from "react-hook-form";
-import OverlayScreen from "../../components/loading/OverlayScreen";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 import { useRouter } from "next/router";
-import { CategoryInput, CreateCourseInput } from "../../types/typesForUs";
-import { createCourse } from "../../utils/api/courses";
+import { CategoryInput, CreateCourseInput } from "@/appTypes/typesForUs";
+import { createCourse } from "@/utils/api/courses";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
 

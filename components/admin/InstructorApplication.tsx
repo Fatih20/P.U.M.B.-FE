@@ -1,6 +1,6 @@
 import React from "react";
-import { InstructorApplicationProps } from "../../types/typesForUs";
-import ApprovalButtons from "../ApprovalButtons";
+import { InstructorApplicationProps } from "@/appTypes/typesForUs";
+import ApprovalButtons from "@/components/ApprovalButtons";
 
 const InstructorApplication = ({
   email,

@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { QuestionStatement, SingleFormType } from "../../types/typesForUs";
-import Emitter from "../../utils/emiiter";
+import { QuestionStatement, SingleFormType } from "@/appTypes/typesForUs";
+import Emitter from "@/utils/emiiter";
 
 export default function SingleForm({ placeholder, event }: SingleFormType) {
   const {

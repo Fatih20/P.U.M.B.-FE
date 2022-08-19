@@ -1,8 +1,8 @@
-import SingleForm from "./SingleForm";
-import Statement from "./Statement";
+import SingleForm from "@/components/Quiz/SingleForm";
+import Statement from "@/components/Quiz/Statement";
 import { useState } from "react";
-import Emitter from "../../utils/emiiter";
-import { QuestionStatement } from "../../types/typesForUs";
+import Emitter from "@/utils/emiiter";
+import { QuestionStatement } from "@/appTypes/typesForUs";
 
 export default function QuizEdit() {
   const [question, setQuestion] = useState({ edit: false });

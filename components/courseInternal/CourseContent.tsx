@@ -3,10 +3,10 @@ import { useQuery } from "react-query";
 import {
   CourseContentElementProps,
   CourseContentElementType,
-} from "../../types/typesForUs";
-import { Lecture, Quiz } from "../../types/typesFromBackEnd";
-import OverlayScreen from "../loading/OverlayScreen";
-import CourseContentElement from "./CourseContentElement";
+} from "@/appTypes/typesForUs";
+import { Lecture, Quiz } from "@/appTypes/typesFromBackEnd";
+import OverlayScreen from "@/components/loading/OverlayScreen";
+import CourseContentElement from "@/components/courseInternal/CourseContentElement";
 
 type CourseContentProps = {
   fetcherFunction: () => Promise<Lecture[] | Quiz[]>;

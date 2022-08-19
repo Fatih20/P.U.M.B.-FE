@@ -1,7 +1,7 @@
 import axios from "axios";
-import { errorWrapper } from "../../utils/api/api";
-import { getAccessToken } from "../../utils/utils";
-import { QuizPatch, QuizPost, QuestionStatement } from "../../types/typesForUs";
+import { errorWrapper } from "@/utils/api/api";
+import { getAccessToken } from "@/utils/utils";
+import { QuizPatch, QuizPost, QuestionStatement } from "@/appTypes/typesForUs";
 
 const config = () => {
   return {

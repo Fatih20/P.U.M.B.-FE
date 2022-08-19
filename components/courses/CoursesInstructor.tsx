@@ -5,14 +5,14 @@ import {
   CoursesProps,
   possibleSeenCourse,
   SeenCourse,
-} from "../../types/typesForUs";
-import { Course, CourseStatusInCourse } from "../../types/typesFromBackEnd";
-import ChangeSeenButton from "../ChangeSeenButton";
-import CourseForInstructor from "../courseExternal/CourseForInstructor";
-import CoursesContainer from "./Courses";
-import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import OverlayScreen from "../loading/OverlayScreen";
-import { getCoursesMine } from "../../utils/api/courses";
+} from "@/appTypes/typesForUs";
+import { Course, CourseStatusInCourse } from "@/appTypes/typesFromBackEnd";
+import ChangeSeenButton from "@/components/ChangeSeenButton";
+import CourseForInstructor from "@/components/courseExternal/CourseForInstructor";
+import CoursesContainer from "@/components/courses/Courses";
+import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
+import OverlayScreen from "@/components/loading/OverlayScreen";
+import { getCoursesMine } from "@/utils/api/courses";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 

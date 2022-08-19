@@ -1,7 +1,7 @@
 import axios from "axios";
-import { errorWrapper } from "../../utils/api/api";
-import { getAccessToken } from "../../utils/utils";
-import { LectureTitlePost, LectureTitlePatch } from "../../types/typesForUs";
+import { errorWrapper } from "@/utils/api/api";
+import { getAccessToken } from "@/utils/utils";
+import { LectureTitlePost, LectureTitlePatch } from "@/appTypes/typesForUs";
 
 const config = () => {
   return {

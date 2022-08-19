@@ -1,14 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "react-query";
-import { getCourse, getLectures, getQuizzes } from "../../../utils/api/courses";
-import technicalConfig from "../../../config/technicalConfig";
-import queryFetchingConfig from "../../../config/queryFetchingConfig";
-import useMe from "../../../hooks/useMe";
-import BaseLayout from "../../../layout/BaseLayout";
-import CourseHeader from "../../../components/courseInternal/CourseHeader";
-import CourseContentContainer from "../../../components/courseInternal/CourseContentContainer";
-import OverlayScreen from "../../../components/loading/OverlayScreen";
+import useMe from "@/hooks/useMe";
+import BaseLayout from "@/layout/BaseLayout";
+import CourseHeader from "@/components/courseInternal/CourseHeader";
+import CourseContentContainer from "@/components/courseInternal/CourseContentContainer";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 
 type Props = {};
 

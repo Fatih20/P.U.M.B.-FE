@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import BaseLayout from "../layout/BaseLayout";
+import BaseLayout from "@/layout/BaseLayout";
 import { useRouter } from "next/router";
-import useMe from "../hooks/useMe";
-import OverlayScreen from "../components/loading/OverlayScreen";
+import useMe from "@/hooks/useMe";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 
 const Home: NextPage = () => {
   const router = useRouter();

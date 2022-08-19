@@ -1,4 +1,4 @@
-import technicalConfig from "../config/technicalConfig";
+import technicalConfig from "@/config/technicalConfig";
 
 export function getAccessToken () {
     const candidateAccessToken = localStorage.getItem(technicalConfig.accessTokenKey)

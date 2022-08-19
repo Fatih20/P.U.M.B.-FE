@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ChangeSeenButton from "../ChangeSeenButton";
-import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import AdminCourses from "./AdminCourses";
-import AdminTeachers from "./AdminTeachers";
+import ChangeSeenButton from "@/components/ChangeSeenButton";
+import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
+import AdminCourses from "@/components/admin/AdminCourses";
+import AdminTeachers from "@/components/admin/AdminTeachers";
 
 type AdminPageProps = {};
 

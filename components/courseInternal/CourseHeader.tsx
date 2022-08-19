@@ -1,7 +1,7 @@
 import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import queryFetchingConfig from "../../config/queryFetchingConfig";
-import { getCourse, subscribeToCourse } from "../../utils/api/courses";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
+import { getCourse, subscribeToCourse } from "@/utils/api/courses";
 import OverlayScreen from "../loading/OverlayScreen";
 import toast from "react-hot-toast";
 

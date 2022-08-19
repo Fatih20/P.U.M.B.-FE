@@ -1,15 +1,9 @@
-import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { CoursesProps } from "../../types/typesForUs";
-import { getCourses } from "../../utils/api/courses";
-import ChangeSeenButton from "../ChangeSeenButton";
-import ChangeSeenButtonContainer from "../ChangeSeenButtonContainer";
-import CourseForStudent from "../courseExternal/CourseForStudent";
-import OverlayScreen from "../loading/OverlayScreen";
-import CoursesContainer from "./Courses";
-import CoursesStudentAll from "./CoursesStudentAll";
-import CoursesStudentEnrolled from "./CoursesStudentEnrolled";
+import { CoursesProps } from "@/appTypes/typesForUs";
+import ChangeSeenButton from "@/components/ChangeSeenButton";
+import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
+import CoursesStudentAll from "@/components/courses/CoursesStudentAll";
+import CoursesStudentEnrolled from "@/components/courses/CoursesStudentEnrolled";
 
 const CoursesStudent = ({}: CoursesProps) => {
   const [seeAll, setSeeAll] = useState(true);

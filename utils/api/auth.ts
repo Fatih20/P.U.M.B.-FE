@@ -1,7 +1,7 @@
 import axios from "axios";
-import technicalConfig from "../../config/technicalConfig";
-import { LoginInputs, RegisterInputs } from "../../types/typesForUs";
-import { bearerHeader, errorWrapper } from "./api";
+import technicalConfig from "@/config/technicalConfig";
+import { LoginInputs, RegisterInputs } from "@/appTypes/typesForUs";
+import { bearerHeader, errorWrapper } from "@/utils/api/api";
 
 export async function login(data:LoginInputs) {
     const errorWrappedResult = (errorWrapper(async () => await axios.post("/auth/login", {...data})))

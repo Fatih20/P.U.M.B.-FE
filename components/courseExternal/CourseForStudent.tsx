@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Course from "./Course";
-import TagName from "../TagName";
-import { CourseForStudentProps } from "../../types/typesForUs";
+import Course from "@/components/courseExternal/Course";
+import TagName from "@/components/TagName";
+import { CourseForStudentProps } from "@/appTypes/typesForUs";
 
 const CourseForStudent = ({
   title,

@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import queryFetchingConfig from "../../config/queryFetchingConfig";
-import {
-  Course,
-  CourseStatusAdminModified,
-} from "../../types/typesFromBackEnd";
-import {
-  getCoursesUnverified,
-  modifyCourseStatus,
-} from "../../utils/api/courses";
-import CourseForAdmin from "../courseExternal/CourseForAdmin";
-import CoursesContainer from "../courses/Courses";
-import OverlayScreen from "../loading/OverlayScreen";
-import CollectiveActionButtons from "./CollectiveActionButtons";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
+import { Course, CourseStatusAdminModified } from "@/appTypes/typesFromBackEnd";
+import { getCoursesUnverified, modifyCourseStatus } from "@/utils/api/courses";
+import CourseForAdmin from "@/components/courseExternal/CourseForAdmin";
+import CoursesContainer from "@/components/courses/Courses";
+import OverlayScreen from "@/components/loading/OverlayScreen";
+import CollectiveActionButtons from "@/components/admin/CollectiveActionButtons";
 import toast from "react-hot-toast";
 
 type Props = {};

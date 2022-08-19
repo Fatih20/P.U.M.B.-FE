@@ -1,7 +1,6 @@
 import axios from "axios"
-import { CreateCourseInput } from "../../types/typesForUs";
-import { Category, Course, CourseStatusAdminModified, CourseStatusModifier, CreateCourseInputBody, Lecture, Quiz, TeacherForAdmin } from "../../types/typesFromBackEnd";
-import { bearerHeader, errorWrapper } from "./api"
+import { Course, CourseStatusAdminModified, CourseStatusModifier, CreateCourseInputBody, Lecture, Quiz, TeacherForAdmin } from "@/appTypes/typesFromBackEnd";
+import { bearerHeader, errorWrapper } from "@/utils/api/api"
 
 export async function getCourses() {
     const result =  await axios.get("/courses" ,bearerHeader())

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import queryFetchingConfig from "../../config/queryFetchingConfig";
-import { RejectOrApproveInput } from "../../types/typesForUs";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
+import { RejectOrApproveInput } from "@/appTypes/typesForUs";
 import {
   CourseStatusAdminModified,
   TeacherForAdmin,
-} from "../../types/typesFromBackEnd";
+} from "@/appTypes/typesFromBackEnd";
 import {
   getTeachersUnverified,
   modifyTeacherStatus,
-} from "../../utils/api/courses";
-import CoursesContainer from "../courses/Courses";
-import OverlayScreen from "../loading/OverlayScreen";
-import CollectiveActionButtons from "./CollectiveActionButtons";
-import InstructorApplication from "./InstructorApplication";
+} from "@/utils/api/courses";
+import CoursesContainer from "@/components/courses/Courses";
+import OverlayScreen from "@/components/loading/OverlayScreen";
+import CollectiveActionButtons from "@/components/admin/CollectiveActionButtons";
+import InstructorApplication from "@/components/admin/InstructorApplication";
 
 type Props = {};
 

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import {
   CourseColorAndText,
   CourseForInstructorProps,
-} from "../../types/typesForUs";
+} from "@/appTypes/typesForUs";
 
-import Course from "./Course";
-import { CourseStatus } from "../../types/typesFromBackEnd";
+import Course from "@/components/courseExternal/Course";
+import { CourseStatus } from "@/appTypes/typesFromBackEnd";
 
 const statusColorAndText = {
   REJECTED: {

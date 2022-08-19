@@ -1,7 +1,7 @@
 import { faSpinner, faFaceFrown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { OverlayType } from "../../types/typesForUs";
+import { OverlayType } from "@/appTypes/typesForUs";
 
 type LoadingScreenProps = {
   displayedText: string;
