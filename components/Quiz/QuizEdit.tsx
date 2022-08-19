@@ -6,15 +6,29 @@ import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
 import { useMutation, QueryClient } from "react-query";
-import { postOption, patchQuestionStatement, patchOption, deleteOption, setCorrectOption } from "@/utils/api/quiz";
+import { postOption, patchQuestionStatement, patchOption, deleteOption, setCorrectOption, patchFeedback } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
+  const [feedbackEdit, setFeedbackEdit] = useState({ edit: false });
   const [optionEdit, setOptionEdit] = useState();
-
-
-
   const queryClient = new QueryClient();
+
+  // Mutate Question PATCH
+  const { mutate: patchFeedbackMutate } = useMutation(patchFeedback, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("QUESTION_PATCH", "");
+    }
+  });
+
+
   // Mutate SET Correct Answer
   const { mutate: setCorrectOptionMutate } = useMutation(setCorrectOption, {
     onSuccess: data => {
@@ -42,7 +56,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
       Emitter.emit("REFETCH", "");
     }
   });
-  
+
   // Mutate Question PATCH
   const { mutate: patchQuestionMutate } = useMutation(patchQuestionStatement, {
     onSuccess: data => {
@@ -110,7 +124,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
   // Handle Option PATCH
   function handleOptionPatch(id: any, formSubmit: any) {
     const data = {
-      content : formSubmit.statement
+      content: formSubmit.statement
     }
     setOptionEdit(undefined)
     if (id !== undefined) {
@@ -129,18 +143,34 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
   function handleCorrectOption(optionId: any) {
     const id = questionId
     const data = {
-      correct_id:optionId
+      correct_id: optionId
     }
     if (questionId !== undefined) {
-      setCorrectOptionMutate({id,data})
+      setCorrectOptionMutate({ id, data })
     }
   }
 
-  
+  // Handle Feedback
+  function handleFeedback(optionId: any, formSubmit: any) {
+    const id = questionId
+    const data = {
+      feedback: formSubmit.statement
+    }
+    if (questionId !== undefined) {
+      patchFeedbackMutate({ id, data })
+    }
+  }
+
+
 
   // Show Question SingleForm
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
     setQuestion({ ...question, edit: true })
+  })
+
+  // Show Question SingleForm
+  Emitter.once('FEEDBACK_STATEMENT_CLICK', () => {
+    setFeedbackEdit({ ...feedbackEdit, edit: true })
   })
 
   // Hide Question SingleForm
@@ -158,7 +188,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
       <div className="rounded overflow-hidden  shadow-lg p-3">
         <div className="space-y-3">
           {/* Question */}
-          {!question.edit && <Statement text={item.statement} />}
+          {!question.edit && <Statement text={item.statement} event="QUESTION_STATEMENT_CLICK" />}
           {question.edit && <SingleForm placeholder="question.." defaultValue={item.statement} callback={handleQuestionPatch} id={questionId} />}
 
 
@@ -176,7 +206,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
                 return (
                   <div key={option.id} className="flex items-center mb-4">
                     <div className="relative w-full">
-                      <input onClick={() => handleCorrectOption(option.id)} 
+                      <input onClick={() => handleCorrectOption(option.id)}
                         id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                       <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
                       <hr />
@@ -221,9 +251,11 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
           <hr />
 
           {/* Feedback */}
-          {/* <SingleForm placeholder="feedback.." /> */}
           <span className="float-right">id : {item.id}</span>
-          <Statement text="This is Feedback Statement" />
+          {!feedbackEdit.edit && <Statement text="This is Feedback Statement" event="FEEDBACK_STATEMENT_CLICK" />}
+          {/* <SingleForm placeholder="feedback.." /> */}
+            {feedbackEdit.edit && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue=""/>}
+
 
         </div>
       </div>

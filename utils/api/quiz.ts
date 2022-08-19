@@ -135,3 +135,14 @@ export async function setCorrectOption({id,data}:{id:any,data:any}) {
   return errorWrappedResult;
 }
 
+// PATCH Feedback
+export async function patchFeedback({id,data}:{id:any,data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+    `/questions/${id}/feedback`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
