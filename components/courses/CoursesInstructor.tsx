@@ -15,11 +15,13 @@ import OverlayScreen from "@/components/loading/OverlayScreen";
 import { getCoursesMine } from "@/utils/api/courses";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
+import useMe from "@/hooks/useMe";
 
 const CoursesInstructor = ({}: CoursesProps) => {
   const [seenType, setSeenType] = useState("ALL" as SeenCourse);
   const router = useRouter();
 
+  const { user, isLoading: userLoading, error } = useMe();
   const {
     data: courseAllData,
     error: courseAllError,
@@ -32,10 +34,10 @@ const CoursesInstructor = ({}: CoursesProps) => {
     [seenType, courseAllData]
   );
 
-  if (!courseAllData || courseAllIsLoading) {
+  if (!courseAllData || courseAllIsLoading || userLoading) {
     return (
       <OverlayScreen
-        displayedText='Loading courses data'
+        displayedText='Loading courses data and your credentials'
         overlayType='loading'
       />
     );
@@ -104,7 +106,11 @@ const CoursesInstructor = ({}: CoursesProps) => {
     <div className='flex flex-col items-center py-4 flex-grow relative'>
       <div className='box-border fixed top-0 bottom-0 left-0 right-0 p-4 min-h-full flex items-end justify-end z-10 pointer-events-none'>
         <button
-          className='text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600 pointer-events-auto'
+          className={`${
+            user.status === null || user.status.status !== "VERIFIED"
+              ? "hidden"
+              : ""
+          } text-white text-2xl rounded-full w-12 h-12 flex items-center justify-center bg-indigo-600 pointer-events-auto`}
           onClick={() => router.push(`${router.asPath}/create`)}
         >
           <FontAwesomeIcon icon={faPlus} />
