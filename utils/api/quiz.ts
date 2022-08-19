@@ -123,4 +123,15 @@ export async function deleteOption(id:any) {
   return errorWrappedResult;
 }
 
+// SET Correct Option
+export async function setCorrectOption({id,data}:{id:any,data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+    `/questions/${id}/answer`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
 

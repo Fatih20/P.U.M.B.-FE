@@ -6,7 +6,7 @@ import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
 import { useMutation, QueryClient } from "react-query";
-import { postOption, patchQuestionStatement, patchOption, deleteOption } from "@/utils/api/quiz";
+import { postOption, patchQuestionStatement, patchOption, deleteOption, setCorrectOption } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
@@ -15,7 +15,19 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
 
   const queryClient = new QueryClient();
-  
+  // Mutate SET Correct Answer
+  const { mutate: setCorrectOptionMutate } = useMutation(setCorrectOption, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("REFETCH", "");
+    }
+  });
 
   // Mutate Option DELETE
   const { mutate: deleteOptionMutate } = useMutation(deleteOption, {
@@ -90,7 +102,6 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
   // Handle Question PATCH
   function handleQuestionPatch(id: any, data: any) {
-    // console.log("handleQuestionPatch");
     if (id !== undefined) {
       patchQuestionMutate({ id, data })
     }
@@ -98,8 +109,6 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
   // Handle Option PATCH
   function handleOptionPatch(id: any, formSubmit: any) {
-    // console.log("handleOptionPatch");
-    // console.log(formSubmit);
     const data = {
       content : formSubmit.statement
     }
@@ -115,6 +124,19 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
       deleteOptionMutate(id)
     }
   }
+
+  // Handle SET Correct Option
+  function handleCorrectOption(optionId: any) {
+    const id = questionId
+    const data = {
+      correct_id:optionId
+    }
+    if (questionId !== undefined) {
+      setCorrectOptionMutate({id,data})
+    }
+  }
+
+  
 
   // Show Question SingleForm
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
@@ -154,9 +176,11 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
                 return (
                   <div key={option.id} className="flex items-center mb-4">
                     <div className="relative w-full">
-                      <input id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
+                      <input onClick={() => handleCorrectOption(option.id)} 
+                        id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                       <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
-
+                      <hr />
+                      <span>id: {option.id}</span>
                     </div>
                     <div className="inline-flex">
                       {/* Edit Button */}
