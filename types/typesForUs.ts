@@ -161,7 +161,7 @@ export type QuestionStatement = {
 export type OptionType = {
   id: number,
   content: string,
-  question_id: number
+  question_id: string
 }
 
 export type QuestionType = {

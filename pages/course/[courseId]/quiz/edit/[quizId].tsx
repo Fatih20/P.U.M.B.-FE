@@ -60,15 +60,12 @@ export default function QuizPage() {
 
   // Listening Quiz Title Edit
   Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
-    console.log("QUIZ_PATCH");
 
     if (typeof quizId !== 'undefined') {
-      console.log("QUIZ_PATCH running");
 
       patchQuiz(quizId, data).then(resp => {
         console.log(resp);
-        // setTitle(resp.result.data.title)
-        // queryClient.invalidateQueries("Quiz");
+        queryClient.invalidateQueries("Quiz");
         refetch()
       })
     }

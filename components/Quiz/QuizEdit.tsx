@@ -5,9 +5,12 @@ import Emitter from "@/utils/emiiter";
 import { QuestionStatement } from "@/appTypes/typesForUs";
 import { QuestionType } from "@/appTypes/typesForUs";
 import { deleteQuestion } from "@/utils/api/quiz";
+import { useMutation, QueryClient } from "react-query";
+import { postOption } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
   const [question, setQuestion] = useState({ edit: false });
+  const queryClient = new QueryClient();
 
   Emitter.once('QUESTION_STATEMENT_CLICK', () => {
     // Show Question SingleForm
@@ -17,20 +20,43 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
       console.log(error);
     }
   })
-  
+
   Emitter.once("QUESTION_PATCH", (data: QuestionStatement) => {
     // Hide Question SingleForm
     setQuestion({ ...question, edit: false });
   });
 
-  function handleQuestionDelete(id:string) {
-    
+  function handleQuestionDelete(id: string) {
     deleteQuestion(id).then(resp => {
       console.log(resp);
       Emitter.emit("QUESTION_DELETE", id);
     })
-    
   }
+
+  const { mutate:postOptionMutate, isLoading } = useMutation(postOption, {
+    onSuccess: data => {
+      console.log("postOptionMutate");
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Quiz')
+      Emitter.emit("QUESTION_PATCH", "");
+    }
+  });
+
+  function handleAddOption() {
+    const data = {
+      question_id:questionId,
+      content : "Answer.."
+    }
+
+    postOptionMutate({data})
+
+  }
+
 
   return (
     <div className="relative">
@@ -39,31 +65,27 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
           {/* Question */}
           {!question.edit && <Statement text={item.statement} />}
 
-          {question.edit && <SingleForm placeholder="question.." event="QUESTION_PATCH" id={questionId}/>}
+          {question.edit && <SingleForm placeholder="question.." event="QUESTION_PATCH" id={questionId} />}
 
 
           <div className="ml-5 space-y-3 ">
 
             <form >
-            {/* Answer Radio */}
-            {item.options.map(option => {
-              return(
-                <div className="flex items-center mb-4">
-                  <input id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
-                  <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
-                </div>
+              {/* Answer Radio */}
+              {item.options.map(option => {
+                return (
+                  <div key={option.id} className="flex items-center mb-4">
+                    <input id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
+                    <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
+                  </div>
 
-              )
-            })}
-              {/* <div className="flex items-center">
-                <input defaultChecked id="default-radio-2" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="default-radio-2" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">Checked state</label>
-              </div> */}
+                )
+              })}
             </form>
 
             {/* Add Answer Button */}
-            <button className="text-sm ">
-              {/* <a href="#" className=""></a> */}
+            <button onClick={handleAddOption}
+              className="text-sm ">
               + Add Answer
             </button>
           </div>

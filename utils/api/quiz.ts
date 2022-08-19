@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "@/utils/api/api";
 import { getAccessToken } from "@/utils/utils";
-import { QuizPatch, QuizPost, QuestionStatement } from "@/appTypes/typesForUs";
+import { QuizPatch, QuizPost, QuestionStatement, OptionType } from "@/appTypes/typesForUs";
 
 const config = () => {
   return {
@@ -88,5 +88,16 @@ export async function deleteQuestion(id:any) {
   return errorWrappedResult;
 }
 
+// POST Option
+export async function postOption({data}:{data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.post(
+    "/options",
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
 
 
