@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import queryFetchingConfig from "@/config/queryFetchingConfig";
-import { RejectOrApproveInput } from "@/appTypes/typesForUs";
 import {
   CourseStatusAdminModified,
   TeacherForAdmin,
@@ -18,7 +17,7 @@ import InstructorApplication from "@/components/admin/InstructorApplication";
 type Props = {};
 
 const AdminTeachers = (props: Props) => {
-  const [selectedTeachers, setSelectedTeachers] = useState([] as number[]);
+  const [selectedTeachers, setSelectedTeachers] = useState([] as string[]);
   const queryClient = useQueryClient();
 
   const {
@@ -36,7 +35,7 @@ const AdminTeachers = (props: Props) => {
       idArray,
       status,
     }: {
-      idArray: number[];
+      idArray: string[];
       status: CourseStatusAdminModified;
     }) => {
       return await modifyTeacherStatus(idArray, status);
@@ -83,8 +82,8 @@ const AdminTeachers = (props: Props) => {
   if (isTeacherVerifyingLoading) {
     return (
       <OverlayScreen
-        displayedText='Loading teachers data'
-        overlayType='loading'
+        displayedText="Loading teachers data"
+        overlayType="loading"
       />
     );
   }
@@ -92,14 +91,14 @@ const AdminTeachers = (props: Props) => {
   if (!teacherVerifyingData || isTeacherVerifyingError) {
     return (
       <OverlayScreen
-        displayedText='Error getting teacher data'
-        overlayType='error'
+        displayedText="Error getting teacher data"
+        overlayType="error"
       />
     );
   }
 
   if (teacherVerifyingData.length === 0) {
-    return <OverlayScreen displayedText='No teacher on the waiting list' />;
+    return <OverlayScreen displayedText="No teacher on the waiting list" />;
   }
 
   return (

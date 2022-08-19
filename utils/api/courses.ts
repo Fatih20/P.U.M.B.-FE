@@ -42,13 +42,13 @@ export async function getTeachersUnverified () {
     return result.data as TeacherForAdmin[];
 }
 
-export async function modifyCourseStatus (idArray : number[], status : CourseStatusAdminModified) {
+export async function modifyCourseStatus (idArray : string[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
     const errorWrappedResult = errorWrapper(async () => await axios.patch(`/admin/courses`, {"updateArray" : requestBody} ,bearerHeader()));
     return errorWrappedResult;
 }
 
-export async function modifyTeacherStatus (idArray : number[], status : CourseStatusAdminModified) {
+export async function modifyTeacherStatus (idArray : string[], status : CourseStatusAdminModified) {
     const requestBody = idArray.map((id) => {return {status, description : "", id} as CourseStatusModifier})
     const errorWrappedResult = errorWrapper(async () =>  await axios.patch(`/admin/teachers`, {"updateArray" : requestBody} ,bearerHeader())) ;
 

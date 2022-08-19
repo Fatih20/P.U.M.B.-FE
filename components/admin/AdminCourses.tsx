@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 type Props = {};
 
 const AdminCourses = (props: Props) => {
-  const [selectedCourses, setSelectedCourses] = useState([] as number[]);
+  const [selectedCourses, setSelectedCourses] = useState([] as string[]);
   const queryClient = useQueryClient();
   const {
     data: courseVerifyingData,
@@ -25,7 +25,7 @@ const AdminCourses = (props: Props) => {
       idArray,
       status,
     }: {
-      idArray: number[];
+      idArray: string[];
       status: CourseStatusAdminModified;
     }) => {
       return await modifyCourseStatus(idArray, status);
@@ -98,8 +98,8 @@ const AdminCourses = (props: Props) => {
   if (isCourseVerifyingLoading) {
     return (
       <OverlayScreen
-        displayedText='Loading courses data'
-        overlayType='loading'
+        displayedText="Loading courses data"
+        overlayType="loading"
       />
     );
   }
@@ -107,14 +107,14 @@ const AdminCourses = (props: Props) => {
   if (!courseVerifyingData || isCourseVerifyingError) {
     return (
       <OverlayScreen
-        displayedText='Error getting courses data'
-        overlayType='error'
+        displayedText="Error getting courses data"
+        overlayType="error"
       />
     );
   }
 
   if (courseVerifyingData.length === 0) {
-    return <OverlayScreen displayedText='No courses on the waiting list' />;
+    return <OverlayScreen displayedText="No courses on the waiting list" />;
   }
 
   return (
