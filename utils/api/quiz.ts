@@ -14,14 +14,18 @@ export const configExternal = () => {
 }
 
 // GET Quiz by ID
-export async function getQuizById(id:any) {
-  
-  const errorWrappedResult = await errorWrapper(async () => await axios.get(
-    `/quizzes/${id}`,
-    config()
-  ).then().catch(console.log));
+export async function getQuizById({queryKey}:any) {
+  const [_, quizId] = queryKey
 
-  return errorWrappedResult;
+  if (quizId !== undefined){
+    const errorWrappedResult = await errorWrapper(async () => await axios.get(
+      `/quizzes/${quizId}`,
+      config()
+    ).then().catch(console.log));
+  
+    return errorWrappedResult;
+  }
+
 }
 
 // POST Quiz Title

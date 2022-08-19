@@ -3,6 +3,8 @@ import QuizEdit from "./QuizEdit"
 
 export default function QuestionFactory({ Items }: { Items: QuestionType[] }) {
     
+    // console.log("Question Factory");
+    // console.log(Items);
     return (
         <>
             {Items.map((item) => {
