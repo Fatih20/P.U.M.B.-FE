@@ -209,8 +209,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
                       <input onClick={() => handleCorrectOption(option.id)}
                         id="default-radio-1" type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                       <label htmlFor="default-radio-1" className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
-                      <hr />
-                      <span>id: {option.id}</span>
+                      {/* <hr /> */}
+                      {/* <span>id: {option.id}</span> */}
                     </div>
                     <div className="inline-flex">
                       {/* Edit Button */}
@@ -251,7 +251,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
           <hr />
 
           {/* Feedback */}
-          <span className="float-right">id : {item.id}</span>
+          {/* <span className="float-right">id : {item.id}</span> */}
           {!feedbackEdit.edit && <Statement text="This is Feedback Statement" event="FEEDBACK_STATEMENT_CLICK" />}
           {/* <SingleForm placeholder="feedback.." /> */}
             {feedbackEdit.edit && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue=""/>}
