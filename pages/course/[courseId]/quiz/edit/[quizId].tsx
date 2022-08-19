@@ -30,8 +30,8 @@ export default function QuizPage() {
   const queryClient = new QueryClient();
   const { data, status, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
 
-  console.log("main page");
-  console.log(data?.result.data);
+  // console.log("main page");
+  // console.log(data?.result.data);
 
   // Listening on Question Create New
   Emitter.on('QUESTION_POST', (data: any) => {
