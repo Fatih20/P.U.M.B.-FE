@@ -52,7 +52,7 @@ export async function patchQuiz(id:any,data:QuizPatch) {
   return errorWrappedResult;
 }
 
-// POST Quiz Title
+// POST Question Statement
 export async function postQuestionStatement(data:QuestionStatement) {
   
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
@@ -64,16 +64,8 @@ export async function postQuestionStatement(data:QuestionStatement) {
   return errorWrappedResult;
 }
 
-// PATCH Quiz Title
+// PATCH Question Statement
 export async function patchQuestionStatement({id,data}:{id:any,data:any}) {
-  const [_, quizId] = id
-  
-  console.log("patchQuestionStatement");
-  console.log(quizId);
-  console.log(id);
-  console.log(data);
-  
-  
   
   const errorWrappedResult = await errorWrapper(async () => await axios.patch(
     `/questions/${id}`,
@@ -85,7 +77,7 @@ export async function patchQuestionStatement({id,data}:{id:any,data:any}) {
   return errorWrappedResult;
 }
 
-// Delete Question by ID
+// DELETE Question by ID
 export async function deleteQuestion(id:any) {
   
   const errorWrappedResult = await errorWrapper(async () => await axios.delete(

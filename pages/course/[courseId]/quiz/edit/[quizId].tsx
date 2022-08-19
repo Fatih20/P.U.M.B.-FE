@@ -33,8 +33,8 @@ export default function QuizPage() {
 
   const { data, status, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
 
-  // console.log(status);
-  // console.log(data?.result.data.questions);
+  console.log("main page");
+  console.log(data?.result.data);
 
 
 
