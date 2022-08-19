@@ -48,6 +48,25 @@ const AdminTeachers = (props: Props) => {
     }
   );
 
+  const approveOrRejectFactory = (isApprove: boolean, idArray: string[]) => {
+    return async () => {
+      const loadingToast = toast.loading(
+        `${isApprove ? "Approving" : "Rejecting"} application`
+      );
+      const resultText = isApprove ? "approved" : "rejected";
+      const { error } = await modifyTeacher({
+        idArray,
+        status: isApprove ? "VERIFIED" : "REJECTED",
+      });
+      toast.dismiss(loadingToast);
+      if (!error) {
+        toast.success(`Course succesfully ${resultText}`);
+      } else {
+        toast.error(`Course failed to be ${resultText}`);
+      }
+    };
+  };
+
   function teacherMapper({ username, id, email }: TeacherForAdmin) {
     const selected = selectedTeachers.includes(id);
     const runOnSelect = () => {
@@ -62,24 +81,6 @@ const AdminTeachers = (props: Props) => {
       );
     };
 
-    const approveOrRejectFactory = (isApprove: boolean) => {
-      return async () => {
-        const loadingToast = toast.loading(
-          `${isApprove ? "Approving" : "Rejecting"} application`
-        );
-        const warningText = isApprove ? "approved" : "rejected";
-        const { error } = await modifyTeacher({
-          idArray: [id],
-          status: isApprove ? "VERIFIED" : "REJECTED",
-        });
-        toast.dismiss(loadingToast);
-        if (!error) {
-          toast.success(`Teacher succesfully ${warningText}`);
-        } else {
-          toast.error(`Teacher failed to be ${warningText}`);
-        }
-      };
-    };
     return (
       <TeacherApplication
         email={email}
@@ -87,8 +88,8 @@ const AdminTeachers = (props: Props) => {
         username={username}
         key={id}
         selected={selectedTeachers.some((selectedID) => selectedID === id)}
-        runOnApprove={approveOrRejectFactory(true)}
-        runOnReject={approveOrRejectFactory(false)}
+        runOnApprove={approveOrRejectFactory(true, [id])}
+        runOnReject={approveOrRejectFactory(false, [id])}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
@@ -123,18 +124,8 @@ const AdminTeachers = (props: Props) => {
       </CoursesContainer>
       {selectedTeachers.length === 0 ? null : (
         <CollectiveActionButtons
-          runOnApprove={async () =>
-            await modifyTeacher({
-              idArray: selectedTeachers,
-              status: "VERIFIED",
-            })
-          }
-          runOnReject={async () =>
-            await modifyTeacher({
-              idArray: selectedTeachers,
-              status: "REJECTED",
-            })
-          }
+          runOnApprove={approveOrRejectFactory(true, selectedTeachers)}
+          runOnReject={approveOrRejectFactory(false, selectedTeachers)}
         />
       )}
     </>

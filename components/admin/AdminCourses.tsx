@@ -37,6 +37,25 @@ const AdminCourses = (props: Props) => {
     }
   );
 
+  const approveOrRejectFactory = (isApprove: boolean, idArray: string[]) => {
+    return async () => {
+      const loadingToast = toast.loading(
+        `${isApprove ? "Approving" : "Rejecting"} application`
+      );
+      const resultText = isApprove ? "approved" : "rejected";
+      const { error } = await modifyCourse({
+        idArray,
+        status: isApprove ? "VERIFIED" : "REJECTED",
+      });
+      toast.dismiss(loadingToast);
+      if (!error) {
+        toast.success(`Course succesfully ${resultText}`);
+      } else {
+        toast.error(`Course failed to be ${resultText}`);
+      }
+    };
+  };
+
   function courseMapper({
     description,
     id,
@@ -53,24 +72,6 @@ const AdminCourses = (props: Props) => {
         prevSelectedCourses.filter((selectedID) => selectedID !== id)
       );
     };
-    const approveOrRejectFactory = (isApprove: boolean) => {
-      return async () => {
-        const loadingToast = toast.loading(
-          `${isApprove ? "Approving" : "Rejecting"} application`
-        );
-        const warningText = isApprove ? "approved" : "rejected";
-        const { error } = await modifyCourse({
-          idArray: [id],
-          status: isApprove ? "VERIFIED" : "REJECTED",
-        });
-        toast.dismiss(loadingToast);
-        if (!error) {
-          toast.success(`Course succesfully ${warningText}`);
-        } else {
-          toast.error(`Course failed to be ${warningText}`);
-        }
-      };
-    };
     return (
       <CourseForAdmin
         description={description}
@@ -80,8 +81,8 @@ const AdminCourses = (props: Props) => {
         selected={selected}
         thumbnail={thumbnail_url}
         key={id}
-        runOnApprove={approveOrRejectFactory(true)}
-        runOnReject={approveOrRejectFactory(false)}
+        runOnApprove={approveOrRejectFactory(true, [id])}
+        runOnReject={approveOrRejectFactory(false, [id])}
         runOnSelect={selected ? runOnDeselect : runOnSelect}
       />
     );
@@ -116,28 +117,8 @@ const AdminCourses = (props: Props) => {
       </CoursesContainer>
       {selectedCourses.length === 0 ? null : (
         <CollectiveActionButtons
-          runOnApprove={async () => {
-            const { error } = await modifyCourse({
-              idArray: selectedCourses,
-              status: "VERIFIED",
-            });
-            if (!error) {
-              toast.success("Course succesfully approved");
-            } else {
-              toast.error("Course failed to be approve");
-            }
-          }}
-          runOnReject={async () => {
-            const { error } = await modifyCourse({
-              idArray: selectedCourses,
-              status: "REJECTED",
-            });
-            if (!error) {
-              toast.success("Selected courses succesfully rejected");
-            } else {
-              toast.error("Selected courses failed to be rejected");
-            }
-          }}
+          runOnApprove={approveOrRejectFactory(true, selectedCourses)}
+          runOnReject={approveOrRejectFactory(false, selectedCourses)}
         />
       )}
     </>
