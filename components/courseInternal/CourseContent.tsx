@@ -43,7 +43,7 @@ const CourseContent = ({
   }
 
   return (
-    <div className='flex flex-col flex-grow w-full justify-start items-center'>
+    <div className='flex flex-col flex-grow w-full justify-start items-center gap-3'>
       {data.map(({ title, course_id, id }) => {
         return (
           <CourseContentElement
