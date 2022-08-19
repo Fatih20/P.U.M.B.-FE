@@ -9,8 +9,8 @@ import { useMutation, QueryClient, useQuery } from "react-query";
 import { postOption, patchQuestionStatement, patchOption, deleteOption, setCorrectOption, patchFeedback, getQuestionAnswer } from "@/utils/api/quiz";
 
 export default function QuizEdit({ item, questionId }: { item: QuestionType, questionId: string }) {
-  const [question, setQuestion] = useState({ edit: false });
-  const [feedbackEdit, setFeedbackEdit] = useState({ edit: false });
+  const [questionEdit, setQuestionEdit] = useState();
+  const [feedbackEdit, setFeedbackEdit] = useState();
   const [optionEdit, setOptionEdit] = useState();
   const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
     },
     onSettled: () => {
       queryClient.invalidateQueries('QuestionAnswer')
-      setFeedbackEdit({edit:false})
+      setFeedbackEdit(undefined)
       refetch()
     }
   });
@@ -173,18 +173,18 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
 
   // Show Question SingleForm
-  Emitter.once('QUESTION_STATEMENT_CLICK', () => {
-    setQuestion({ ...question, edit: true })
+  Emitter.once('QUESTION_STATEMENT_CLICK', (id:any) => {
+    setQuestionEdit(id)
   })
 
   // Show Question SingleForm
-  Emitter.once('FEEDBACK_STATEMENT_CLICK', () => {
-    setFeedbackEdit({ ...feedbackEdit, edit: true })
+  Emitter.once('FEEDBACK_STATEMENT_CLICK', (id:any) => {
+    setFeedbackEdit(id)
   })
 
   // Hide Question SingleForm
   Emitter.once("QUESTION_PATCH", (data: QuestionStatement) => {
-    setQuestion({ ...question, edit: false });
+    setQuestionEdit(undefined);
   });
 
   function markOptionClick(id: any) {
@@ -197,8 +197,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
       <div className="rounded overflow-hidden  shadow-lg p-3">
         <div className="space-y-3">
           {/* Question */}
-          {!question.edit && <Statement text={item.statement} event="QUESTION_STATEMENT_CLICK" />}
-          {question.edit && <SingleForm placeholder="question.." defaultValue={item.statement} callback={handleQuestionPatch} id={questionId} />}
+          {questionEdit != questionId && <Statement id={questionId} text={item.statement} event="QUESTION_STATEMENT_CLICK" />}
+          {questionEdit == questionId && <SingleForm placeholder="question.." defaultValue={item.statement} callback={handleQuestionPatch} id={questionId} />}
 
 
           <div className="ml-5 space-y-3 ">
@@ -220,7 +220,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
                       <input onClick={() => handleCorrectOption(option.id)}
                         // {questionAnswer == option.id }
                         checked={questionAnswer?.result.data?.correct_id == option.id}
-                        type="radio" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
+                        readOnly
+                        type="radio" name={questionId} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
                       <label className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{option.content}</label>
                       {/* <hr /> */}
                       {/* <span>id: {option.id}</span> */}
@@ -265,9 +266,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
           {/* Feedback */}
           {/* <span className="float-right">id : {item.id}</span> */}
-          {!feedbackEdit.edit && questionAnswer && <Statement text={(questionAnswer?.result.data.feedback !== null) ? questionAnswer?.result.data.feedback : "feedback.." } event="FEEDBACK_STATEMENT_CLICK" />}
-          {/* <SingleForm placeholder="feedback.." /> */}
-            {feedbackEdit.edit && questionAnswer && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue={questionAnswer?.result.data.feedback}/>}
+          {feedbackEdit !== questionId && questionAnswer && <Statement id={questionId} text={(questionAnswer?.result.data.feedback !== null) ? questionAnswer?.result.data.feedback : "feedback.." } event="FEEDBACK_STATEMENT_CLICK" />}
+          {feedbackEdit === questionId && questionAnswer && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue={questionAnswer?.result.data.feedback}/>}
 
 
         </div>
