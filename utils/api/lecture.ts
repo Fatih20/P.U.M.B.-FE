@@ -37,10 +37,6 @@ export async function postLectureTitle(data:LectureTitlePost) {
 
 export async function patchLectureTitle(id:any,data:LectureTitlePatch) {
 
-  console.log(id);
-  console.log(data);
-  
-
   const errorWrappedResult = await errorWrapper(async () => await axios.patch(
     `/lectures/${id}`,
     data,
@@ -53,7 +49,6 @@ export async function patchLectureTitle(id:any,data:LectureTitlePatch) {
 
 // --- Lecture Item Start --- 
 export async function postLectureItem({data}:{data:ResourcePost}) {
-  console.log(data);
   
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
     `/resources`,

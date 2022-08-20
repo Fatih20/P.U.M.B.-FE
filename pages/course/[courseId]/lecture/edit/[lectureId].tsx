@@ -16,8 +16,8 @@ export default function LecturePage() {
 
   const { data, status, error, refetch } = useQuery(["Lectures", lectureId as string], getLectureItems);
 
-  console.log("lecture edit");
-  console.log(data);
+  // console.log("lecture edit");
+  // console.log(data);
 
   // Initiate State
   const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({
