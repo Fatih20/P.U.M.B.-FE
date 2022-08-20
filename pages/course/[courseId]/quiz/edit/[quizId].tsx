@@ -62,24 +62,24 @@ export default function QuizPage() {
   });
 
   // Listening to Question Delete
-  Emitter.on("QUESTION_DELETE", (id: string) => {
-    let itemsCopy = questions;
-    let result = itemsCopy.filter((item: any) => {
-      if (item.id != id) {
-        return item;
-      }
-    });
-    refetch();
-  });
+  Emitter.on('QUESTION_DELETE', (id: string) => {
+    // let itemsCopy = questions
+    // let result = itemsCopy.filter((item: any) => {
+    //   if (item.id != id) {
+    //     return item
+    //   }
+    // })
+    refetch()
+  })
 
   // Listening Quiz Title Edit
-  Emitter.once("QUIZ_PATCH", (data: QuizPatch) => {
-    if (typeof quizId !== "undefined") {
-      patchQuiz(quizId, data).then((resp) => {
+  Emitter.once('QUIZ_PATCH', (data: QuizPatch) => {
+    if (typeof quizId !== 'undefined') {
+      patchQuiz(quizId, data).then(resp => {
         // console.log(resp);
         queryClient.invalidateQueries("Quiz");
-        refetch();
-      });
+        refetch()
+      })
     }
   });
 

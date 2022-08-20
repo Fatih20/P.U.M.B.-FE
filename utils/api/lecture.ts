@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "@/utils/api/api";
 import { getAccessToken } from "@/utils/utils";
-import { LectureTitlePost, LectureTitlePatch } from "@/appTypes/typesForUs";
+import { LectureTitlePost, LectureTitlePatch, ResourcePost } from "@/appTypes/typesForUs";
 
 const config = () => {
   return {
@@ -48,8 +48,7 @@ export async function patchLectureTitle(id:string, data:LectureTitlePatch) {
 // --- Lecture Title End --- 
 
 // --- Lecture Item Start --- 
-export async function postLectureItem(lectureId:any,data:any) {
-  console.log(data);
+export async function postLectureItem({data}:{data:ResourcePost}) {
   
   const errorWrappedResult = await errorWrapper(async () => await axios.post(
     `/resources`,

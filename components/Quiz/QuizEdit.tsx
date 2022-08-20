@@ -264,8 +264,8 @@ export default function QuizEdit({ item, questionId }: { item: QuestionType, que
 
           {/* Feedback */}
           {/* <span className="float-right">id : {item.id}</span> */}
-          {feedbackEdit !== questionId && questionAnswer && <Statement id={questionId} text={(questionAnswer?.result.data.feedback !== null) ? questionAnswer?.result.data.feedback : "feedback.." } event="FEEDBACK_STATEMENT_CLICK" />}
-          {feedbackEdit === questionId && questionAnswer && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue={questionAnswer?.result.data.feedback}/>}
+          {feedbackEdit !== questionId && questionAnswer?.result.data && <Statement id={questionId} text={(questionAnswer?.result.data.feedback !== null) ? questionAnswer?.result.data.feedback : "feedback.." } event="FEEDBACK_STATEMENT_CLICK" />}
+          {feedbackEdit === questionId && questionAnswer?.result.data && <SingleForm placeholder="feedback.." callback={handleFeedback} id={questionId} defaultValue={questionAnswer?.result.data.feedback}/>}
 
 
         </div>
