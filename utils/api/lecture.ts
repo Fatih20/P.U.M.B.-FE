@@ -48,15 +48,15 @@ export async function patchLectureTitle(id:string, data:LectureTitlePatch) {
 // --- Lecture Title End --- 
 
 // --- Lecture Item Start --- 
-export async function postLectureItem({data}:{data:ResourcePost}) {
+export async function postLectureItem(data:ResourcePost) {
   
-  const errorWrappedResult = await errorWrapper(async () => await axios.post(
+  const result = await errorWrapper(async () => await axios.post(
     `/resources`,
     data,
     config()
-  ).then().catch(console.log));
+  ));
 
-  return errorWrappedResult;
+  return result;
 }
 
 export async function getLectureItems(lectureId:any) {

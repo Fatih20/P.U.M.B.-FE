@@ -23,8 +23,8 @@ export default function LecturePage() {
     isLoading,
   } = useQuery(
     queryName,
-    async () => await getLectureItems(lectureId),
-    queryFetchingConfig
+    async () => await getLectureItems(lectureId)
+    // queryFetchingConfig
   );
   const queryClient = useQueryClient();
 

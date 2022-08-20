@@ -24,30 +24,20 @@ export default function LectureItemFormFactory({
     formState: { errors },
   } = useForm<ResourcePost>();
 
-
   // Mutate Video POST
-  const { mutate: postLectureItemMutate } = useMutation(postLectureItem, {
-    onSuccess: data => {
-      console.log(data);
-    },
-    onError: () => {
-      alert("there was an error")
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries('Lectures')
-      Emitter.emit("LECTURE_ITEM_POST", "");
-    }
+  const { mutateAsync: makeNewLectureItem } = useMutation(postLectureItem, {
+    onSuccess: callback,
   });
 
-  const handleVideoSubmit: SubmitHandler<ResourcePost> = (payload) => {
-    if(lectureId !== undefined){
+  const handleVideoSubmit: SubmitHandler<ResourcePost> = async (payload) => {
+    if (lectureId !== undefined) {
       const data: ResourcePost = {
         ...payload,
         name: "Youtube Video URL",
         lecture_id: lectureId as string,
         type: "VIDEO",
       };
-      postLectureItemMutate({data})
+      await makeNewLectureItem(data);
     }
   };
 
