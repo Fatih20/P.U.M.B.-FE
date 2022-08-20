@@ -61,9 +61,9 @@ const AdminTeachers = (props: Props) => {
       });
       toast.dismiss(loadingToast);
       if (!error) {
-        toast.success(`Course succesfully ${resultText}`);
+        toast.success(`Teacher succesfully ${resultText}`);
       } else {
-        toast.error(`Course failed to be ${resultText}`);
+        toast.error(`Teacher failed to be ${resultText}`);
       }
     };
   };
