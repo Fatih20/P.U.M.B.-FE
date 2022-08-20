@@ -8,6 +8,7 @@ import { CategoryInput, CreateCourseInput } from "@/appTypes/typesForUs";
 import { createCourse } from "@/utils/api/courses";
 import toast from "react-hot-toast";
 import { useQueryClient } from "react-query";
+import technicalConfig from "@/config/technicalConfig";
 
 type Props = {};
 
@@ -67,6 +68,16 @@ const CreateCoursePage = (props: Props) => {
     thumbnail,
   }: CreateCourseInput) {
     const loadingToast = toast.loading("Creating the course...");
+
+    if (
+      thumbnail[0].size / (10 ^ 6) >
+      technicalConfig.maximumCourseThumbnailFileSize
+    ) {
+      toast.dismiss(loadingToast);
+      toast.error("Thumbnail file size is too big. 500 MB maximum");
+      return;
+    }
+
     const categoriesProcessed = categories.split(",").map((category) => {
       return { name: category.trim() } as CategoryInput;
     });
