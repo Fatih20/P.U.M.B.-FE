@@ -65,12 +65,12 @@ export async function postLectureItem(lectureId:any,data:any) {
 }
 
 export async function getLectureItems(lectureId:any) {
-  const errorWrappedResult = await errorWrapper(async () => await axios.get(
+  const result = await axios.get(
     `/lectures/${lectureId}/resources`,
     config()
-  ).then().catch(console.log));
+  );
 
-  return errorWrappedResult;
+  return result;
 }
 
 export async function deleteLectureItem(lectureId:any) {

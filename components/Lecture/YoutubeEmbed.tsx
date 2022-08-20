@@ -36,7 +36,7 @@ const YoutubeEmbed = ({
 
   return (
     <div className='relative'>
-      <div className='rounded overflow-hidden shadow-lg p-3 bg-white'>
+      <div className='rounded overflow-hidden p-3 bg-white'>
         <iframe
           className='w-full h-44 sm:h-80'
           src={"https://www.youtube.com/embed/" + embedId}

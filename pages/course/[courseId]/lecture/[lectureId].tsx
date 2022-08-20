@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import BaseLayout from "@/layout/BaseLayout";
-import LectureTitleForm from "@/components/Lecture/lectureTitle";
+import LectureTitleForm from "@/components/Lecture/LectureTitle";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
 
@@ -20,7 +20,7 @@ export default function LecturePage() {
     // Fetching data
     if (courseId && lectureItems.fetched == false) {
       getLectureItems(courseId).then((data) => {
-        let lectureItem = data.result.data;
+        let lectureItem = data.data;
         setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
       });
     }
@@ -29,7 +29,7 @@ export default function LecturePage() {
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className='space-y-3 w-full '>
+        <div className='flex flex-col justify-start items-center w-full flex-grow py-3'>
           <LectureTitleForm editable={false} />
 
           {lectureItems.fetched && (

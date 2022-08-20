@@ -36,7 +36,7 @@ export default function LectureItemFormFactory({
   if (type == "VIDEO") {
     return (
       <>
-        <form onSubmit={handleSubmit(handleVideoSubmit)}>
+        <form onSubmit={handleSubmit(handleVideoSubmit)} className='w-full'>
           <div className='mb-6'>
             <input
               type='text'

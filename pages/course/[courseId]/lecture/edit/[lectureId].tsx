@@ -2,17 +2,23 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Emitter from "@/utils/emiiter";
 import BaseLayout from "@/layout/BaseLayout";
-import LectureTitleForm from "@/components/Lecture/lectureTitle";
+import LectureTitleForm from "@/components/Lecture/LectureTitle";
 import AddDropDownButton from "@/components/Lecture/addDropDownButton";
 import LectureItemFormFactory from "@/components/Lecture/LectureItemFormFactory";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
 import OverlayScreen from "@/components/loading/OverlayScreen";
+import { useQuery } from "react-query";
 
 export default function LecturePage() {
   // Initiate Router
   const router = useRouter();
   const { courseId } = router.query;
+  const {
+    data: lectureData,
+    isError,
+    isLoading,
+  } = useQuery(`${courseId}/lecture`, () => getLectureItems(courseId));
 
   // Initiate State
   const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({
@@ -37,7 +43,7 @@ export default function LecturePage() {
     // Fetching data
     if (courseId && lectureItems.fetched == false) {
       getLectureItems(courseId).then((data) => {
-        let lectureItem = data.result.data;
+        let lectureItem = data.data;
         setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
       });
     }
@@ -76,14 +82,14 @@ export default function LecturePage() {
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className='space-y-3 w-full '>
+        <div className='flex flex-col justify-start items-center w-full flex-grow py-3 gap-3'>
           <LectureTitleForm editable={true} />
 
           {lectureItems.fetched && (
             <LectureItemFactory Items={lectureItems.items} editable={true} />
           )}
 
-          <div className='rounded h-fit shadow-lg bg-white'>
+          <div className='rounded h-fit shadow-lg bg-white w-full'>
             {lectureItemFormTrigger.show && (
               <LectureItemFormFactory
                 type={lectureItemFormTrigger.type}
