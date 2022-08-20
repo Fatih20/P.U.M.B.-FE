@@ -52,13 +52,11 @@ export default function LecturePage() {
         <div className='flex flex-col justify-start items-center w-full flex-grow py-3'>
           <LectureTitleForm editable={false} courseID={courseId as string} />
 
-          {lectureData.data.fetched && (
-            <LectureItemFactory
-              Items={lectureData.data}
-              editable={false}
-              queryName={queryName}
-            />
-          )}
+          <LectureItemFactory
+            Items={lectureData.data}
+            editable={false}
+            queryName={queryName}
+          />
         </div>
       </BaseLayout>
     </>
