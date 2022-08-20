@@ -20,7 +20,6 @@ export default function LoginPage() {
     toast.dismiss(loadingToast);
     if (!result || error) {
       toast.error((error as any).response.data.message);
-      console.log(error);
       return;
     }
 
