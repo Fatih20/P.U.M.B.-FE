@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CourseContentContainerProps,
   CourseContentElementInput,
@@ -22,24 +22,23 @@ const CourseContentContainer = ({
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );
-  const { register, handleSubmit, reset } =
-    useForm<CourseContentElementInput>();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formErrors },
+  } = useForm<CourseContentElementInput>();
+
+  useEffect(() => {
+    reset();
+  }, [seenContentType, reset]);
 
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const quizQueryName = `${courseID}/quiz`;
   const lectureQueryName = `${courseID}/lecture`;
-
-  function addNewLectureFactory() {
-    return async (title: string) =>
-      await postLectureTitle({ title, course_id: courseID });
-  }
-
-  function addNewQuizFactory() {
-    return async (title: string) =>
-      await postQuiz({ title, course_id: courseID });
-  }
 
   async function handleCreateNewElement({ title }: CourseContentElementInput) {
     const addedContentType = seenContentType;
@@ -91,10 +90,15 @@ const CourseContentContainer = ({
           className='flex flex-col md:flex-row justify-between w-full gap-3'
         >
           <input
-            {...register("title", { required: true })}
+            {...register("title", {
+              required: `Title of ${seenContentType} is required`,
+            })}
             className='flex-grow outline-none border-2 border-indigo-600 rounded-md py-1 px-2'
             placeholder='Title'
           />
+          {formErrors.title && (
+            <p className='text-red-400'>{formErrors.title.message}</p>
+          )}
           <button
             type='submit'
             className='bg-indigo-600 text-white rounded-lg py-1 px-2 m-0'
