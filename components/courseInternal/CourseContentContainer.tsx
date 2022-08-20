@@ -2,12 +2,18 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import {
   CourseContentContainerProps,
+  CourseContentElementInput,
   CourseContentElementType,
 } from "@/appTypes/typesForUs";
 import { getLectures, getQuizzes } from "@/utils/api/courses";
 import ChangeSeenButton from "@/components/ChangeSeenButton";
 import ChangeSeenButtonContainer from "@/components/ChangeSeenButtonContainer";
 import CourseContent from "@/components/courseInternal/CourseContent";
+import { useQueryClient } from "react-query";
+import { postLectureTitle } from "@/utils/api/lecture";
+import { postQuiz } from "@/utils/api/quiz";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 const CourseContentContainer = ({
   courseID,
@@ -16,6 +22,45 @@ const CourseContentContainer = ({
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );
+  const { register, handleSubmit, reset } =
+    useForm<CourseContentElementInput>();
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const quizQueryName = `${courseID}/quiz`;
+  const lectureQueryName = `${courseID}/lecture`;
+
+  function addNewLectureFactory() {
+    return async (title: string) =>
+      await postLectureTitle({ title, course_id: courseID });
+  }
+
+  function addNewQuizFactory() {
+    return async (title: string) =>
+      await postQuiz({ title, course_id: courseID });
+  }
+
+  async function handleCreateNewElement({ title }: CourseContentElementInput) {
+    const addedContentType = seenContentType;
+    const loadingToast = toast.loading(`Creating new ${addedContentType}`);
+    const runToAdd =
+      addedContentType === "lecture" ? postLectureTitle : postQuiz;
+    const { error, result } = await runToAdd({ title, course_id: courseID });
+    toast.dismiss(loadingToast);
+    if (!result) {
+      toast.error(`Error adding new ${addedContentType}`);
+      return;
+    }
+    const { id } = result.data;
+    toast.success(`Succesfully adding new ${addedContentType}`);
+    queryClient.invalidateQueries(
+      addedContentType === "lecture" ? lectureQueryName : quizQueryName
+    );
+    reset();
+    router.push(`/course/${courseID}/${addedContentType}/edit/${id}`);
+  }
+
   return (
     <div className='flex w-full gap-4 items-center flex-col flex-grow'>
       <ChangeSeenButtonContainer>
@@ -34,28 +79,42 @@ const CourseContentContainer = ({
           selected={seenContentType === "quiz"}
         />
       </ChangeSeenButtonContainer>
-      <button
-        onClick={() => {
-          return;
-        }}
-        className={`${
+      <div
+        className={`flex justify-center items-center w-full ${
           isTeacher ? "" : "hidden"
-        } bg-indigo-600 text-white py-1 px-2 rounded-md`}
+        }`}
       >
-        Add {seenContentType}
-      </button>
+        <form
+          onSubmit={handleSubmit(handleCreateNewElement)}
+          action='#'
+          method='POST'
+          className='flex flex-col md:flex-row justify-between w-full gap-3'
+        >
+          <input
+            {...register("title", { required: true })}
+            className='flex-grow outline-none border-2 border-indigo-600 rounded-md py-1 px-2'
+            placeholder='Title'
+          />
+          <button
+            type='submit'
+            className='bg-indigo-600 text-white rounded-lg py-1 px-2 m-0'
+          >
+            Add {seenContentType}
+          </button>
+        </form>
+      </div>
       {seenContentType === "lecture" ? (
         <CourseContent
           fetcherFunction={async () => await getLectures(courseID)}
           courseID={courseID}
-          queryName={`${courseID}/${seenContentType}`}
+          queryName={lectureQueryName}
           type={seenContentType}
           isTeacher={isTeacher}
         />
       ) : (
         <CourseContent
           fetcherFunction={async () => await getQuizzes(courseID)}
-          queryName={`${courseID}/${seenContentType}`}
+          queryName={quizQueryName}
           type={seenContentType}
           courseID={courseID}
           isTeacher={isTeacher}

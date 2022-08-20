@@ -1,5 +1,5 @@
 import axios from "axios";
-import { errorWrapper } from "@/utils/api/api";
+import { bearerHeader, errorWrapper } from "@/utils/api/api";
 import { getAccessToken } from "@/utils/utils";
 import { QuizPatch, QuizPost, QuestionStatement, OptionType, CourseContentElementProps, CourseContentElementType } from "@/appTypes/typesForUs";
 
@@ -18,7 +18,7 @@ export async function getQuizById({queryKey}:any) {
   const [_, quizId] = queryKey
 
   if (quizId !== undefined){
-    const result = async () => await axios.get(
+    const result = await axios.get(
       `/quizzes/${quizId}`,
       config()
     );
@@ -35,7 +35,7 @@ export async function postQuiz(data:QuizPost) {
     "/quizzes",
     data,
     config()
-  ).then().catch(console.log));
+  ));
 
   return errorWrappedResult;
 }
@@ -167,6 +167,6 @@ export async function deleteCourseContentElement (elementID : string, type : Cou
     quiz : "quizzes"
   } as Record<CourseContentElementType, "quizzes" | "lectures">
 
-  const result = await axios.delete(`${contentTypeToEndpointName[type]}/${elementID}`);
+  const result = await axios.delete(`${contentTypeToEndpointName[type]}/${elementID}`, bearerHeader());
   return result;
 }

@@ -231,3 +231,14 @@ export type LoadingScreenProps = {
   displayedText: string;
   overlayType?: OverlayType;
 };
+
+export type CourseContentElementInput = {
+  title : string;
+}
+
+export type CourseNewElementProps = {
+  runToAdd: (title: string) => Promise<{ result: any; error: unknown }>;
+  runToInvalidate: () => Promise<void>;
+  contentType: CourseContentElementType;
+  visible: boolean;
+};

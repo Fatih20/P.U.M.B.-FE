@@ -30,7 +30,7 @@ export async function postLectureTitle(data:LectureTitlePost) {
     '/lectures',
     data,
     config()
-  ).then().catch(console.log));
+  ));
 
   return errorWrappedResult;
 }

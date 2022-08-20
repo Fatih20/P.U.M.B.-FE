@@ -27,7 +27,7 @@ const CourseContent = ({
         toast.success(`Succesfully deleted the ${type}`);
       },
       onError: () => {
-        toast.success(`Failed to delete the ${type}`);
+        toast.error(`Failed to delete the ${type}`);
       },
     }
   );
