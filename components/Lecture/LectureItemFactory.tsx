@@ -16,8 +16,9 @@ export default function LectureItemFactory({
   Items: any;
   editable: boolean;
 }) {
-  console.log("LectureItem Factory");
-  console.log(Items);
+
+  // console.log("LectureItem Factory");
+  // console.log(Items);
   
   return (
     <>

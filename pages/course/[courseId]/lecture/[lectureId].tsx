@@ -4,11 +4,16 @@ import BaseLayout from "@/layout/BaseLayout";
 import LectureTitleForm from "@/components/Lecture/lectureTitle";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
+import { useQuery, QueryClient } from "react-query";
 
 export default function LecturePage() {
+  
+  
   // Initiate Router
   const router = useRouter();
-  const { courseId } = router.query;
+  const { courseId, lectureId } = router.query;
+
+  const { data, status, error, refetch } = useQuery(["Lectures", lectureId as string], getLectureItems);
 
   // Initiate State
   const [lectureItems, setLectureItems] = useState({
@@ -16,24 +21,14 @@ export default function LecturePage() {
     fetched: false,
   });
 
-  useEffect(() => {
-    // Fetching data
-    if (courseId && lectureItems.fetched == false) {
-      getLectureItems(courseId).then((data) => {
-        let lectureItem = data.result.data;
-        setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
-      });
-    }
-  });
-
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className='space-y-3 w-full '>
+        <div className='mt-3 space-y-3 w-full '>
           <LectureTitleForm editable={false} />
 
-          {lectureItems.fetched && (
-            <LectureItemFactory Items={lectureItems.items} editable={false} />
+          {status == "success" && (
+            <LectureItemFactory Items={data?.result.data} editable={false} />
           )}
         </div>
       </BaseLayout>

@@ -64,23 +64,13 @@ export default function LecturePage() {
 
   // Listening Lecture Item Delete
   Emitter.on("LECTURE_ITEM_DELETE", (data: any) => {
-    try {
-      let itemsCopy = lectureItems.items;
-      let result = itemsCopy.filter((item: any) => {
-        if (item.id != data.id) {
-          return item;
-        }
-      });
-      setLectureItems({ ...lectureItems, items: result, fetched: true });
-    } catch (error) {
-      console.log(error);
-    }
+    refetch()
   });
 
   return (
     <>
       <BaseLayout showBackButton={true}>
-        <div className='space-y-3 w-full '>
+        <div className='mt-3 space-y-3 w-full '>
           <LectureTitleForm editable={true} />
 
           {status === "success" && (
