@@ -21,17 +21,16 @@ export default function LectureItemFormFactory({
   } = useForm<ResourcePost>();
 
   // Post Video Resource
-  const handleVideoSubmit: SubmitHandler<ResourcePost> = (data) => {
+  const handleVideoSubmit: SubmitHandler<ResourcePost> = async (data) => {
     const payload: ResourcePost = {
       ...data,
       name: "youtube video",
-      lecture_id: parseInt(lectureId as string),
+      lecture_id: lectureId as string,
       type: "VIDEO",
     };
 
-    postLectureItem(lectureId, payload).then((data) => {
-      callback(data);
-    });
+    await postLectureItem(lectureId, payload);
+    callback();
   };
   if (type == "VIDEO") {
     return (
@@ -46,7 +45,6 @@ export default function LectureItemFormFactory({
               placeholder='Youtube Video URL..'
             />
           </div>
-          {/* <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button> */}
         </form>
       </>
     );

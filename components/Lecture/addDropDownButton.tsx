@@ -8,13 +8,13 @@ export default function AddDropDownButton({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <>
+    <div className='w-full justify-center items-center flex'>
       <div
-        className='relative w-full'
+        className='relative  w-full sm:w-auto justify-center items-center flex'
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <button
-          className='w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+          className='w-full sm:w-auto  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
           type='button'
         >
           <span className='w-11/12 text-left'>+ Add Item..</span>
@@ -37,13 +37,13 @@ export default function AddDropDownButton({
         {/* Dropdown menu */}
         {showDropdown && (
           <div
-            className='w-full sm:w-auto z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block'
-            style={{
-              position: "absolute",
-              inset: "-26px auto auto -292px",
-              margin: 0,
-              transform: "translate(291px, 70px)",
-            }}
+            className='absolute w-full sm:w-auto top-full z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block'
+            // style={{
+            //   position: "absolute",
+            //   inset: "-26px auto auto -292px",
+            //   margin: 0,
+            //   transform: "translate(291px, 70px)",
+            // }}
           >
             <ul
               className='py-1 text-sm text-gray-700 dark:text-gray-200'
@@ -77,6 +77,6 @@ export default function AddDropDownButton({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

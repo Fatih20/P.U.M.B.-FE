@@ -15,12 +15,12 @@ export const configExternal = () => {
 
 // GET Lecture by ID
 export async function getLectureById(lectureId:any) {
-  const errorWrappedResult = await errorWrapper(async () => await axios.get(
+  const result = await axios.get(
     `/lectures/${lectureId}`,
     config()
-  ).then().catch(console.log));
+  );
 
-  return errorWrappedResult;
+  return result;
 }
 
 // --- Lecture Title Start --- 
@@ -35,19 +35,15 @@ export async function postLectureTitle(data:LectureTitlePost) {
   return errorWrappedResult;
 }
 
-export async function patchLectureTitle(id:any,data:LectureTitlePatch) {
+export async function patchLectureTitle(id:string, data:LectureTitlePatch) {
 
-  console.log(id);
-  console.log(data);
-  
-
-  const errorWrappedResult = await errorWrapper(async () => await axios.patch(
+  const result = await axios.patch(
     `/lectures/${id}`,
     data,
     config()
-  ).then().catch(console.log));
+  );
 
-  return errorWrappedResult;
+  return result;
 }
 // --- Lecture Title End --- 
 
@@ -74,12 +70,12 @@ export async function getLectureItems(lectureId:any) {
 }
 
 export async function deleteLectureItem(lectureId:any) {
-  const errorWrappedResult = await errorWrapper(async () => await axios.delete(
+  const result = await axios.delete(
     `/resources/${lectureId}`,
     config()
-  ).then().catch(console.log));
+  );
 
-  return errorWrappedResult;
+  return result;
 }
 
 

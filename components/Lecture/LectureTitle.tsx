@@ -1,37 +1,48 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { patchLectureTitle } from "@/utils/api/lecture";
 import { LectureTitlePatch } from "@/appTypes/typesForUs";
 import { useRouter } from "next/router";
 import { getLectureById } from "@/utils/api/lecture";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 type FormInput = {
   titleForm: string;
 };
 
-export default function LectureTitleForm({ editable }: { editable: boolean }) {
+export default function LectureTitleForm({
+  editable,
+  courseID,
+}: {
+  editable: boolean;
+  courseID: string;
+}) {
   // Initiate Router
   const router = useRouter();
   const { lectureId } = router.query;
 
-  // Initiate State
-  const [title, setTitle] = useState({ text: "", visibility: true, id: null });
-  const [form, setForm] = useState({ text: "", visibility: false });
+  const queryClient = useQueryClient();
+  const queryName = `${lectureId}/title`;
+  const {
+    data: titleData,
+    isLoading: titleLoading,
+    isError: titleError,
+  } = useQuery(queryName, async () => await getLectureById(lectureId));
 
-  // Fetching data
-  useEffect(() => {
-    if (lectureId && title.id == null) {
-      getLectureById(lectureId).then((data) => {
-        setTitle({
-          ...title,
-          id: data.result.data.id,
-          visibility: true,
-          text: data.result.data.title,
-        });
-      });
+  const { mutateAsync: modifyTitle } = useMutation(
+    async (newTitle: string) => {
+      await patchLectureTitle(lectureId as string, { title: newTitle });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryName);
+      },
     }
-  });
+  );
 
+  // Initiate State
+  const [titleVisibility, setTitleVisibility] = useState(true);
+  const [form, setForm] = useState({ text: "", visibility: false });
   const {
     register,
     handleSubmit,
@@ -40,7 +51,7 @@ export default function LectureTitleForm({ editable }: { editable: boolean }) {
 
   const transformToForm = () => {
     if (editable) {
-      setTitle({ ...title, visibility: false });
+      setTitleVisibility(false);
       setForm({ ...form, visibility: true });
     }
   };
@@ -51,23 +62,25 @@ export default function LectureTitleForm({ editable }: { editable: boolean }) {
     };
 
     // PATCH Lecture with id
-    patchLectureTitle(lectureId, payload).then((data) => {
-      setTitle({
-        ...title,
-        text: data.result.data.title,
-        visibility: true,
-        id: data.result.data.id,
-      });
-      setForm({ ...form, visibility: false });
-    });
+    modifyTitle(data.titleForm);
+    setForm({ ...form, visibility: false });
+    setTitleVisibility(true);
   };
+
+  if (titleLoading || !titleData) {
+    return <h2>Loading title...</h2>;
+  }
+
+  if (titleError) {
+    return <h2>Error loading title...</h2>;
+  }
 
   return (
     <>
       {/* Title */}
-      {title.visibility && (
+      {titleVisibility && (
         <h1 className='text-2xl text-bold' onClick={() => transformToForm()}>
-          {title.text}
+          {titleData.data.title}
         </h1>
       )}
 
@@ -82,8 +95,8 @@ export default function LectureTitleForm({ editable }: { editable: boolean }) {
               type='text'
               className='text-center text-2xl bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               {...register("titleForm", { required: true })}
-              defaultValue={title.text}
-              placeholder={title.text}
+              defaultValue={titleData.data.title}
+              placeholder={titleData.data.title}
             />
           </div>
         </form>

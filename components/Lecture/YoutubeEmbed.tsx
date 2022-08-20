@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { deleteLectureItem } from "@/utils/api/lecture";
-import Emitter from "@/utils/emiiter";
 
 // use youtube_parser when storing embedId to db later
 function youtube_parser(url: string): any {
@@ -20,19 +18,14 @@ const YoutubeEmbed = ({
   url,
   id,
   editable,
+  handleDeleteObject,
 }: {
   url: string;
-  id: any;
+  id: string;
   editable: boolean;
+  handleDeleteObject: any;
 }) => {
   const embedId = youtube_parser(url);
-
-  function handleDelete(id: any) {
-    deleteLectureItem(id).then((data) => {
-      // console.log(data);
-      Emitter.emit("LECTURE_ITEM_DELETE", data.result.data);
-    });
-  }
 
   return (
     <div className='relative'>
@@ -48,10 +41,10 @@ const YoutubeEmbed = ({
 
         {editable && (
           <button
-            onClick={() => handleDelete(id)}
+            onClick={async () => await handleDeleteObject(id)}
             type='button'
             style={{ top: "1px", right: "-5px", height: 40 }}
-            className='shadow-lg absolute w-fit flex items-center justify-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
+            className='absolute w-fit flex items-center justify-center focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'

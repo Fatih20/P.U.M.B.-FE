@@ -4,36 +4,60 @@ import BaseLayout from "@/layout/BaseLayout";
 import LectureTitleForm from "@/components/Lecture/LectureTitle";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
+import { useQuery } from "react-query";
+import OverlayScreen from "@/components/loading/OverlayScreen";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
 
 export default function LecturePage() {
   // Initiate Router
   const router = useRouter();
   const { courseId } = router.query;
+  const { lectureId } = router.query;
+  const queryName = `${courseId}/lecture`;
+  const {
+    data: lectureData,
+    isError,
+    isLoading,
+  } = useQuery(
+    queryName,
+    async () => await getLectureItems(lectureId),
+    queryFetchingConfig
+  );
 
-  // Initiate State
-  const [lectureItems, setLectureItems] = useState({
-    items: [] as object[],
-    fetched: false,
-  });
+  if (isLoading || !lectureData) {
+    return (
+      <BaseLayout>
+        <OverlayScreen
+          displayedText='Loading lecture data'
+          overlayType='loading'
+        />
+      </BaseLayout>
+    );
+  }
 
-  useEffect(() => {
-    // Fetching data
-    if (courseId && lectureItems.fetched == false) {
-      getLectureItems(courseId).then((data) => {
-        let lectureItem = data.data;
-        setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
-      });
-    }
-  });
+  if (isError) {
+    return (
+      <BaseLayout>
+        <OverlayScreen
+          displayedText='Error getting lecture data'
+          overlayType='error'
+        />
+      </BaseLayout>
+    );
+  }
 
   return (
     <>
       <BaseLayout showBackButton={true}>
         <div className='flex flex-col justify-start items-center w-full flex-grow py-3'>
-          <LectureTitleForm editable={false} />
+          <LectureTitleForm editable={false} courseID={courseId as string} />
 
-          {lectureItems.fetched && (
-            <LectureItemFactory Items={lectureItems.items} editable={false} />
+          {lectureData.data.fetched && (
+            <LectureItemFactory
+              Items={lectureData.data}
+              editable={false}
+              queryName={queryName}
+            />
           )}
         </div>
       </BaseLayout>

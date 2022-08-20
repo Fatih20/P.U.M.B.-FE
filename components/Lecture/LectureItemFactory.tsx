@@ -1,6 +1,8 @@
 import YoutubeEmbed from "@/components/Lecture/YoutubeEmbed";
 import FileDownloadButton from "@/components/Lecture/FileDownloadButton";
 import ImageLecture from "@/components/Lecture/ImageLecture";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { deleteLectureItem } from "@/utils/api/lecture";
 
 type Item = {
   id: any;
@@ -12,10 +14,22 @@ type Item = {
 export default function LectureItemFactory({
   Items,
   editable,
+  queryName,
 }: {
   Items: any;
   editable: boolean;
+  queryName: string;
 }) {
+  const queryClient = useQueryClient();
+  const { mutateAsync: handleDeleteObject } = useMutation(
+    async (id) => await deleteLectureItem(id),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryName);
+      },
+    }
+  );
+
   return (
     <>
       {Items.map((item: Item) => {
@@ -27,6 +41,7 @@ export default function LectureItemFactory({
               id={item.id}
               url={item.url}
               editable={editable}
+              handleDeleteObject={handleDeleteObject}
             />
           );
         } else if (item.type == "DOCUMENT") {

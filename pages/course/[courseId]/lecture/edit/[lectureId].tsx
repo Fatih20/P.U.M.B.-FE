@@ -8,26 +8,30 @@ import LectureItemFormFactory from "@/components/Lecture/LectureItemFormFactory"
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
 import OverlayScreen from "@/components/loading/OverlayScreen";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
+import queryFetchingConfig from "@/config/queryFetchingConfig";
 
 export default function LecturePage() {
   // Initiate Router
   const router = useRouter();
   const { courseId } = router.query;
+  const { lectureId } = router.query;
+  const queryName = `${courseId}/lecture`;
   const {
     data: lectureData,
     isError,
     isLoading,
-  } = useQuery(`${courseId}/lecture`, () => getLectureItems(courseId));
+  } = useQuery(
+    queryName,
+    async () => await getLectureItems(lectureId),
+    queryFetchingConfig
+  );
+  const queryClient = useQueryClient();
 
   // Initiate State
   const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({
     show: false,
     type: "",
-  });
-  const [lectureItems, setLectureItems] = useState({
-    items: [] as object[],
-    fetched: false,
   });
 
   // Show Hide Lecture Item Form
@@ -39,61 +43,47 @@ export default function LecturePage() {
     });
   }
 
-  useEffect(() => {
-    // Fetching data
-    if (courseId && lectureItems.fetched == false) {
-      getLectureItems(courseId).then((data) => {
-        let lectureItem = data.data;
-        setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
-      });
-    }
-  });
-
-  // Update LectureItems State
-  function updateLectureItems(data: any) {
-    let newItem = data.result.data;
-    let itemsCopy = lectureItems.items;
-
-    itemsCopy.push(newItem);
-
-    setLectureItems({ ...lectureItems, items: itemsCopy, fetched: true });
-    setLectureItemFormTrigger({
-      ...lectureItemFormTrigger,
-      show: false,
-      type: "",
-    });
+  if (isLoading || !lectureData) {
+    return (
+      <BaseLayout>
+        <OverlayScreen
+          displayedText='Loading lecture data'
+          overlayType='loading'
+        />
+      </BaseLayout>
+    );
   }
 
-  // Listening Lecture Item Delete
-  Emitter.on("LECTURE_ITEM_DELETE", (data: any) => {
-    try {
-      let itemsCopy = lectureItems.items;
-      let result = itemsCopy.filter((item: any) => {
-        if (item.id != data.id) {
-          return item;
-        }
-      });
-      setLectureItems({ ...lectureItems, items: result, fetched: true });
-    } catch (error) {
-      console.log(error);
-    }
-  });
-
+  if (isError) {
+    return (
+      <BaseLayout>
+        <OverlayScreen
+          displayedText='Error getting lecture data'
+          overlayType='error'
+        />
+      </BaseLayout>
+    );
+  }
   return (
     <>
       <BaseLayout showBackButton={true}>
         <div className='flex flex-col justify-start items-center w-full flex-grow py-3 gap-3'>
-          <LectureTitleForm editable={true} />
+          <LectureTitleForm editable={true} courseID={courseId as string} />
 
-          {lectureItems.fetched && (
-            <LectureItemFactory Items={lectureItems.items} editable={true} />
-          )}
+          <LectureItemFactory
+            Items={lectureData.data}
+            editable={true}
+            queryName={queryName}
+          />
 
           <div className='rounded h-fit shadow-lg bg-white w-full'>
             {lectureItemFormTrigger.show && (
               <LectureItemFormFactory
                 type={lectureItemFormTrigger.type}
-                callback={updateLectureItems}
+                callback={() => {
+                  queryClient.invalidateQueries(queryName);
+                  setLectureItemFormTrigger({ show: false, type: "" });
+                }}
               />
             )}
           </div>
