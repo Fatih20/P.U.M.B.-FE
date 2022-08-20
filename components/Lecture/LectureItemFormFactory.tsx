@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { postLectureItem } from "@/utils/api/lecture";
 import { ResourcePost } from "@/appTypes/typesForUs";
+import { useMutation, QueryClient, useQuery } from "react-query";
+import Emitter from "@/utils/emiiter";
 
 export default function LectureItemFormFactory({
   callback,
@@ -10,6 +12,8 @@ export default function LectureItemFormFactory({
   callback?: any;
   type: string;
 }) {
+  const queryClient = new QueryClient();
+
   // Initiate Router
   const router = useRouter();
   const { lectureId } = router.query;
@@ -20,18 +24,33 @@ export default function LectureItemFormFactory({
     formState: { errors },
   } = useForm<ResourcePost>();
 
-  // Post Video Resource
-  const handleVideoSubmit: SubmitHandler<ResourcePost> = async (data) => {
-    const payload: ResourcePost = {
-      ...data,
-      name: "youtube video",
-      lecture_id: lectureId as string,
-      type: "VIDEO",
-    };
 
-    await postLectureItem(lectureId, payload);
-    callback();
+  // Mutate Video POST
+  const { mutate: postLectureItemMutate } = useMutation(postLectureItem, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: () => {
+      alert("there was an error")
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('Lectures')
+      Emitter.emit("LECTURE_ITEM_POST", "");
+    }
+  });
+
+  const handleVideoSubmit: SubmitHandler<ResourcePost> = (payload) => {
+    if(lectureId !== undefined){
+      const data: ResourcePost = {
+        ...payload,
+        name: "Youtube Video URL",
+        lecture_id: lectureId as string,
+        type: "VIDEO",
+      };
+      postLectureItemMutate({data})
+    }
   };
+
   if (type == "VIDEO") {
     return (
       <>

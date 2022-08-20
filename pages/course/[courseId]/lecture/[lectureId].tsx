@@ -9,6 +9,8 @@ import OverlayScreen from "@/components/loading/OverlayScreen";
 import queryFetchingConfig from "@/config/queryFetchingConfig";
 
 export default function LecturePage() {
+  
+  
   // Initiate Router
   const router = useRouter();
   const { courseId } = router.query;

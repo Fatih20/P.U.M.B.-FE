@@ -170,3 +170,30 @@ export async function deleteCourseContentElement (elementID : string, type : Cou
   const result = await axios.delete(`${contentTypeToEndpointName[type]}/${elementID}`, bearerHeader());
   return result;
 }
+
+// POST Question Answer
+export async function postQuestionAnswer({id,data}:{id:any,data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.post(
+    `/quizzes/${id}/submission`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
+
+// /quizzes/{id}/submission
+// GET Quiz Submission
+export async function getQuizSubmission({queryKey}:any) {
+  const [_, quizId] = queryKey
+
+  if (quizId !== undefined){
+    const errorWrappedResult = await errorWrapper(async () => await axios.get(
+      `/quizzes/${quizId}/submission`,
+      config()
+    ).then().catch(console.log));
+  
+    return errorWrappedResult;
+  }
+}
