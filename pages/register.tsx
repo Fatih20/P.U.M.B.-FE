@@ -10,24 +10,19 @@ import toast from "react-hot-toast";
 import technicalConfig from "@/config/technicalConfig";
 
 export default function RegisterPage() {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<RegisterInputs>();
+  const { register, handleSubmit } = useForm<RegisterInputs>();
 
   // Role State
   const [selectedRole, setRole] = useState("STUDENT" as PossiblyCreatedRole);
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
-    if (watch("password") !== watch("confirmPassword")) {
+    if (data.confirmPassword !== data.password) {
       toast.error("Password isn't matching!");
       return;
     }
 
-    if (watch("username").length < technicalConfig.minimumUsernameLength) {
+    if (data.username.length < technicalConfig.minimumUsernameLength) {
       toast.error(
         `Username must at least be ${technicalConfig.minimumUsernameLength} characters long!`
       );
