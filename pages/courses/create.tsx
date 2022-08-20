@@ -70,11 +70,11 @@ const CreateCoursePage = (props: Props) => {
     const loadingToast = toast.loading("Creating the course...");
 
     if (
-      thumbnail[0].size / (10 ^ 6) >
+      thumbnail[0].size / 10 ** 6 >
       technicalConfig.maximumCourseThumbnailFileSize
     ) {
       toast.dismiss(loadingToast);
-      toast.error("Thumbnail file size is too big. 500 MB maximum");
+      toast.error("Thumbnail file size is too big. 500 kb maximum");
       return;
     }
 
@@ -91,8 +91,7 @@ const CreateCoursePage = (props: Props) => {
     const { result, error } = await createCourse(formDataSubmitted);
     toast.dismiss(loadingToast);
 
-    if (!result) {
-      console.log(error);
+    if (!result || error) {
       toast.error("Failed to create course. Please try again.");
       return;
     }
@@ -128,8 +127,8 @@ const CreateCoursePage = (props: Props) => {
               placeholder='Course thumbnail'
               className='w-full p-2'
             />
-            {formErrors.title && (
-              <p className='text-red-400'>{formErrors.title.message}</p>
+            {formErrors.thumbnail && (
+              <p className='text-red-400'>{formErrors.thumbnail.message}</p>
             )}
           </div>
           <div className='flex flex-col w-full gap-2'>
