@@ -47,7 +47,7 @@ const CourseContentContainer = ({
       addedContentType === "lecture" ? postLectureTitle : postQuiz;
     const { error, result } = await runToAdd({ title, course_id: courseID });
     toast.dismiss(loadingToast);
-    if (!result) {
+    if (!result || error) {
       toast.error(`Error adding new ${addedContentType}`);
       return;
     }
