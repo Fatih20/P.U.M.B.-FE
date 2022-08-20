@@ -14,10 +14,13 @@ import AddQuestionButton from "@/components/Quiz/AddQuestionButton";
 import QuestionFactory from "@/components/Quiz/QuestionFactory";
 import { useQuery, QueryClient } from "react-query";
 import queryFetchingConfig from "@/config/queryFetchingConfig";
+import useMe from "@/hooks/useMe";
 
 
 
 export default function QuizPage() {
+  const { user, isLoading: userLoading } = useMe();
+
   // Initiate Router
   const router = useRouter()
   const { quizId } = router.query
@@ -28,10 +31,10 @@ export default function QuizPage() {
 
   // React Query
   const queryClient = new QueryClient();
-  const { data, status, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
+  const { data, status, error, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
 
   // console.log("main page");
-  // console.log(data?.result.data);
+  // console.log(data);
 
   // Listening on Question Create New
   Emitter.on('REFETCH', (data: any) => {
