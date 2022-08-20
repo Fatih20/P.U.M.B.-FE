@@ -8,6 +8,7 @@ import { useState } from "react";
 import useMe from "@/hooks/useMe";
 export default function Question({ question, attempt }: { question: any, attempt: boolean }) {
 
+    // console.log("Data di dalem quesiton");
     // console.log(question);
 
     const queryClient = new QueryClient();
@@ -47,8 +48,14 @@ export default function Question({ question, attempt }: { question: any, attempt
 
                         // Student
                         if (user?.role === "STUDENT") {
-                            if(attempt){
+                            // console.log("STUDENT");
+
+                            if (attempt) {
+                                // console.log("ATTEMPT");
+
                                 if (question.answer.correct_id == item.id) {
+                                    // console.log("CORRECT ANS");
+
                                     return (
                                         <a href="#" key={item.id} className={`${greenCss} block p-2  rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700`}>
                                             {!attempt &&
@@ -64,8 +71,10 @@ export default function Question({ question, attempt }: { question: any, attempt
                                         </a>
                                     )
                                 } else if (question.answer.option_id == item.id) {
+                                    // console.log("WRONG ANS");
+                                    
                                     return (
-    
+
                                         <a href="#" key={item.id} className="block p-2 bg-red-300 rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                             {!attempt &&
                                                 <input
@@ -78,8 +87,23 @@ export default function Question({ question, attempt }: { question: any, attempt
                                             <label className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{item.content}</label>
                                         </a>
                                     )
+                                }else {
+                                    // console.log("Other ANS");
+                                    return (
+                                        <a href="#" key={item.id} className="block p-2 rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                            {!attempt &&
+                                                <input
+                                                    value={item.id}
+                                                    onChange={(e) => handleAnswer(e)}
+                                                    name={question.id}
+                                                    type="radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" />
+                                            }
+    
+                                            <label className="ml-2 text-sm  text-gray-900 dark:text-gray-300">{item.content}</label>
+                                        </a>
+                                    )
                                 }
-                            }else{
+                            } else {
                                 return (
                                     <a href="#" key={item.id} className="block p-2 rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                                         {!attempt &&

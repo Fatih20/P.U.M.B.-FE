@@ -21,11 +21,11 @@ export default function QuizPage() {
     const { data: quizAnswer, status: quizAnswerStat } = useQuery(["QuizAnswered", quizId as string], getQuizSubmission);
 
 
-    console.log("data");
-    console.log(data);
+    // console.log("data");
+    // console.log(data);
 
-    console.log("quiz Answer");
-    console.log(quizAnswer);
+    // console.log("quiz Answer");
+    // console.log(quizAnswer);
 
     // console.log("user");
     // console.log(user);
@@ -79,14 +79,36 @@ export default function QuizPage() {
     }
 
     useEffect(() => {
-        if(user?.role === "STUDENT" && quizAnswer?.result !== undefined && data?.status === 200){
-            
+        if (user?.role === "STUDENT" && quizAnswer?.result !== undefined && data?.status === 200) {
+
             let questionList = data?.data.questions
             let answerList = quizAnswer?.result.data.answers
+
+            console.log("questionList");
+            console.log(questionList);
+
+
+            console.log("answerList");
+            console.log(answerList);
+
             if (questionList !== undefined && answerList !== undefined) {
                 questionList.forEach(function (item: any, i: any) {
-                    item['answer'] = answerList[i]
+                    answerList.forEach((element: any) => {
+                        if (item.id === element.question_id) {
+                            item['answer'] = element
+
+                        }
+                    });
+
                 });
+
+                // questionList.forEach(function (item: any, i: any) {
+                //     item['answer'] = answerList[i]
+
+                //     // item['answer'] = answerList[i]
+                // });
+
+
                 console.log(questionList);
                 setResult(questionList)
             }
@@ -133,7 +155,7 @@ export default function QuizPage() {
                 </div>
 
                 {
-                    data?.data.attempt || user?.role === "STUDENT" && 
+                    data?.data.attempt || user?.role === "STUDENT" &&
                     <button
                         onClick={() => handleSubmit()}
                         className="w-full justify-center sm:w-auto shadow-lg text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
