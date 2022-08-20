@@ -18,12 +18,12 @@ export async function getQuizById({queryKey}:any) {
   const [_, quizId] = queryKey
 
   if (quizId !== undefined){
-    const errorWrappedResult = await errorWrapper(async () => await axios.get(
+    const result = async () => await axios.get(
       `/quizzes/${quizId}`,
       config()
-    ).then().catch(console.log));
+    );
   
-    return errorWrappedResult;
+    return result;
   }
 
 }
