@@ -58,12 +58,12 @@ export default function QuizPage() {
 
   // Listening to Question Delete
   Emitter.on('QUESTION_DELETE', (id: string) => {
-    let itemsCopy = questions
-    let result = itemsCopy.filter((item: any) => {
-      if (item.id != id) {
-        return item
-      }
-    })
+    // let itemsCopy = questions
+    // let result = itemsCopy.filter((item: any) => {
+    //   if (item.id != id) {
+    //     return item
+    //   }
+    // })
     refetch()
   })
 

@@ -161,3 +161,15 @@ export async function getQuestionAnswer({queryKey}:any) {
   }
 
 }
+
+// POST Question Answer
+export async function postQuestionAnswer({id,data}:{id:any,data:any}) {
+  
+  const errorWrappedResult = await errorWrapper(async () => await axios.post(
+    `/quizzes/${id}/submission`,
+    data,
+    config()
+  ).then().catch(console.log));
+
+  return errorWrappedResult;
+}
