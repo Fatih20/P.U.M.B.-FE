@@ -212,12 +212,10 @@ export type CategoryInput = {
 
 export type CourseContentProps = {
   fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
-  runOnDelete: () => void;
-  runOnEdit: () => void;
-  runOnClick: (id: string) => void;
   queryName: string;
   type: CourseContentElementType;
-  isTeacher?: boolean;
+  isTeacher: boolean;
+  courseID : string;
 };
 
 export type CourseContentContainerProps = {

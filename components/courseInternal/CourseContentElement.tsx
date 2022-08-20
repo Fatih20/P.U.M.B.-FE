@@ -13,7 +13,7 @@ const CourseContentElement = ({
   return (
     <div
       onClick={runOnClick}
-      className='w-full flex gap p-2 bg-indigo-600 text-white rounded-md cursor-pointer'
+      className='w-full flex gap p-2 bg-indigo-600 text-white rounded-md cursor-pointer items-center'
     >
       <h3 className='block'>{title}</h3>
       <div className='flex flex-grow'></div>
@@ -24,13 +24,19 @@ const CourseContentElement = ({
       >
         <button
           className='flex items-center justify-center p-2'
-          onClick={runOnEdit}
+          onClick={(e) => {
+            e.stopPropagation();
+            runOnEdit();
+          }}
         >
           <FontAwesomeIcon icon={faPencil} />
         </button>
         <button
           className='flex items-center justify-center p-2'
-          onClick={runOnDelete}
+          onClick={(e) => {
+            e.stopPropagation();
+            runOnDelete();
+          }}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

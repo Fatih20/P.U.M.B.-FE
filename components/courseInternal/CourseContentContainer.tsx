@@ -16,8 +16,6 @@ const CourseContentContainer = ({
   const [seenContentType, setSeenContentType] = useState(
     "quiz" as CourseContentElementType
   );
-  const router = useRouter();
-
   return (
     <div className='flex w-full gap-4 items-center flex-col flex-grow'>
       <ChangeSeenButtonContainer>
@@ -49,32 +47,18 @@ const CourseContentContainer = ({
       {seenContentType === "lecture" ? (
         <CourseContent
           fetcherFunction={async () => await getLectures(courseID)}
-          runOnClick={(elementID: string) => {
-            router.push(`${router.asPath}/${seenContentType}/${elementID}`);
-          }}
-          queryName={seenContentType}
+          courseID={courseID}
+          queryName={`${courseID}/${seenContentType}`}
           type={seenContentType}
-          runOnDelete={() => {
-            return;
-          }}
-          runOnEdit={() => {
-            return;
-          }}
+          isTeacher={isTeacher}
         />
       ) : (
         <CourseContent
           fetcherFunction={async () => await getQuizzes(courseID)}
-          queryName={seenContentType}
+          queryName={`${courseID}/${seenContentType}`}
           type={seenContentType}
-          runOnClick={(elementID: string) => {
-            router.push(`${router.asPath}/${seenContentType}/${elementID}`);
-          }}
-          runOnDelete={() => {
-            return;
-          }}
-          runOnEdit={() => {
-            return;
-          }}
+          courseID={courseID}
+          isTeacher={isTeacher}
         />
       )}
     </div>

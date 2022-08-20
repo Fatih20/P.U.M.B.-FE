@@ -1,7 +1,7 @@
 import axios from "axios";
 import { errorWrapper } from "@/utils/api/api";
 import { getAccessToken } from "@/utils/utils";
-import { QuizPatch, QuizPost, QuestionStatement, OptionType } from "@/appTypes/typesForUs";
+import { QuizPatch, QuizPost, QuestionStatement, OptionType, CourseContentElementProps, CourseContentElementType } from "@/appTypes/typesForUs";
 
 const config = () => {
   return {
@@ -159,5 +159,14 @@ export async function getQuestionAnswer({queryKey}:any) {
   
     return errorWrappedResult;
   }
+}
 
+export async function deleteCourseContentElement (elementID : string, type : CourseContentElementType) {
+  const contentTypeToEndpointName = {
+    lecture : "lectures",
+    quiz : "quizzes"
+  } as Record<CourseContentElementType, "quizzes" | "lectures">
+
+  const result = await axios.delete(`${contentTypeToEndpointName[type]}/${elementID}`);
+  return result;
 }

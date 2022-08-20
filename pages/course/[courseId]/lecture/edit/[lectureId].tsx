@@ -7,6 +7,7 @@ import AddDropDownButton from "@/components/Lecture/addDropDownButton";
 import LectureItemFormFactory from "@/components/Lecture/LectureItemFormFactory";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 
 export default function LecturePage() {
   // Initiate Router
