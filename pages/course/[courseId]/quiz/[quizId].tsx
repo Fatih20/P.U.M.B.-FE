@@ -44,8 +44,7 @@ export default function QuizPage() {
         },
         onSettled: () => {
             queryClient.invalidateQueries('Quiz')
-            // router.push("/temp")
-            // router.goBack()
+            window.location.reload();
         }
     });
 
