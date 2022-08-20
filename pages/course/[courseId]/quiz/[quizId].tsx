@@ -84,32 +84,16 @@ export default function QuizPage() {
             let questionList = data?.data.questions
             let answerList = quizAnswer?.result.data.answers
 
-            console.log("questionList");
-            console.log(questionList);
-
-
-            console.log("answerList");
-            console.log(answerList);
-
             if (questionList !== undefined && answerList !== undefined) {
                 questionList.forEach(function (item: any, i: any) {
                     answerList.forEach((element: any) => {
                         if (item.id === element.question_id) {
                             item['answer'] = element
-
                         }
                     });
 
                 });
 
-                // questionList.forEach(function (item: any, i: any) {
-                //     item['answer'] = answerList[i]
-
-                //     // item['answer'] = answerList[i]
-                // });
-
-
-                console.log(questionList);
                 setResult(questionList)
             }
         }
@@ -121,7 +105,6 @@ export default function QuizPage() {
         <BaseLayout showBackButton={true}>
             <div className="mt-3 space-y-3 w-full">
                 <div>
-                    {/* <h1 className="text-lg">Title of Course</h1> */}
                     <h1 className="text-3xl">{data?.data.title}</h1>
                     {
                         quizAnswer?.result !== undefined &&
