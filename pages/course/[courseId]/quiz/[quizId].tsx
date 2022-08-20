@@ -21,8 +21,14 @@ export default function QuizPage() {
     const { data: quizAnswer, status: quizAnswerStat } = useQuery(["QuizAnswered", quizId as string], getQuizSubmission);
 
 
+    console.log("data");
     console.log(data);
 
+    console.log("quiz Answer");
+    console.log(quizAnswer);
+
+    // console.log("user");
+    // console.log(user);
 
     const [answer, setAnswer] = useState([] as any[]);
     const [result, setResult] = useState([] as any[]);
@@ -38,6 +44,8 @@ export default function QuizPage() {
         },
         onSettled: () => {
             queryClient.invalidateQueries('Quiz')
+            // router.push("/temp")
+            // router.goBack()
         }
     });
 
@@ -70,38 +78,18 @@ export default function QuizPage() {
         postAnswerMutate({ id, data })
     }
 
-    // Jika sudah attempt
-    // if (data?.data.attempt === true) {
-
-
-
-
-
-    //     return (
-    //         <h1>You attempt this Quiz</h1>
-    //     )
-    // }
-
-    console.log("data");
-    let questionList = data?.data.questions
-    // console.log(questionList[0]);
-
-    // console.log("quiz Answer");
-    let answerList = quizAnswer?.result.data.answers
-    // console.log(answerList[0]);
-
-
-
     useEffect(() => {
-        if (questionList !== undefined && answerList !== undefined) {
-            questionList = data?.data.questions
-            answerList = quizAnswer?.result.data.answers
-            questionList.forEach(function (item: any, i: any) {
-                // console.log('%d: %s', i, item);
-                item['answer'] = answerList[i]
-            });
-            console.log(questionList);
-            setResult(questionList)
+        if(user?.role === "STUDENT" && quizAnswer?.result !== undefined && data?.status === 200){
+            
+            let questionList = data?.data.questions
+            let answerList = quizAnswer?.result.data.answers
+            if (questionList !== undefined && answerList !== undefined) {
+                questionList.forEach(function (item: any, i: any) {
+                    item['answer'] = answerList[i]
+                });
+                console.log(questionList);
+                setResult(questionList)
+            }
         }
     })
 
@@ -113,25 +101,39 @@ export default function QuizPage() {
                 <div>
                     {/* <h1 className="text-lg">Title of Course</h1> */}
                     <h1 className="text-3xl">{data?.data.title}</h1>
-                    <h1>Score : {quizAnswer?.result.data.score}</h1>
-                    
+                    {
+                        quizAnswer?.result !== undefined &&
+                        <h1>Score : {quizAnswer?.result.data.score}</h1>
+                    }
+
                 </div>
                 <div className="mt-3 space-y-6 w-full">
-                    {status === "success" && data?.data.attempt === false && data?.data.questions.map((item: any) => {
+                    {/* TEACHER */}
+                    {user?.role === "TEACHER" && data?.data.questions.map((item: any) => {
                         return (
                             <Question key={item.id} question={item} attempt={data?.data.attempt} />
                         )
                     })}
 
-                    {status === "success" && data?.data.attempt === true && result.map((item: any) => {
+                    {/* Student */}
+                    {user?.role === "STUDENT" && data?.data.attempt === false && data?.data.questions.map((item: any) => {
+
                         return (
                             <Question key={item.id} question={item} attempt={data?.data.attempt} />
                         )
                     })}
+
+                    {user?.role === "STUDENT" && data?.data.attempt === true && result.map((item: any) => {
+                        return (
+                            <Question key={item.id} question={item} attempt={data?.data.attempt} />
+                        )
+                    })}
+
+
                 </div>
 
                 {
-                    !data?.data.attempt &&
+                    data?.data.attempt || user?.role === "STUDENT" && 
                     <button
                         onClick={() => handleSubmit()}
                         className="w-full justify-center sm:w-auto shadow-lg text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
