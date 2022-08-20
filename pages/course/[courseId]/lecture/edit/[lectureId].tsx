@@ -7,11 +7,17 @@ import AddDropDownButton from "@/components/Lecture/addDropDownButton";
 import LectureItemFormFactory from "@/components/Lecture/LectureItemFormFactory";
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
+import { useQuery, QueryClient } from "react-query";
 
 export default function LecturePage() {
   // Initiate Router
   const router = useRouter();
-  const { courseId } = router.query;
+  const { courseId, lectureId } = router.query;
+
+  const { data, status, error, refetch } = useQuery(["Lectures", lectureId as string], getLectureItems);
+
+  console.log("lecture edit");
+  console.log(data);
 
   // Initiate State
   const [lectureItemFormTrigger, setLectureItemFormTrigger] = useState({
@@ -32,16 +38,6 @@ export default function LecturePage() {
     });
   }
 
-  useEffect(() => {
-    // Fetching data
-    if (courseId && lectureItems.fetched == false) {
-      getLectureItems(courseId).then((data) => {
-        let lectureItem = data.result.data;
-        setLectureItems({ ...lectureItems, items: lectureItem, fetched: true });
-      });
-    }
-  });
-
   // Update LectureItems State
   function updateLectureItems(data: any) {
     let newItem = data.result.data;
@@ -56,6 +52,15 @@ export default function LecturePage() {
       type: "",
     });
   }
+
+  Emitter.on("LECTURE_ITEM_POST", (data: any) => {
+    refetch()
+    setLectureItemFormTrigger({
+      ...lectureItemFormTrigger,
+      show: false,
+      type: "",
+    });
+  });
 
   // Listening Lecture Item Delete
   Emitter.on("LECTURE_ITEM_DELETE", (data: any) => {
@@ -78,8 +83,8 @@ export default function LecturePage() {
         <div className='space-y-3 w-full '>
           <LectureTitleForm editable={true} />
 
-          {lectureItems.fetched && (
-            <LectureItemFactory Items={lectureItems.items} editable={true} />
+          {status === "success" && (
+            <LectureItemFactory Items={data?.result.data} editable={true} />
           )}
 
           <div className='rounded h-fit shadow-lg bg-white'>
