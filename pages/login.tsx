@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import technicalConfig from "@/config/technicalConfig";
 import { LoginInputs } from "@/appTypes/typesForUs";
 import { login } from "@/utils/api/auth";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,12 +15,16 @@ export default function LoginPage() {
   } = useForm<LoginInputs>();
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
+    const loadingToast = toast.loading("Logging in");
     const { result, error } = await login(data);
-
-    if (!result) {
+    toast.dismiss(loadingToast);
+    if (!result || error) {
+      toast.error((error as any).response.data.message);
       console.log(error);
       return;
     }
+
+    toast.success("Succesfully logged in!");
 
     const accessToken = result.data.access_token;
     localStorage.setItem(
