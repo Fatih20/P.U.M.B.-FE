@@ -1,20 +1,36 @@
 import React from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { CourseContentProps } from "@/appTypes/typesForUs";
 import { Lecture, Quiz } from "@/appTypes/typesFromBackEnd";
 import OverlayScreen from "@/components/loading/OverlayScreen";
 import CourseContentElement from "@/components/courseInternal/CourseContentElement";
+import { useRouter } from "next/router";
+import { deleteCourseContentElement } from "@/utils/api/quiz";
+import toast from "react-hot-toast";
 
 const CourseContent = ({
   fetcherFunction,
-  runOnDelete,
-  runOnEdit,
-  runOnClick,
   queryName,
   type,
-  isTeacher = false,
+  courseID,
+  isTeacher,
 }: CourseContentProps) => {
+  const router = useRouter();
   const { data, isLoading } = useQuery(queryName, fetcherFunction);
+  const queryClient = useQueryClient();
+  const { mutateAsync: deleteElement } = useMutation(
+    async (elementID: string) =>
+      await deleteCourseContentElement(elementID, type),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(queryName);
+        toast.success(`Succesfully deleted the ${type}`);
+      },
+      onError: () => {
+        toast.error(`Failed to delete the ${type}`);
+      },
+    }
+  );
 
   if (isLoading || !data) {
     return (
@@ -37,9 +53,13 @@ const CourseContent = ({
             key={id}
             title={title}
             type={type}
-            runOnDelete={runOnDelete}
-            runOnEdit={runOnEdit}
-            runOnClick={() => runOnClick(id.toString())}
+            runOnClick={() => {
+              router.push(`/course/${courseID}/${type}/${id}`);
+            }}
+            runOnDelete={async () => await deleteElement(id)}
+            runOnEdit={() => {
+              router.push(`/course/${courseID}/${type}/edit/${id}`);
+            }}
             isTeacher={isTeacher}
           />
         );

@@ -212,12 +212,10 @@ export type CategoryInput = {
 
 export type CourseContentProps = {
   fetcherFunction: () => Promise<Lecture[] | Quiz[]>;
-  runOnDelete: () => void;
-  runOnEdit: () => void;
-  runOnClick: (id: string) => void;
   queryName: string;
   type: CourseContentElementType;
-  isTeacher?: boolean;
+  isTeacher: boolean;
+  courseID : string;
 };
 
 export type CourseContentContainerProps = {
@@ -232,4 +230,15 @@ export type CourseHeaderProps = {
 export type LoadingScreenProps = {
   displayedText: string;
   overlayType?: OverlayType;
+};
+
+export type CourseContentElementInput = {
+  title : string;
+}
+
+export type CourseNewElementProps = {
+  runToAdd: (title: string) => Promise<{ result: any; error: unknown }>;
+  runToInvalidate: () => Promise<void>;
+  contentType: CourseContentElementType;
+  visible: boolean;
 };

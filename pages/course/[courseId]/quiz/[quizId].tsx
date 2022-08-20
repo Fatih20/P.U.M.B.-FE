@@ -18,9 +18,9 @@ export default function QuizPage() {
     // React Query
     const queryClient = new QueryClient();
     const { data, status, error, refetch } = useQuery(["Quiz", quizId as string], getQuizById);
-    
+
     console.log(data);
-    
+
     const [answer, setAnswer] = useState([] as any[]);
 
     // Mutate Answer POST
@@ -37,14 +37,12 @@ export default function QuizPage() {
         }
     });
 
+    // Appending Answer State
     Emitter.on("OnChangeOption", (data: any) => {
         let answerCopy = answer
-
         let answered = false
-        // jika ada
         if (answerCopy.some((e: any) => e.question_id === data.question_id)) {
             answered = true
-            // console.log("ada");
             let updatedResult = answerCopy.map((item: any) => {
                 if (item.question_id === data.question_id) {
                     return data
@@ -52,30 +50,23 @@ export default function QuizPage() {
                     return item
                 }
             })
-
             setAnswer(updatedResult)
-            // console.log(answer);
-
         }
 
-        // jika belum ada
         if (!answered) {
-            // console.log("tidak ada");
-
             answerCopy.push(data)
             setAnswer(answerCopy)
-            // console.log(answer);
         }
     })
 
+    // Submit Answer
     function handleSubmit() {
         let id = quizId
         let data = answer
-        postAnswerMutate({id, data })
+        postAnswerMutate({ id, data })
     }
 
     return (
-
         <BaseLayout showBackButton={true}>
             <div className="mt-3 space-y-3 w-full">
                 <div>
@@ -99,6 +90,5 @@ export default function QuizPage() {
 
             </div>
         </BaseLayout>
-
     )
 }

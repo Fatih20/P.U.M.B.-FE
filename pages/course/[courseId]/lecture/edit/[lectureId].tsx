@@ -8,6 +8,7 @@ import LectureItemFormFactory from "@/components/Lecture/LectureItemFormFactory"
 import LectureItemFactory from "@/components/Lecture/LectureItemFactory";
 import { getLectureItems } from "@/utils/api/lecture";
 import { useQuery, QueryClient } from "react-query";
+import OverlayScreen from "@/components/loading/OverlayScreen";
 
 export default function LecturePage() {
   // Initiate Router
