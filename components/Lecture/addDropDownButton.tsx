@@ -17,7 +17,7 @@ export default function AddDropDownButton({handleTrigger}:{handleTrigger:any}) {
                 {showDropdown && 
                     <div className="w-full sm:w-auto z-10 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 block" style={{ position: 'absolute', inset: '-26px auto auto -292px', margin: 0, transform: 'translate(291px, 70px)' }}>
                         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                            <li>
+                            {/* <li>
                                 <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Document
                                 </a>
@@ -26,7 +26,7 @@ export default function AddDropDownButton({handleTrigger}:{handleTrigger:any}) {
                                 <a href="#" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Image
                                 </a>
-                            </li>
+                            </li> */}
                             <li>
                                 <a onClick={() => handleTrigger("VIDEO")} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Youtube Video Link

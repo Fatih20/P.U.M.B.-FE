@@ -182,3 +182,18 @@ export async function postQuestionAnswer({id,data}:{id:any,data:any}) {
 
   return errorWrappedResult;
 }
+
+// /quizzes/{id}/submission
+// GET Quiz Submission
+export async function getQuizSubmission({queryKey}:any) {
+  const [_, quizId] = queryKey
+
+  if (quizId !== undefined){
+    const errorWrappedResult = await errorWrapper(async () => await axios.get(
+      `/quizzes/${quizId}/submission`,
+      config()
+    ).then().catch(console.log));
+  
+    return errorWrappedResult;
+  }
+}
